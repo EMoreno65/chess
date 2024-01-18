@@ -144,7 +144,6 @@ public class ChessPiece {
                     ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
                     possibleMoves.add(addedMove);
                 }
-
             case KNIGHT:
                 // Knight Logic
             case ROOK:
