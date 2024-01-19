@@ -616,10 +616,24 @@ public class ChessPiece {
                 possibleMoves.add(addedMove);
             }
             ChessPosition newPosition = new ChessPosition(myPosition.getRow() + 1, myPosition.getColumn());
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
-            possibleMoves.add(addedMove);
+            if (newPosition.getRow() == 8){
+                // Right here, I wanna find a way to find what the promoted piece is so I can return an object with that piece
+                // Do I just need to initialize 4 separate objects all with the same position parameters and add that to possible moves?
+                ChessMove addedMove = new ChessMove(myPosition, newPosition, PieceType.BISHOP);
+                possibleMoves.add(addedMove);
+                ChessMove addedMove2 = new ChessMove(myPosition, newPosition, PieceType.ROOK);
+                possibleMoves.add(addedMove2);
+                ChessMove addedMove3 = new ChessMove(myPosition, newPosition, PieceType.QUEEN);
+                possibleMoves.add(addedMove3);
+                ChessMove addedMove4 = new ChessMove(myPosition, newPosition, PieceType.KNIGHT);
+                possibleMoves.add(addedMove4);
+            }
+            else{
+                ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                possibleMoves.add(addedMove);
+            }
         }
-        if (this.pieceColor == ChessGame.TeamColor.BLACK && myPosition.getRow() > 0){
+        if (this.pieceColor == ChessGame.TeamColor.BLACK && myPosition.getRow() > 1){
             if (myPosition.getRow() == 7){
                 ChessPosition newPosition = new ChessPosition(myPosition.getRow() - 2, myPosition.getColumn());
                 ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
