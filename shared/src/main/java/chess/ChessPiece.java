@@ -67,7 +67,7 @@ public class ChessPiece {
             case ROOK:
                 return straightMoves(board, myPosition);
             case PAWN:
-                // Pawn logic
+                return pawnMoves(board, myPosition);
         }
         return possibleMoves;
     }
@@ -607,4 +607,27 @@ public class ChessPiece {
         }
         return possibleMoves;
     }
-}
+    public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition myPosition){
+        HashSet<ChessMove> possibleMoves = new HashSet<>();
+        if (this.pieceColor == ChessGame.TeamColor.WHITE && myPosition.getRow() < 8){
+            if (myPosition.getRow() == 2){
+                ChessPosition newPosition = new ChessPosition(myPosition.getRow() + 2, myPosition.getColumn());
+                ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                possibleMoves.add(addedMove);
+            }
+            ChessPosition newPosition = new ChessPosition(myPosition.getRow() + 1, myPosition.getColumn());
+            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            possibleMoves.add(addedMove);
+        }
+        if (this.pieceColor == ChessGame.TeamColor.BLACK && myPosition.getRow() > 0){
+            if (myPosition.getRow() == 7){
+                ChessPosition newPosition = new ChessPosition(myPosition.getRow() - 2, myPosition.getColumn());
+                ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                possibleMoves.add(addedMove);
+            }
+            ChessPosition newPosition = new ChessPosition(myPosition.getRow() - 1, myPosition.getColumn());
+            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            possibleMoves.add(addedMove);
+        }
+        return possibleMoves;
+}}
