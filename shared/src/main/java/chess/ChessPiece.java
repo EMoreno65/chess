@@ -73,7 +73,6 @@ public class ChessPiece {
     }
     public Collection<ChessMove> diagonalMoves(ChessBoard board, ChessPosition myPosition){
         HashSet<ChessMove> possibleMoves = new HashSet<>();
-        // Bishop Logic
         for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j <= 8; i++, j++) {
             if (i == myPosition.getRow() && j == myPosition.getColumn()){
                 continue;
