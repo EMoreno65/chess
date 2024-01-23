@@ -107,14 +107,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
         }
         for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j >= 1; i++, j--) {
@@ -128,14 +126,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
         }
         for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1 && j >= 1; i--, j--) {
@@ -149,14 +145,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
         }
         for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1 && j <= 8; i--, j++) {
@@ -170,14 +164,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
         }
         return possibleMoves;
