@@ -187,14 +187,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
         }
         for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1; i--) {
@@ -208,14 +206,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
         }
         for (int i = myPosition.getRow(), j = myPosition.getColumn(); j <= 8; j++) {
@@ -229,14 +225,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
         }
         for (int i = myPosition.getRow(), j = myPosition.getColumn(); j >= 1; j--) {
@@ -250,14 +244,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
         }
         return possibleMoves;
@@ -275,14 +267,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -297,14 +287,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -319,14 +307,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -341,14 +327,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -363,14 +347,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -385,14 +367,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -407,14 +387,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -429,14 +407,12 @@ public class ChessPiece {
                     break; // Go to the next for loop
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -455,14 +431,12 @@ public class ChessPiece {
                     break;
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -477,14 +451,12 @@ public class ChessPiece {
                     break;
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -499,14 +471,12 @@ public class ChessPiece {
                     break;
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -521,14 +491,12 @@ public class ChessPiece {
                     break;
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -543,14 +511,12 @@ public class ChessPiece {
                     break;
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -565,14 +531,12 @@ public class ChessPiece {
                     break;
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -587,14 +551,12 @@ public class ChessPiece {
                     break;
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
@@ -609,14 +571,12 @@ public class ChessPiece {
                     break;
                 }
                 else{
-                    ChessPosition newPosition = new ChessPosition(i,j);
-                    ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
                     break;
                 }
             }
-            ChessPosition newPosition = new ChessPosition(i,j);
-            ChessMove addedMove = new ChessMove(myPosition, newPosition, null);
+            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
             possibleMoves.add(addedMove);
             break;
         }
