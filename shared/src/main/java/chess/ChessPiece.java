@@ -614,8 +614,10 @@ public class ChessPiece {
             if (pieceAtLeftPosition != null){
                 if (pieceAtLeftPosition.pieceColor != this.pieceColor){
                     ChessMove addedMove = new ChessMove(myPosition, leftDiagonalPosition, null);
-                    possibleMoves.add(addedMove);
-                    if (leftDiagonalPosition.getRow() == 8){
+                    if (leftDiagonalPosition.getRow() != 8) {
+                        possibleMoves.add(addedMove);
+                    }
+                    else if (leftDiagonalPosition.getRow() == 8){
                         ChessMove LeftAddedMove1 = new ChessMove(myPosition, leftDiagonalPosition, PieceType.BISHOP);
                         possibleMoves.add(LeftAddedMove1);
                         ChessMove LeftAddedMove2 = new ChessMove(myPosition, leftDiagonalPosition, PieceType.ROOK);
@@ -682,8 +684,10 @@ public class ChessPiece {
             if (pieceAtLeftPosition != null){
                 if (pieceAtLeftPosition.pieceColor != this.pieceColor){
                     ChessMove addedMove = new ChessMove(myPosition, leftDiagonalPosition, null);
-                    possibleMoves.add(addedMove);
-                    if (leftDiagonalPosition.getRow() == 1){
+                    if (leftDiagonalPosition.getRow() != 1) {
+                        possibleMoves.add(addedMove);
+                    }
+                    else if (leftDiagonalPosition.getRow() == 1){
                         ChessMove LeftAddedMove1 = new ChessMove(myPosition, leftDiagonalPosition, PieceType.BISHOP);
                         possibleMoves.add(LeftAddedMove1);
                         ChessMove LeftAddedMove2 = new ChessMove(myPosition, leftDiagonalPosition, PieceType.ROOK);

@@ -70,7 +70,7 @@ public class ChessGame {
      * @return Set of valid moves for requested piece, or null if no piece at
      * startPosition
      */
-    public Collection<ChessMove> validMoves(ChessPosition startPosition) {
+    public Collection<ChessMove> validMoves(ChessPosition startPosition) throws InvalidMoveException{
         HashSet<ChessMove> validMoves = new HashSet<>();
         ChessPosition kingPosition = findCurrentKing(board, board.getPiece(startPosition).getTeamColor());
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.KING){
@@ -79,6 +79,10 @@ public class ChessGame {
             for (ChessMove move: kingValidMoves){
                 // Iterate through the moves of the opposing team pieces, if any of them match
                 // the king's position, return true for isInCheck and don't add the move to valid moves
+                if (!kingValidMoves.contains(move)){
+                    throw InvalidMoveException;
+                }
+                makeMove(move);
             }
             return kingValidMoves;
         }
@@ -130,6 +134,12 @@ public class ChessGame {
         board.addPiece(move.startPosition, null);
         board.addPiece(move.endPosition, movingPiece);
     }
+    public void unmakeMove(ChessMove move, ChessPiece piece) throws InvalidMoveException{
+        ChessPiece movingPiece = board.getPiece(move.endPosition);
+        board.addPiece(move.endPosition, piece);
+        board.addPiece(move.startPosition, movingPiece);
+
+    }
 
     /**
      * Determines if the given team is in check
@@ -177,23 +187,24 @@ public class ChessGame {
                             Collection<ChessMove> givenPiecePossibleMoves = givenPiece.pieceMoves(board, checkedPiecePosition);
                             for (ChessMove move: givenPiecePossibleMoves){
                                 ChessPosition kingPosition = findCurrentKing(board, teamColor);
+                                ChessPiece restoredPiece = null;
+                                if (board.getPiece(move.endPosition) != null){
+                                    restoredPiece = board.getPiece(move.endPosition);
+                                }
                                 makeMove(move);
                                 if (!isInCheck(teamColor)){
+                                    unmakeMove(move, restoredPiece);
                                     return false;
                                 }
+                                unmakeMove(move, restoredPiece);
                             }
                         }
                     }
                 }
             }
+            return true;
         }
-        return true;
-    }
-
-    public void unmakeMove(ChessMove move){
-        ChessPiece movingPiece = board.getPiece(move.endPosition);
-        board.addPiece(move.endPosition, null);
-        board.addPiece(move.startPosition, movingPiece);
+        return false;
     }
 
     /**
