@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * For a class that can manage a chess game, making moves on a board
@@ -48,7 +49,52 @@ public class ChessGame {
      * startPosition
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
-        throw new RuntimeException("Not implemented");
+        HashSet<ChessMove> validMoves = new HashSet<>();
+        ChessPosition kingPosition = findCurrentKing(board, startPosition);
+        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.KING){
+            Collection<ChessMove> kingValidMoves = null;
+            kingValidMoves = board.getPiece(startPosition).kingMoves(board, startPosition);
+            for (ChessMove move: kingValidMoves){
+                // Iterate through the moves of the opposing team pieces, if any of them match
+                // the king's position, return true for isInCheck and don't add the move to valid moves
+            }
+            return kingValidMoves;
+        }
+        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.QUEEN){
+            Collection<ChessMove> queenValidMoves = null;
+            queenValidMoves.addAll(board.getPiece(startPosition).diagonalMoves(board, startPosition));
+            queenValidMoves.addAll(board.getPiece(startPosition).straightMoves(board, startPosition));
+        }
+        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.BISHOP){
+            // Bishop Logic
+        }
+        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.KNIGHT){
+            // Knight Logic
+        }
+        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.ROOK){
+            // Rook Logic
+        }
+        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.PAWN){
+            // Pawn Logic
+        }
+        return validMoves;
+    }
+
+    public ChessPosition findCurrentKing(ChessBoard board, ChessPosition startPosition){
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                ChessPosition checkedPosition = new ChessPosition((i),(j));
+                if (board.getPiece(checkedPosition) != null){
+                    if (board.getPiece(checkedPosition).getPieceType() == ChessPiece.PieceType.KING){
+                        if (board.getPiece(checkedPosition).getTeamColor() == board.getPiece(startPosition).getTeamColor()){
+                            ChessPosition currentKingPosition = checkedPosition;
+                            return currentKingPosition;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /**
