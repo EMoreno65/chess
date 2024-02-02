@@ -129,16 +129,112 @@ public class ChessGame {
             return queenValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.BISHOP){
-            // Bishop Logic
+            Collection<ChessMove> bishopValidMoves = null;
+            bishopValidMoves = board.getPiece(startPosition).diagonalMoves(board, startPosition);
+            for (ChessMove move: bishopValidMoves){
+                // Iterate through the moves of the opposing team pieces, if any of them match
+                // the king's position, return true for isInCheck and don't add the move to valid moves
+                try {
+                    makeMove(move);
+                } catch (InvalidMoveException e) {
+                    throw new RuntimeException(e);
+                }
+                ChessPiece restoredPiece = null;
+                if (board.getPiece(move.endPosition) != null){
+                    restoredPiece = board.getPiece(move.endPosition);
+                }
+                if (isInCheck(board.getPiece(startPosition).getTeamColor())){
+                    // delete the move from kingValidMoves, how?
+                    bishopValidMoves.remove(move);
+                    try {
+                        unmakeMove(move, restoredPiece);
+                    } catch (InvalidMoveException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            return bishopValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.KNIGHT){
-            // Knight Logic
+            Collection<ChessMove> knightValidMoves = null;
+            knightValidMoves = board.getPiece(startPosition).knightMoves(board, startPosition);
+            for (ChessMove move: knightValidMoves){
+                // Iterate through the moves of the opposing team pieces, if any of them match
+                // the king's position, return true for isInCheck and don't add the move to valid moves
+                try {
+                    makeMove(move);
+                } catch (InvalidMoveException e) {
+                    throw new RuntimeException(e);
+                }
+                ChessPiece restoredPiece = null;
+                if (board.getPiece(move.endPosition) != null){
+                    restoredPiece = board.getPiece(move.endPosition);
+                }
+                if (isInCheck(board.getPiece(startPosition).getTeamColor())){
+                    // delete the move from knightValidMoves, how?
+                    knightValidMoves.remove(move);
+                    try {
+                        unmakeMove(move, restoredPiece);
+                    } catch (InvalidMoveException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            return knightValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.ROOK){
-            // Rook Logic
+            Collection<ChessMove> rookValidMoves = null;
+            rookValidMoves = board.getPiece(startPosition).straightMoves(board, startPosition);
+            for (ChessMove move: rookValidMoves){
+                // Iterate through the moves of the opposing team pieces, if any of them match
+                // the king's position, return true for isInCheck and don't add the move to valid moves
+                try {
+                    makeMove(move);
+                } catch (InvalidMoveException e) {
+                    throw new RuntimeException(e);
+                }
+                ChessPiece restoredPiece = null;
+                if (board.getPiece(move.endPosition) != null){
+                    restoredPiece = board.getPiece(move.endPosition);
+                }
+                if (isInCheck(board.getPiece(startPosition).getTeamColor())){
+                    // delete the move from kingValidMoves, how?
+                    rookValidMoves.remove(move);
+                    try {
+                        unmakeMove(move, restoredPiece);
+                    } catch (InvalidMoveException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            return rookValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.PAWN){
-            // Pawn Logic
+            Collection<ChessMove> pawnValidMoves = null;
+            pawnValidMoves = board.getPiece(startPosition).pawnMoves(board, startPosition);
+            for (ChessMove move: pawnValidMoves){
+                // Iterate through the moves of the opposing team pieces, if any of them match
+                // the king's position, return true for isInCheck and don't add the move to valid moves
+                try {
+                    makeMove(move);
+                } catch (InvalidMoveException e) {
+                    throw new RuntimeException(e);
+                }
+                ChessPiece restoredPiece = null;
+                if (board.getPiece(move.endPosition) != null){
+                    restoredPiece = board.getPiece(move.endPosition);
+                }
+                if (isInCheck(board.getPiece(startPosition).getTeamColor())){
+                    // delete the move from kingValidMoves, how?
+                    pawnValidMoves.remove(move);
+                    try {
+                        unmakeMove(move, restoredPiece);
+                    } catch (InvalidMoveException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            return pawnValidMoves;
         }
         return validMoves;
     }
