@@ -70,7 +70,7 @@ public class ChessGame {
      * @return Set of valid moves for requested piece, or null if no piece at
      * startPosition
      */
-    public Collection<ChessMove> validMoves(ChessPosition startPosition) throws InvalidMoveException{
+    public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         HashSet<ChessMove> validMoves = new HashSet<>();
         ChessPosition kingPosition = findCurrentKing(board, board.getPiece(startPosition).getTeamColor());
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.KING){
@@ -79,10 +79,24 @@ public class ChessGame {
             for (ChessMove move: kingValidMoves){
                 // Iterate through the moves of the opposing team pieces, if any of them match
                 // the king's position, return true for isInCheck and don't add the move to valid moves
-                if (!kingValidMoves.contains(move)){
-                    throw InvalidMoveException;
+                try {
+                    makeMove(move);
+                } catch (InvalidMoveException e) {
+                    throw new RuntimeException(e);
                 }
-                makeMove(move);
+                ChessPiece restoredPiece = null;
+                if (board.getPiece(move.endPosition) != null){
+                    restoredPiece = board.getPiece(move.endPosition);
+                }
+                if (isInCheck(board.getPiece(startPosition).getTeamColor())){
+                    // delete the move from kingValidMoves, how?
+                    kingValidMoves.remove(move);
+                    try {
+                        unmakeMove(move, restoredPiece);
+                    } catch (InvalidMoveException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
             return kingValidMoves;
         }
@@ -90,6 +104,29 @@ public class ChessGame {
             Collection<ChessMove> queenValidMoves = null;
             queenValidMoves.addAll(board.getPiece(startPosition).diagonalMoves(board, startPosition));
             queenValidMoves.addAll(board.getPiece(startPosition).straightMoves(board, startPosition));
+            for (ChessMove move: queenValidMoves){
+                // Iterate through the moves of the opposing team pieces, if any of them match
+                // the king's position, return true for isInCheck and don't add the move to valid moves
+                try {
+                    makeMove(move);
+                } catch (InvalidMoveException e) {
+                    throw new RuntimeException(e);
+                }
+                ChessPiece restoredPiece = null;
+                if (board.getPiece(move.endPosition) != null){
+                    restoredPiece = board.getPiece(move.endPosition);
+                }
+                if (isInCheck(board.getPiece(startPosition).getTeamColor())){
+                    // delete the move from kingValidMoves, how?
+                    queenValidMoves.remove(move);
+                    try {
+                        unmakeMove(move, restoredPiece);
+                    } catch (InvalidMoveException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            return queenValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.BISHOP){
             // Bishop Logic
@@ -130,9 +167,14 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        ChessPiece movingPiece = board.getPiece(move.startPosition);
-        board.addPiece(move.startPosition, null);
-        board.addPiece(move.endPosition, movingPiece);
+        if (validMoves(move.startPosition).contains(move)){
+            ChessPiece movingPiece = board.getPiece(move.startPosition);
+            board.addPiece(move.startPosition, null);
+            board.addPiece(move.endPosition, movingPiece);
+        }
+        else{
+            throw new InvalidMoveException("Invalid Move Exception");
+        }
     }
     public void unmakeMove(ChessMove move, ChessPiece piece) throws InvalidMoveException{
         ChessPiece movingPiece = board.getPiece(move.endPosition);
