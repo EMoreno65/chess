@@ -447,7 +447,7 @@ public class ChessGameTests {
 
     @Test
     @DisplayName("White in Checkmate")
-    public void whiteTeamCheckmate() throws InvalidMoveException {
+    public void whiteTeamCheckmate() {
 
         var game = getNewGame();
         game.setBoard(loadBoard("""
@@ -471,7 +471,7 @@ public class ChessGameTests {
 
     @Test
     @DisplayName("Black in Checkmate by Pawns")
-    public void blackTeamPawnCheckmate() throws InvalidMoveException {
+    public void blackTeamPawnCheckmate() {
         var game = getNewGame();
         game.setBoard(loadBoard("""
                 | | | |k| | | | |
