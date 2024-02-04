@@ -180,6 +180,7 @@ public class ChessGame {
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.ROOK){
             Collection<ChessMove> rookValidMoves = null;
+            Collection<ChessMove> rookValidDeletedMoves = null;
             rookValidMoves = board.getPiece(startPosition).straightMoves(board, startPosition);
             for (ChessMove move: rookValidMoves){
                 // Iterate through the moves of the opposing team pieces, if any of them match
@@ -196,12 +197,14 @@ public class ChessGame {
                     ChessPiece unmovingPiece = board.getPiece(move.endPosition);
                     board.addPiece(move.endPosition, restoredPiece);
                     board.addPiece(move.startPosition, unmovingPiece);
-                    rookValidMoves.remove(move);
+                    rookValidDeletedMoves.add(move);
                 }
-                ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                board.addPiece(move.endPosition, restoredPiece);
-                board.addPiece(move.startPosition, unmovingPiece);
-            }
+                else {
+                    ChessPiece unmovingPiece = board.getPiece(move.endPosition);
+                    board.addPiece(move.endPosition, restoredPiece);
+                    board.addPiece(move.startPosition, unmovingPiece);
+            }}
+            rookValidMoves.remove(rookValidDeletedMoves);
             return rookValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.PAWN){
@@ -257,19 +260,34 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
+        if (board.getPiece(move.startPosition).getTeamColor() != currentTurn){
+            throw new InvalidMoveException("Invalid Move: Out of Turn");
+        }
         if (validMoves(move.startPosition).contains(move)){
             ChessPiece movingPiece = board.getPiece(move.startPosition);
             board.addPiece(move.startPosition, null);
             board.addPiece(move.endPosition, movingPiece);
+            if (currentTurn == TeamColor.WHITE){
+                currentTurn = TeamColor.BLACK;
+            }
+            else if (currentTurn == TeamColor.BLACK){
+                currentTurn = TeamColor.WHITE;
+            }
         }
         else{
-            throw new InvalidMoveException("Invalid Move Exception");
+            throw new InvalidMoveException("Invalid Move");
         }
     }
     public void unmakeMove(ChessMove move, ChessPiece piece) throws InvalidMoveException{
         ChessPiece movingPiece = board.getPiece(move.endPosition);
         board.addPiece(move.endPosition, piece);
         board.addPiece(move.startPosition, movingPiece);
+        if (currentTurn == TeamColor.WHITE){
+            currentTurn = TeamColor.BLACK;
+        }
+        else if (currentTurn == TeamColor.BLACK){
+            currentTurn = TeamColor.WHITE;
+        }
 
     }
 
