@@ -353,12 +353,8 @@ public class ChessGame {
                                 try {
                                     makeMove(move);
                                 } catch (InvalidMoveException e) {
-                                    // If any move is invalid, catch the exception
-                                    // and continue checking the next move
                                     continue;
                                 }
-
-                                // If we reach here, the move is valid, so set allMovesInvalid to false
                                 allMovesInvalid = false;
 
                                 try {
@@ -367,8 +363,6 @@ public class ChessGame {
                                     throw new RuntimeException(e);
                                 }
                             }
-
-                            // If all moves for the piece are invalid, return true for isCheckmate
                             if (allMovesInvalid) {
                                 return true;
                             }
