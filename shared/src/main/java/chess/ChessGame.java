@@ -257,8 +257,16 @@ public class ChessGame {
         }
         if (validMoves(move.startPosition).contains(move)){
             ChessPiece movingPiece = board.getPiece(move.startPosition);
-            board.addPiece(move.startPosition, null);
-            board.addPiece(move.endPosition, movingPiece);
+            if (move.endPosition.getRow() == 8 && board.getPiece(move.startPosition).getTeamColor() == TeamColor.WHITE && board.getPiece(move.startPosition).getPieceType() == ChessPiece.PieceType.PAWN) {
+                board.addPiece(move.startPosition, null);
+                ChessPiece promotedPiece = new ChessPiece(TeamColor.WHITE, move.promotionPiece);
+                board.addPiece(move.endPosition, promotedPiece);
+            }
+            if (move.endPosition.getRow() == 1 && board.getPiece(move.startPosition).getTeamColor() == TeamColor.BLACK && board.getPiece(move.startPosition).getPieceType() == ChessPiece.PieceType.PAWN) {
+                board.addPiece(move.startPosition, null);
+                ChessPiece promotedPiece = new ChessPiece(TeamColor.BLACK, move.promotionPiece);
+                board.addPiece(move.endPosition, promotedPiece);
+            }
             if (currentTurn == TeamColor.WHITE){
                 currentTurn = TeamColor.BLACK;
             }
