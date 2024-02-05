@@ -325,49 +325,58 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        // If isInCheck is true, iterate the board for all pieces of the same color. For each move for each of these pieces, run the isInCheck function again. If all
-        // of them return true, this function returns true
-        if (isInCheck(teamColor)){
-            for (int i = 1; i <= 8; i++){
+        // If isInCheck is true, iterate the board for all pieces of the same color.
+        // For each move for each of these pieces, run the isInCheck function again.
+        // If all of them return true, this function returns true
+        if (isInCheck(teamColor)) {
+            for (int i = 1; i <= 8; i++) {
                 for (int j = 1; j <= 8; j++) {
-                    ChessPosition checkedPiecePosition=new ChessPosition((i), (j));
-                    if (board.getPiece(checkedPiecePosition) != null ){
-                        if (board.getPiece(checkedPiecePosition).getTeamColor() == teamColor){
+                    ChessPosition checkedPiecePosition = new ChessPosition(i, j);
+                    if (board.getPiece(checkedPiecePosition) != null) {
+                        if (board.getPiece(checkedPiecePosition).getTeamColor() == teamColor) {
                             ChessPiece givenPiece = board.getPiece(checkedPiecePosition);
                             Collection<ChessMove> givenPiecePossibleMoves = givenPiece.pieceMoves(board, checkedPiecePosition);
-                            for (ChessMove move: givenPiecePossibleMoves){
+
+                            boolean allMovesInvalid = true; // Assume all moves are invalid initially
+
+                            for (ChessMove move : givenPiecePossibleMoves) {
                                 ChessPosition kingPosition = findCurrentKing(board, teamColor);
                                 ChessPiece restoredPiece = null;
-                                if (board.getPiece(move.endPosition) != null){
+                                if (board.getPiece(move.endPosition) != null) {
                                     restoredPiece = board.getPiece(move.endPosition);
                                 }
+
                                 try {
                                     makeMove(move);
                                 } catch (InvalidMoveException e) {
-                                    throw new RuntimeException(e);
+                                    // If any move is invalid, catch the exception
+                                    // and continue checking the next move
+                                    continue;
                                 }
-                                if (!isInCheck(teamColor)){
-                                    try {
-                                        unmakeMove(move, restoredPiece);
-                                    } catch (InvalidMoveException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    return false;
-                                }
+
+                                // If we reach here, the move is valid, so set allMovesInvalid to false
+                                allMovesInvalid = false;
+
                                 try {
                                     unmakeMove(move, restoredPiece);
                                 } catch (InvalidMoveException e) {
                                     throw new RuntimeException(e);
                                 }
                             }
+
+                            // If all moves for the piece are invalid, return true for isCheckmate
+                            if (allMovesInvalid) {
+                                return true;
+                            }
                         }
                     }
                 }
             }
-            return true;
+            return false;
         }
         return false;
     }
+
 
     /**
      * Determines if the given team is in stalemate, which here is defined as having
