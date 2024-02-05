@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -75,6 +76,7 @@ public class ChessGame {
         ChessPosition kingPosition = findCurrentKing(board, board.getPiece(startPosition).getTeamColor());
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.KING){
             Collection<ChessMove> kingValidMoves = null;
+            Collection<ChessMove> kingValidDeletedMoves = new ArrayList<>();
             kingValidMoves = board.getPiece(startPosition).kingMoves(board, startPosition);
             for (ChessMove move: kingValidMoves){
                 // Iterate through the moves of the opposing team pieces, if any of them match
@@ -88,19 +90,18 @@ public class ChessGame {
                 board.addPiece(move.endPosition, movingPiece);
                 if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
                     // delete the move from kingValidMoves, how?
-                    ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                    board.addPiece(move.endPosition, restoredPiece);
-                    board.addPiece(move.startPosition, unmovingPiece);
-                    kingValidMoves.remove(move);
+                    kingValidDeletedMoves.add(move);
                 }
                 ChessPiece unmovingPiece = board.getPiece(move.endPosition);
                 board.addPiece(move.endPosition, restoredPiece);
                 board.addPiece(move.startPosition, unmovingPiece);
             }
+            kingValidMoves.removeAll(kingValidDeletedMoves);
             return kingValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.QUEEN){
             Collection<ChessMove> queenValidMoves = null;
+            Collection<ChessMove> queenValidDeletedMoves = new ArrayList<>();
             queenValidMoves = (board.getPiece(startPosition).diagonalMoves(board, startPosition));
             queenValidMoves.addAll(board.getPiece(startPosition).straightMoves(board, startPosition));
             for (ChessMove move: queenValidMoves){
@@ -115,19 +116,18 @@ public class ChessGame {
                 board.addPiece(move.endPosition, movingPiece);
                 if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
                     // delete the move from kingValidMoves, how?
-                    ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                    board.addPiece(move.endPosition, restoredPiece);
-                    board.addPiece(move.startPosition, unmovingPiece);
-                    queenValidMoves.remove(move);
+                    queenValidDeletedMoves.add(move);
                 }
                 ChessPiece unmovingPiece = board.getPiece(move.endPosition);
                 board.addPiece(move.endPosition, restoredPiece);
                 board.addPiece(move.startPosition, unmovingPiece);
             }
+            queenValidMoves.removeAll(queenValidDeletedMoves);
             return queenValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.BISHOP){
             Collection<ChessMove> bishopValidMoves = null;
+            Collection<ChessMove> bishopValidDeletedMoves = new ArrayList<>();
             bishopValidMoves = board.getPiece(startPosition).diagonalMoves(board, startPosition);
             for (ChessMove move: bishopValidMoves){
                 // Iterate through the moves of the opposing team pieces, if any of them match
@@ -141,19 +141,18 @@ public class ChessGame {
                 board.addPiece(move.endPosition, movingPiece);
                 if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
                     // delete the move from kingValidMoves, how?
-                    ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                    board.addPiece(move.endPosition, restoredPiece);
-                    board.addPiece(move.startPosition, unmovingPiece);
-                    bishopValidMoves.remove(move);
+                    bishopValidDeletedMoves.add(move);
                 }
                 ChessPiece unmovingPiece = board.getPiece(move.endPosition);
                 board.addPiece(move.endPosition, restoredPiece);
                 board.addPiece(move.startPosition, unmovingPiece);
             }
+            bishopValidMoves.removeAll(bishopValidDeletedMoves);
             return bishopValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.KNIGHT){
             Collection<ChessMove> knightValidMoves = null;
+            Collection<ChessMove> knightValidDeletedMoves = new ArrayList<>();
             knightValidMoves = board.getPiece(startPosition).knightMoves(board, startPosition);
             for (ChessMove move: knightValidMoves){
                 // Iterate through the moves of the opposing team pieces, if any of them match
@@ -167,20 +166,18 @@ public class ChessGame {
                 board.addPiece(move.endPosition, movingPiece);
                 if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
                     // delete the move from knightValidMoves, how?
-                    ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                    board.addPiece(move.endPosition, restoredPiece);
-                    board.addPiece(move.startPosition, unmovingPiece);
-                    knightValidMoves.remove(move);
+                    knightValidDeletedMoves.add(move);
                 }
                 ChessPiece unmovingPiece = board.getPiece(move.endPosition);
                 board.addPiece(move.endPosition, restoredPiece);
                 board.addPiece(move.startPosition, unmovingPiece);
             }
+            knightValidMoves.removeAll(knightValidDeletedMoves);
             return knightValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.ROOK){
             Collection<ChessMove> rookValidMoves = null;
-            Collection<ChessMove> rookValidDeletedMoves = null;
+            Collection<ChessMove> rookValidDeletedMoves = new ArrayList<>();
             rookValidMoves = board.getPiece(startPosition).straightMoves(board, startPosition);
             for (ChessMove move: rookValidMoves){
                 // Iterate through the moves of the opposing team pieces, if any of them match
@@ -194,21 +191,18 @@ public class ChessGame {
                 board.addPiece(move.endPosition, movingPiece);
                 if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
                     // delete the move from kingValidMoves, how?
-                    ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                    board.addPiece(move.endPosition, restoredPiece);
-                    board.addPiece(move.startPosition, unmovingPiece);
                     rookValidDeletedMoves.add(move);
                 }
-                else {
-                    ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                    board.addPiece(move.endPosition, restoredPiece);
-                    board.addPiece(move.startPosition, unmovingPiece);
-            }}
-            rookValidMoves.remove(rookValidDeletedMoves);
+                ChessPiece unmovingPiece = board.getPiece(move.endPosition);
+                board.addPiece(move.endPosition, restoredPiece);
+                board.addPiece(move.startPosition, unmovingPiece);
+                }
+            rookValidMoves.removeAll(rookValidDeletedMoves);
             return rookValidMoves;
         }
         if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.PAWN){
             Collection<ChessMove> pawnValidMoves = null;
+            Collection<ChessMove> pawnValidDeletedMoves = new ArrayList<>();
             pawnValidMoves = board.getPiece(startPosition).pawnMoves(board, startPosition);
             for (ChessMove move: pawnValidMoves){
                 // Iterate through the moves of the opposing team pieces, if any of them match
@@ -222,15 +216,13 @@ public class ChessGame {
                 board.addPiece(move.endPosition, movingPiece);
                 if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
                     // delete the move from kingValidMoves, how?
-                    ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                    board.addPiece(move.endPosition, restoredPiece);
-                    board.addPiece(move.startPosition, unmovingPiece);
-                    pawnValidMoves.remove(move);
+                    pawnValidDeletedMoves.add(move);
                 }
                 ChessPiece unmovingPiece = board.getPiece(move.endPosition);
                 board.addPiece(move.endPosition, restoredPiece);
                 board.addPiece(move.startPosition, unmovingPiece);
             }
+            pawnValidMoves.removeAll(pawnValidDeletedMoves);
             return pawnValidMoves;
         }
         return validMoves;
