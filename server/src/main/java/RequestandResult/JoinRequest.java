@@ -1,4 +1,4 @@
 package RequestandResult;
 
-public class Result {
+public class JoinRequest {
 }

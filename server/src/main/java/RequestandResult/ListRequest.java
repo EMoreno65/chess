@@ -1,4 +1,4 @@
 package RequestandResult;
 
-public class Request {
+public class ListRequest {
 }
