@@ -7,7 +7,7 @@ public class Server {
         new Server().run(8080);
     }
 
-    public void run(int desiredPort) {
+    public int run(int desiredPort) {
         Spark.port(desiredPort);
 
         Spark.staticFiles.location("web");
@@ -23,6 +23,8 @@ public class Server {
         //Register your endpoints and handle exceptions here.
 
         Spark.awaitInitialization();
+        int actualPort = 8080;
+        return actualPort;
     }
 
     public void stop() {

@@ -5,10 +5,11 @@ import RequestandResult.RegisterResult;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
+import service.RegisterService;
 
 public class RegisterHandler {
 
-  server.RegisterService myService = new server.RegisterService();
+  RegisterService myService = new RegisterService();
 
   public Object register(Request req, Response res) {
     String myJSON = req.body();
