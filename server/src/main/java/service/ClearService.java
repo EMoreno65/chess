@@ -7,9 +7,9 @@ import org.eclipse.jetty.server.Authentication;
 
 public class ClearService {
 
-  GameDAO gameAccess = new GameDAO();
-  UserDAO userAccess = new UserDAO();
-  AuthDAO tokenAccess = new AuthDAO();
+  public GameDAO gameAccess = new GameDAO();
+  public UserDAO userAccess = new UserDAO();
+  public AuthDAO tokenAccess = new AuthDAO();
 
   public void clearAll(){
     gameAccess.clearAll();

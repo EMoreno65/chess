@@ -1,7 +1,9 @@
 package dataAccess;
 
+import chess.ChessGame;
 import model.AuthData;
 import model.UserData;
+import org.eclipse.jetty.server.Authentication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,16 +15,21 @@ public class UserDAO {
   public UserDAO() {
   }
 
-  public void addUser(UserData user) throws DataAccessException{
-    if(myUsers.get(user.getUsername()) == null){
-      myUsers.put(user.getUsername(), user);
+  public void createUser(UserData user) throws DataAccessException {
+    if (myUsers.containsKey(user.getUsername())) {
+      throw new DataAccessException("User already exists with username: " + user.getUsername());
     }
-    else{
-      throw new DataAccessException("Username already exists");
-    }
-    // Check if username already exists
-    // If not, add user data to the hash map
+    myUsers.put(user.getUsername(), user);
   }
+
+  public UserData getUser(String username) throws DataAccessException {
+    UserData user = myUsers.get(username);
+    if (user == null) {
+      throw new DataAccessException("User not found with username: " + username);
+    }
+    return user;
+  }
+
 
   public void clearAll() {
   }

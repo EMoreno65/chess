@@ -28,6 +28,15 @@ public class AuthDAO {
     }
   }
 
+  public AuthData getAuth(String authToken) throws DataAccessException {
+    for (AuthData authData : myTokens) {
+      if (authData.getAuthToken().equals(authToken)) {
+        return authData;
+      }
+    }
+    throw new DataAccessException("Token not found: " + authToken);
+  }
+
   public void clearAll() {
     myTokens = new ArrayList<>();
     myTokens.clear();
