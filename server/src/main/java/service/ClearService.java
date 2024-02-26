@@ -11,10 +11,10 @@ public class ClearService {
   public UserDAO userAccess = new UserDAO();
   public AuthDAO tokenAccess = new AuthDAO();
 
-  public void clearAll(){
-    gameAccess.clearAll();
-    userAccess.clearAll();
-    tokenAccess.clearAll();
+  public void clearAll(UserDAO userDAO, AuthDAO authDAO, GameDAO gameDAO){
+    userDAO.clearAll();
+    gameDAO.clearAll();
+    authDAO.clearAll();
   }
 
 }

@@ -2,18 +2,32 @@ package RequestandResult;
 import model.AuthData;
 
 public class RegisterResult {
-  public RegisterResult() {
+  public RegisterResult(String authToken, String username) {
+    this.authToken = authToken;
+    this.username = username;
+  }
+  public RegisterResult(String errorMessage){
+    this.errorMessage = errorMessage;
   }
 
-  public AuthData getMyToken() {
-    return myToken;
+  public String getAuthToken() {
+    return authToken;
   }
 
-  public void setMyToken(AuthData myToken) {
-    this.myToken=myToken;
+  public void setAuthToken(String authToken) {
+    this.authToken=authToken;
   }
 
-  AuthData myToken;
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username=username;
+  }
+
+  String authToken;
+  String username;
 
   public String getErrorMessage() {
     return errorMessage;

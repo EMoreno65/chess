@@ -1,5 +1,8 @@
 package serverTests;
 
+import dataAccess.AuthDAO;
+import dataAccess.GameDAO;
+import dataAccess.UserDAO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Test;
 import service.ClearService;
@@ -17,7 +20,7 @@ public class ClearServiceTest {
     ClearService clearService = new ClearService();
 
     // Act: Call the clearAll method
-    clearService.clearAll();
+    clearService.clearAll(new UserDAO(), new AuthDAO(), new GameDAO());
 
     //
     assertTrue(clearService.gameAccess.listGames().isEmpty(), "Game database should be empty");

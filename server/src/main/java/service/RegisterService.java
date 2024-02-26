@@ -5,22 +5,21 @@ import RequestandResult.RegisterResult;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.UserDAO;
+import model.AuthData;
 import model.UserData;
+import org.eclipse.jetty.server.Authentication;
 
 public class RegisterService {
-  UserDAO userAccess = new UserDAO();
-  AuthDAO tokenAccess = new AuthDAO();
-  public RegisterResult newResult(RegisterRequest givenRequest) {
-    String username =givenRequest.getUsername();
-    RegisterResult myResult = new RegisterResult();
+//  UserDAO userAccess = new UserDAO();
+//  AuthDAO tokenAccess = new AuthDAO();
+  public RegisterResult newResult(RegisterRequest givenRequest, UserDAO userDAO, AuthDAO authDAO) {
     UserData user = new UserData(givenRequest.getUsername(), givenRequest.getPassword(), givenRequest.getEmail());
     try{
-      userAccess.addUser(user);
-      myResult.setMyToken(tokenAccess.createAuth(user));
-      return myResult;
+      userDAO.createUser(user);
+      AuthData givenToken = authDAO.createAuth(user);
+      return new RegisterResult(givenToken.getAuthToken(), givenToken.getusername());
     } catch(DataAccessException e) {
-      myResult.setErrorMessage(e.getMessage());
-      return myResult;
+      return new RegisterResult(e.getMessage());
     }
   }
 }
