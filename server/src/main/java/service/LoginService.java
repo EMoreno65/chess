@@ -2,19 +2,23 @@ package service;
 
 import RequestandResult.LoginRequest;
 import RequestandResult.LoginResult;
+import dataAccess.AuthDAO;
+import dataAccess.DataAccessException;
 import dataAccess.UserDAO;
+import model.AuthData;
+import model.UserData;
 
 public class LoginService {
   //  UserDAO userAccess = new UserDAO();
 //  AuthDAO tokenAccess = new AuthDAO();
-  public LoginResult newResult(LoginRequest givenRequest, UserDAO userDAO) {
-    UserData user = new UserData(givenRequest.getUsername(), givenRequest.getPassword(), givenRequest.getEmail());
+  public LoginResult newResult(LoginRequest givenRequest, UserDAO userDAO, AuthDAO authDAO) throws DataAccessException {
+    UserData user = userDAO.getUser(givenRequest.getUsername());
     try{
-      userDAO.createUser(user);
       AuthData givenToken = authDAO.createAuth(user);
-      return new RegisterResult(givenToken.getAuthToken(), givenToken.getusername());
+      // I need to use getUser and createAuth to push to the database
+      return new LoginResult(givenToken.getAuthToken(), givenToken.getusername()); // Only return auth and username, no need for password
     } catch(DataAccessException e) {
-      return new RegisterResult(e.getMessage());
+      return new LoginResult(e.getMessage());
     }
   }
 }

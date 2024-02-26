@@ -30,6 +30,16 @@ public class UserDAO {
     return user;
   }
 
+  public UserData getPassword(String password) throws DataAccessException{
+    UserData user = myUsers.get(password);
+    if (user == null){
+      throw new DataAccessException("Password is Incorrect");
+    }
+    return user;
+  }
+
+  // Write get Password method that does the same thing as get User
+
 
   public void clearAll() {
   }

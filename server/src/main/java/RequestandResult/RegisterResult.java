@@ -39,6 +39,4 @@ public class RegisterResult {
 
   String errorMessage;
 
-
-
 }
