@@ -1,10 +1,24 @@
 package server;
 
+import RequestandResult.JoinRequest;
+import RequestandResult.JoinResult;
+import RequestandResult.RegisterRequest;
+import RequestandResult.RegisterResult;
+import com.google.gson.Gson;
+import dataAccess.AuthDAO;
+import dataAccess.GameDAO;
+import dataAccess.UserDAO;
+import service.JoinService;
 import spark.Request;
 import spark.Response;
 
 public class JoinHandler {
-  public Object join(Request req, Response res) {
+
+  JoinService myService = new JoinService();
+  public Object join(Request req, Response res, UserDAO userDAO, GameDAO gameDAO, AuthDAO authDAO) {
+    String myJSON = req.body();
+    JoinRequest givenRequest = new Gson().fromJson(myJSON, JoinRequest.class);
+    JoinResult myResult = myService.joinResult(givenRequest, userDAO, authDAO, gameDAO);
     return null;
   }
 }

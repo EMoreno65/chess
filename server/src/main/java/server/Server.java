@@ -26,13 +26,12 @@ public class Server {
         Spark.delete("/session", (req, res) -> (new LogoutHandler()).logout(req, res, newAuth, newUser));
         Spark.get("/game", (req, res) -> (new ListHandler()).list(req, res));
         Spark.post("/game", (req, res) -> (new CreateHandler()).create(req, res, newAuth, newGame, newUser));
-        Spark.put("/game", (req, res) -> (new JoinHandler()).join(req, res));
+        Spark.put("/game", (req, res) -> (new JoinHandler()).join(req, res, newUser, newGame, newAuth));
 
         //Register your endpoints and handle exceptions here.
 
         Spark.awaitInitialization();
-        int actualPort = 8080;
-        return actualPort;
+        return Spark.port();
     }
 
     public void stop() {

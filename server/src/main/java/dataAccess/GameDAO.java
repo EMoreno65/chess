@@ -11,7 +11,7 @@ import model.GameData;
 public class GameDAO {
   private static int nextGameID = 1;
   // Simulating a database storage for chess games
-  public Map<Integer, ChessGame> gamesMap = new HashMap<>();
+  public Map<Integer, GameData> gamesMap = new HashMap<>();
 
   public GameDAO() {
   }
@@ -22,7 +22,7 @@ public class GameDAO {
   }
 
   // Method to create a new chess game
-  public void createGame(int gameId, ChessGame game) throws DataAccessException {
+  public void createGame(int gameId, GameData game) throws DataAccessException {
     if (gamesMap.containsKey(gameId)) {
       throw new DataAccessException("Game already exists with ID: " + gameId);
     }
@@ -30,8 +30,8 @@ public class GameDAO {
   }
 
   // Method to retrieve a chess game by its ID
-  public ChessGame getGame(int gameId) throws DataAccessException {
-    ChessGame game = gamesMap.get(gameId);
+  public GameData getGame(int gameId) throws DataAccessException {
+    GameData game = gamesMap.get(gameId);
     if (game == null) {
       throw new DataAccessException("Game not found with ID: " + gameId);
     }
@@ -39,7 +39,7 @@ public class GameDAO {
   }
 
   public int getGameID(ChessGame gameToFind) throws DataAccessException {
-    for (Map.Entry<Integer, ChessGame> entry : gamesMap.entrySet()) {
+    for (Map.Entry<Integer, GameData> entry : gamesMap.entrySet()) {
       if (entry.getValue().equals(gameToFind)) {
         return entry.getKey();
       }
