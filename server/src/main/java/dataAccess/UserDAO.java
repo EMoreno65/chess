@@ -17,7 +17,7 @@ public class UserDAO {
 
   public void createUser(UserData user) throws DataAccessException {
     if (myUsers.containsKey(user.getUsername())) {
-      throw new DataAccessException("User already exists with username: " + user.getUsername());
+      throw new DataAccessException("Error: already taken");
     }
     myUsers.put(user.getUsername(), user);
   }

@@ -10,16 +10,24 @@ import model.UserData;
 import org.eclipse.jetty.server.Authentication;
 
 public class RegisterService {
-//  UserDAO userAccess = new UserDAO();
-//  AuthDAO tokenAccess = new AuthDAO();
   public RegisterResult newResult(RegisterRequest givenRequest, UserDAO userDAO, AuthDAO authDAO) {
-    UserData user = new UserData(givenRequest.getUsername(), givenRequest.getPassword(), givenRequest.getEmail());
-    try{
+    String username = givenRequest.getUsername();
+    String password = givenRequest.getPassword();
+    String email = givenRequest.getEmail();
+
+    if (password == null || password.isEmpty()) {
+      DataAccessException e = new DataAccessException("Error: bad request");
+      return new RegisterResult(e.getMessage());
+    }
+
+    UserData user = new UserData(username, password, email);
+    try {
       userDAO.createUser(user);
       AuthData givenToken = authDAO.createAuth(user);
-      return new RegisterResult(givenToken.getAuthToken(), givenToken.getusername());
-    } catch(DataAccessException e) {
+      return new RegisterResult(givenToken.getAuthToken(), givenToken.getusername(), givenToken.getPassword());
+    } catch (DataAccessException e) {
       return new RegisterResult(e.getMessage());
     }
   }
 }
+

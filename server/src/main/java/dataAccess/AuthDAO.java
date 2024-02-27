@@ -18,7 +18,7 @@ public class AuthDAO {
 
   public AuthData createAuth(UserData user) throws DataAccessException {
     String newToken = user + "/" + LocalDateTime.now();
-    AuthData myToken = new AuthData(newToken, user.getUsername());
+    AuthData myToken = new AuthData(newToken, user.getUsername(), user.getPassword());
     if (!myTokens.contains(myToken)){
       myTokens.add(myToken);
       return myToken;
