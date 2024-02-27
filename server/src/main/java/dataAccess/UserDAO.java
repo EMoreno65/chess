@@ -30,13 +30,25 @@ public class UserDAO {
     return user;
   }
 
-  public UserData getPassword(String password) throws DataAccessException{
-    UserData user = myUsers.get(password);
-    if (user == null){
-      throw new DataAccessException("Password is Incorrect");
+  public String getPassword(String username) throws DataAccessException{
+    for (UserData user : myUsers.values()) {
+      if (user.getUsername().equals(username)) {
+        return user.password();
+      }
     }
-    return user;
+    throw new DataAccessException("User not found with username: " + username);
   }
+
+  public boolean verifyPassword(UserData user, String providedPassword) {
+    String username = user.getUsername();
+    String storedPassword = user.password();
+
+    if (storedPassword != null) {
+      return storedPassword.equals(providedPassword);
+    }
+    return false;
+  }
+
 
   // Write get Password method that does the same thing as get User
 

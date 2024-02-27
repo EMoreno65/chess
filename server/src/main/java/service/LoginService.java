@@ -15,6 +15,10 @@ public class LoginService {
     try{
       UserData user = userDAO.getUser(givenRequest.getUsername());
       AuthData givenToken = authDAO.createAuth(user);
+      if (!userDAO.verifyPassword(user, givenRequest.getPassword())){
+        DataAccessException e = new DataAccessException("Error: unauthorized");
+        return new LoginResult(e.getMessage());
+      }
       // I need to use getUser and createAuth to push to the database
       return new LoginResult(givenToken.getAuthToken(), givenToken.getusername()); // Only return auth and username, no need for password
     } catch(DataAccessException e) {

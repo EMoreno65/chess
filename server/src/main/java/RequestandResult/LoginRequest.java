@@ -4,9 +4,10 @@ import model.AuthData;
 
 public class LoginRequest {
 
-  public LoginRequest(String username, String authToken){
+  public LoginRequest(String username, String authToken, String password){
     this.username = username;
     this.authToken = authToken;
+    this.password = password;
   }
 
   public String getUsername() {
@@ -27,5 +28,15 @@ public class LoginRequest {
 
   String username;
   String authToken;
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password=password;
+  }
+
+  String password;
 
 }
