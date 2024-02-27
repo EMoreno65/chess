@@ -34,7 +34,7 @@ public class AuthDAO {
         return authData;
       }
     }
-    throw new DataAccessException("Token not found: " + authToken);
+    return null;
   }
 
   public String getAuthToken(AuthData authData) throws DataAccessException {
@@ -43,7 +43,7 @@ public class AuthDAO {
         return myTokens.get(i).getAuthToken();
       }
     }
-    throw new DataAccessException("Token not found: " + authData.getAuthToken());
+    return null;
   }
 
   public void deleteAuth(String authToken) throws DataAccessException {

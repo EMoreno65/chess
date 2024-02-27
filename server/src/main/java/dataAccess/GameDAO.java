@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import chess.ChessGame;
+import model.GameData;
 
 public class GameDAO {
 
@@ -36,6 +37,16 @@ public class GameDAO {
     }
     return game;
   }
+
+  public int getGameID(ChessGame gameToFind) throws DataAccessException {
+    for (Map.Entry<Integer, ChessGame> entry : gamesMap.entrySet()) {
+      if (entry.getValue().equals(gameToFind)) {
+        return entry.getKey();
+      }
+    }
+    throw new DataAccessException("Game not found with given ChessGame object");
+  }
+
 
   // Method to retrieve all chess games
   public List<ChessGame> listGames() {
