@@ -9,7 +9,7 @@ import chess.ChessGame;
 import model.GameData;
 
 public class GameDAO {
-
+  private static int nextGameID = 1;
   // Simulating a database storage for chess games
   public Map<Integer, ChessGame> gamesMap = new HashMap<>();
 
@@ -59,6 +59,10 @@ public class GameDAO {
       throw new DataAccessException("Game not found with ID: " + gameId);
     }
     gamesMap.put(gameId, updatedGame);
+  }
+
+  public static synchronized int generateUniqueGameID() {
+    return nextGameID++;
   }
 
   // Method to delete a chess game

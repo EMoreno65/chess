@@ -1,11 +1,14 @@
 package RequestandResult;
 
+import chess.ChessGame;
 import model.GameData;
 
 public class CreateRequest {
-  public CreateRequest(String authToken, GameData gameData){
+  public CreateRequest(String authToken, String gameName, GameData gameData, ChessGame game){
     this.authToken = authToken;
+    this.gameName = gameName;
     this.gameData = gameData;
+    this.game = game;
   }
 
   public String getAuthToken() {
@@ -25,5 +28,26 @@ public class CreateRequest {
   }
 
   String authToken;
+
+  public String getGameName() {
+    return gameName;
+  }
+
+  public void setGameName(String gameName) {
+    this.gameName=gameName;
+  }
+
+  String gameName;
+
   GameData gameData;
+
+  public ChessGame getGame() {
+    return game;
+  }
+
+  public void setGame(ChessGame game) {
+    this.game=game;
+  }
+
+  ChessGame game;
 }

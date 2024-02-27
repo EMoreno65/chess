@@ -5,42 +5,29 @@ import model.UserData;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AuthDAO {
-  public AuthDAO() {
-  // create
-  //read
-  //update
-  //delete
 
-}
   private static ArrayList<AuthData> myTokens = new ArrayList<>();
 
+  public AuthDAO() {
+  }
+
   public AuthData createAuth(UserData user) throws DataAccessException {
-    String newToken = user + "/" + LocalDateTime.now();
+    // Generate a unique token
+    String newToken = generateToken();
+    // Create AuthData object with the generated token and user information
     AuthData myToken = new AuthData(newToken, user.getUsername(), user.getPassword());
-    if (!myTokens.contains(myToken)){
-      myTokens.add(myToken);
-      return myToken;
-    }
-    else{
-      throw new DataAccessException("Token already exists");
-    }
+    // Add the AuthData object to the list
+    myTokens.add(myToken);
+    return myToken;
   }
 
   public AuthData getAuthData(String authToken) throws DataAccessException {
     for (AuthData authData : myTokens) {
       if (authData.getAuthToken().equals(authToken)) {
         return authData;
-      }
-    }
-    return null;
-  }
-
-  public String getAuthToken(AuthData authData) throws DataAccessException {
-    for (int i = 0; i < myTokens.size(); i++) {
-      if (authData.equals(myTokens.get(i))) {
-        return myTokens.get(i).getAuthToken();
       }
     }
     return null;
@@ -61,8 +48,21 @@ public class AuthDAO {
     }
   }
 
+  public boolean isUserAuthenticated(String authToken) {
+    for (AuthData authData : myTokens) {
+      if (authData.getAuthToken().equals(authToken)) {
+        return true; // User is authenticated
+      }
+    }
+    return false; // User is not authenticated
+  }
+
+  // Method to generate a random token
+  private String generateToken() {
+    return UUID.randomUUID().toString();
+  }
+
   public void clearAll() {
-    myTokens = new ArrayList<>();
     myTokens.clear();
   }
 }
