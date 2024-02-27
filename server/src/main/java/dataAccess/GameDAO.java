@@ -50,7 +50,7 @@ public class GameDAO {
 
   // Method to retrieve all chess games
   public List<ChessGame> listGames() {
-    return new ArrayList<>(gamesMap.values());
+    return new ArrayList<>(gamesMa);
   }
 
   // Method to update a chess game
