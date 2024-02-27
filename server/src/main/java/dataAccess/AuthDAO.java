@@ -16,6 +16,7 @@ public class AuthDAO {
 
   public AuthData createAuth(UserData user) throws DataAccessException {
     // Generate a unique token
+    int t = 7;
     String newToken = generateToken();
     // Create AuthData object with the generated token and user information
     AuthData myToken = new AuthData(newToken, user.getUsername(), user.getPassword());
