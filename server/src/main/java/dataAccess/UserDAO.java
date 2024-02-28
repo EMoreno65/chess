@@ -54,5 +54,6 @@ public class UserDAO {
 
 
   public void clearAll() {
+    myUsers.clear();
   }
 }

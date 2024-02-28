@@ -20,6 +20,7 @@ public class CreateHandler {
   public Object create(Request req, Response res, AuthDAO authDAO, GameDAO gameDAO, UserDAO userDAO) throws DataAccessException {
     String myJSON = req.body();
     CreateRequest givenRequest = new Gson().fromJson(myJSON, CreateRequest.class);
+    givenRequest.setAuthToken(req.headers("authorization"));
     CreateResult myResult = myService.createGame(givenRequest, authDAO, gameDAO, userDAO);
     if (myResult.getErrorMessage() != null){
       results resultMessage = new results("Error: unauthorized");
