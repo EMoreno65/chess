@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
+import model.GameData;
 import model.results;
 import service.JoinService;
 import spark.Request;
@@ -37,8 +38,20 @@ public class JoinHandler {
           res.status(401);
           return new Gson().toJson(resultMessage);
         }
+        else if (Objects.equals(result.getErrorMessage(), "Error: already taken")){
+          results resultMessage = new results("Error: already taken");
+          res.status(403);
+          return new Gson().toJson(resultMessage);
+        }
       }
     }
+
+    GameData gameData = new GameData(1 /* gameID */, "ExistingUser" /* username1 */, null /* username2 */, null /* gameName */, null /* game */);
+
+    JoinResult joinResult = new JoinResult("authToken", gameData);
+    Gson gson = new Gson();
+    String json = gson.toJson(joinResult);
+    System.out.println(json);
 
     return new Gson().toJson(myResult);
   }
