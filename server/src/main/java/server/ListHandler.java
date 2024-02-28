@@ -15,6 +15,6 @@ public class ListHandler {
     String myJSON = req.body();
     ListRequest givenRequest = new Gson().fromJson(myJSON, ListRequest.class);
     ListResult myResult = myService.listResult();
-    return null;
+    return new Gson().toJson(myResult);
   }
 }
