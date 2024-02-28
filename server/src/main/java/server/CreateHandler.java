@@ -7,7 +7,7 @@ import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
-import model.results;
+import model.Results;
 import service.CreateService;
 import spark.Request;
 import spark.Response;
@@ -21,7 +21,7 @@ public class CreateHandler {
     givenRequest.setAuthToken(req.headers("authorization"));
     CreateResult myResult = myService.createGame(givenRequest, authDAO, gameDAO, userDAO);
     if (myResult.getErrorMessage() != null){
-      results resultMessage = new results("Error: unauthorized");
+      Results resultMessage = new Results("Error: unauthorized");
       res.status(401);
       return new Gson().toJson(resultMessage);
     }

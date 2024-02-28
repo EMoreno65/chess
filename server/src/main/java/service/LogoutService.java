@@ -8,7 +8,7 @@ import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.UserDAO;
 import model.AuthData;
-import model.results;
+import model.Results;
 
 public class LogoutService {
 

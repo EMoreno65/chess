@@ -5,7 +5,7 @@ import RequestandResult.RegisterResult;
 import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.UserDAO;
-import model.results;
+import model.Results;
 import spark.Request;
 import spark.Response;
 import service.RegisterService;
@@ -20,11 +20,11 @@ public class RegisterHandler {
     RegisterResult myResult = myService.newResult(givenRequest, userDAO, authDAO);
     if (myResult.getErrorMessage() != null){
       if (myResult.getErrorMessage() == "Error: already taken"){
-        results resultMessage = new results(myResult.getErrorMessage());
+        Results resultMessage = new Results(myResult.getErrorMessage());
         res.status(403);
         return new Gson().toJson(resultMessage);
       }
-      results resultMessage = new results("Error: unauthorized");
+      Results resultMessage = new Results("Error: unauthorized");
       res.status(400);
       return new Gson().toJson(resultMessage);
     }

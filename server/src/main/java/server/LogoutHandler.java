@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.UserDAO;
-import model.results;
+import model.Results;
 import service.LogoutService;
 import spark.Request;
 import spark.Response;
@@ -18,7 +18,7 @@ public class LogoutHandler {
     String authToken = req.headers("Authorization");
     LogoutResult myResult =(LogoutResult) myService.logout(authDAO, authToken);
     if (myResult != null && myResult.getErrorMessage() != null){
-      results resultMessage = new results("Error: unauthorized");
+      Results resultMessage = new Results("Error: unauthorized");
       res.status(401);
       return new Gson().toJson(resultMessage);
     }

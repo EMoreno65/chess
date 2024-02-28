@@ -13,10 +13,6 @@ public class CreateResult {
     return gameID;
   }
 
-  public void setGameID(int gameID) {
-    this.gameID=gameID;
-  }
-
   int gameID;
 
   public String getErrorMessage() {

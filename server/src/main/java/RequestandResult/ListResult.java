@@ -11,14 +11,6 @@ public class ListResult {
     this.authToken = authToken;
   }
 
-  public List<GameData> getGames() {
-    return games;
-  }
-
-  public void setGames(List<GameData> games) {
-    this.games=games;
-  }
-
   public String getAuthToken() {
     return authToken;
   }

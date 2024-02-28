@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.UserDAO;
-import model.results;
+import model.Results;
 import service.LoginService;
 import spark.Request;
 import spark.Response;
@@ -20,7 +20,7 @@ public class LoginHandler {
     LoginResult myResult = myService.newResult(givenRequest, userDAO, authDAO);
     // My result, if it has an error message, set message to error unauthorized, res.statuscode(401)
     if (myResult.getErrorMessage() != null){
-      results resultMessage = new results("Error: unauthorized");
+      Results resultMessage = new Results("Error: unauthorized");
       res.status(401);
       return new Gson().toJson(resultMessage);
     }

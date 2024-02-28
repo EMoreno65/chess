@@ -6,7 +6,7 @@ import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.GameDAO;
 import model.GameData;
-import model.results;
+import model.Results;
 import service.ListService;
 import spark.Request;
 import spark.Response;
@@ -21,7 +21,7 @@ public class ListHandler {
       return new Gson().toJson(myResult);
 
     }
-    results resultMessage = new results("Error: unauthorized");
+    Results resultMessage = new Results("Error: unauthorized");
     res.status(401);
     return new Gson().toJson(resultMessage);
   }

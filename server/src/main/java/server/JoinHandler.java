@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
-import model.results;
+import model.Results;
 import service.JoinService;
 import spark.Request;
 import spark.Response;
@@ -26,17 +26,17 @@ public class JoinHandler {
       String errorMessage = result.getErrorMessage();
       if (errorMessage != null) {
         if (Objects.equals(result.getErrorMessage(), "Game not found with ID: 0")){
-          results resultMessage = new results("Error: bad request");
+          Results resultMessage = new Results("Error: bad request");
           res.status(400);
           return new Gson().toJson(resultMessage);
         }
         else if (Objects.equals(result.getErrorMessage(), "Error: unauthorized")){
-          results resultMessage = new results("Error: unauthorized");
+          Results resultMessage = new Results("Error: unauthorized");
           res.status(401);
           return new Gson().toJson(resultMessage);
         }
         else if (Objects.equals(result.getErrorMessage(), "Error: already taken")){
-          results resultMessage = new results("Error: already taken");
+          Results resultMessage = new Results("Error: already taken");
           res.status(403);
           return new Gson().toJson(resultMessage);
         }
