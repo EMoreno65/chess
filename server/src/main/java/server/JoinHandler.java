@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
-import model.GameData;
 import model.results;
 import service.JoinService;
 import spark.Request;
@@ -45,13 +44,6 @@ public class JoinHandler {
         }
       }
     }
-
-    GameData gameData = new GameData(1 /* gameID */, "ExistingUser" /* username1 */, null /* username2 */, null /* gameName */, null /* game */);
-
-    JoinResult joinResult = new JoinResult("authToken", gameData);
-    Gson gson = new Gson();
-    String json = gson.toJson(joinResult);
-    System.out.println(json);
 
     return new Gson().toJson(myResult);
   }

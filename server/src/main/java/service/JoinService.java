@@ -34,6 +34,11 @@ public class JoinService {
             return new JoinResult(e.getMessage());
           }
           GameData newGameData = new GameData(givenGame.GameID(), user.getUsername(), givenGame.blackUsername(), givenGame.gameName(), givenGame.game());
+          try {
+            gameDAO.updateGame(newGameData.GameID(), newGameData);
+          } catch (DataAccessException e) {
+            return new JoinResult("Error updating game data: " + e.getMessage());
+          }
           return new JoinResult(givenRequest.getAuthtoken(), newGameData);
         } else if (givenRequest.getPlayerColor() == ChessGame.TeamColor.BLACK) {
           if (givenGame.blackUsername() != null) {
@@ -41,6 +46,11 @@ public class JoinService {
             return new JoinResult(e.getMessage());
           }
           GameData newGameData = new GameData(givenGame.GameID(), givenGame.whiteUsername(), user.getUsername(), givenGame.gameName(), givenGame.game());
+          try {
+            gameDAO.updateGame(newGameData.GameID(), newGameData);
+          } catch (DataAccessException e) {
+            return new JoinResult("Error updating game data: " + e.getMessage());
+          }
           return new JoinResult(givenRequest.getAuthtoken(), newGameData);
         }
         // Gamedata at black or white username, make new gamedata, set username part of gameData to user's username
