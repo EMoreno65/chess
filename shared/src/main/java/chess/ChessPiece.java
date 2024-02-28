@@ -98,494 +98,130 @@ public class ChessPiece {
         }
         return possibleMoves;
     }
-    public Collection<ChessMove> diagonalMoves(ChessBoard board, ChessPosition myPosition){
+    public Collection<ChessMove> diagonalMoves(ChessBoard board, ChessPosition myPosition) {
         HashSet<ChessMove> possibleMoves = new HashSet<>();
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j <= 8; i++, j++) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j >= 1; i++, j--) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1 && j >= 1; i--, j--) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1 && j <= 8; i--, j++) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-        }
+
+        // Iterate over each direction
+        addDiagonalMoves(board, myPosition, 1, 1, possibleMoves);
+        addDiagonalMoves(board, myPosition, 1, -1, possibleMoves);
+        addDiagonalMoves(board, myPosition, -1, 1, possibleMoves);
+        addDiagonalMoves(board, myPosition, -1, -1, possibleMoves);
+
         return possibleMoves;
     }
-    public Collection<ChessMove> straightMoves(ChessBoard board, ChessPosition myPosition){
+
+    private void addDiagonalMoves(ChessBoard board, ChessPosition myPosition, int rowDirection, int colDirection, HashSet<ChessMove> possibleMoves) {
+        int i = myPosition.getRow();
+        int j = myPosition.getColumn();
+
+        while (i >= 1 && i <= 8 && j >= 1 && j <= 8) {
+            if (i != myPosition.getRow() || j != myPosition.getColumn()) {
+                ChessPosition currentPosition = new ChessPosition(i, j);
+                ChessPiece pieceAtPosition = board.getPiece(currentPosition);
+                if (pieceAtPosition != null) {
+                    if (pieceAtPosition.pieceColor == this.pieceColor) {
+                        break;
+                    } else {
+                        ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
+                        possibleMoves.add(addedMove);
+                        break;
+                    }
+                }
+                ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
+                possibleMoves.add(addedMove);
+            }
+            i += rowDirection;
+            j += colDirection;
+        }
+    }
+    public Collection<ChessMove> straightMoves(ChessBoard board, ChessPosition myPosition) {
         HashSet<ChessMove> possibleMoves = new HashSet<>();
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j <= 8; i++) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1; i--) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); j <= 8; j++) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); j >= 1; j--) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-        }
+
+        // Iterate over each direction
+        addStraightMoves(board, myPosition, 1, 0, possibleMoves); // Forward
+        addStraightMoves(board, myPosition, -1, 0, possibleMoves); // Backward
+        addStraightMoves(board, myPosition, 0, 1, possibleMoves); // Right
+        addStraightMoves(board, myPosition, 0, -1, possibleMoves); // Left
+
         return possibleMoves;
     }
-    public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition myPosition){
+
+    private void addStraightMoves(ChessBoard board, ChessPosition myPosition, int rowDirection, int colDirection, HashSet<ChessMove> possibleMoves) {
+        int i = myPosition.getRow();
+        int j = myPosition.getColumn();
+
+        while (i >= 1 && i <= 8 && j >= 1 && j <= 8) {
+            if (i != myPosition.getRow() || j != myPosition.getColumn()) {
+                ChessPosition currentPosition = new ChessPosition(i, j);
+                ChessPiece pieceAtPosition = board.getPiece(currentPosition);
+                if (pieceAtPosition != null) {
+                    if (pieceAtPosition.pieceColor == this.pieceColor) {
+                        break;
+                    } else {
+                        ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
+                        possibleMoves.add(addedMove);
+                        break;
+                    }
+                }
+                ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
+                possibleMoves.add(addedMove);
+            }
+            i += rowDirection;
+            j += colDirection;
+        }
+    }
+
+    public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition myPosition) {
         HashSet<ChessMove> possibleMoves = new HashSet<>();
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j <= 8; i++) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1; i--) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); j <= 8; j++) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); j >= 1; j--) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j <= 8; i++, j++) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j >= 1; i++, j--) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1 && j >= 1; i--, j--) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1 && j <= 8; i--, j++) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break; // Go to the next for loop
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
+
+        // Iterate over each direction
+        addKingMoves(board, myPosition, 1, 0, possibleMoves); // Up
+        addKingMoves(board, myPosition, -1, 0, possibleMoves); // Down
+        addKingMoves(board, myPosition, 0, 1, possibleMoves); // Right
+        addKingMoves(board, myPosition, 0, -1, possibleMoves); // Left
+        addKingMoves(board, myPosition, 1, 1, possibleMoves); // Up-Right
+        addKingMoves(board, myPosition, 1, -1, possibleMoves); // Up-Left
+        addKingMoves(board, myPosition, -1, 1, possibleMoves); // Down-Right
+        addKingMoves(board, myPosition, -1, -1, possibleMoves); // Down-Left
+
         return possibleMoves;
     }
-    public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition myPosition){
+
+    private void addKingMoves(ChessBoard board, ChessPosition myPosition, int rowDirection, int colDirection, HashSet<ChessMove> possibleMoves) {
+        int i = myPosition.getRow() + rowDirection;
+        int j = myPosition.getColumn() + colDirection;
+
+        if (i >= 1 && i <= 8 && j >= 1 && j <= 8) {
+            ChessPosition currentPosition = new ChessPosition(i, j);
+            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
+            if (pieceAtPosition == null || pieceAtPosition.pieceColor != this.pieceColor) {
+                ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
+                possibleMoves.add(addedMove);
+            }
+        }
+    }
+
+    public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition myPosition) {
         HashSet<ChessMove> possibleMoves = new HashSet<>();
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j <= 8; i+= 2, j+= 1) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break;
-                }
-                else{
+
+        // Knight moves offsets
+        int[][] offsets = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
+        for (int[] offset : offsets) {
+            int i = myPosition.getRow() + offset[0];
+            int j = myPosition.getColumn() + offset[1];
+            if (i >= 1 && i <= 8 && j >= 1 && j <= 8) {
+                ChessPosition currentPosition = new ChessPosition(i, j);
+                ChessPiece pieceAtPosition = board.getPiece(currentPosition);
+                if (pieceAtPosition == null || pieceAtPosition.pieceColor != this.pieceColor) {
                     ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
                     possibleMoves.add(addedMove);
-                    break;
                 }
             }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
         }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j >= 1; i+= 2, j-= 1) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break;
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1 && j <= 8; i-= 1, j+= 2) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break;
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1 && j >= 1; i-= 2, j-= 1) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break;
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1 && j <= 8; i-= 2, j+= 1) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break;
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i >= 1 && j >= 1; i-= 1, j-= 2) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break;
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j <= 8; i+= 1, j+= 2) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break;
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
-        for (int i = myPosition.getRow(), j = myPosition.getColumn(); i <= 8 && j >= 1; i+= 1, j-= 2) {
-            if (i == myPosition.getRow() && j == myPosition.getColumn()){
-                continue;
-            }
-            ChessPosition currentPosition = new ChessPosition(i,j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition != null){
-                if (pieceAtPosition.pieceColor == this.pieceColor){
-                    break;
-                }
-                else{
-                    ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                    possibleMoves.add(addedMove);
-                    break;
-                }
-            }
-            ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-            possibleMoves.add(addedMove);
-            break;
-        }
+
         return possibleMoves;
     }
+
     public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition myPosition) {
         HashSet<ChessMove> possibleMoves=new HashSet<>();
         if (this.pieceColor == ChessGame.TeamColor.WHITE && myPosition.getRow() < 8) {
