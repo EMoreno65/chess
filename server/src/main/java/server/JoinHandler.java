@@ -18,7 +18,7 @@ public class JoinHandler {
   public Object join(Request req, Response res, UserDAO userDAO, GameDAO gameDAO, AuthDAO authDAO) {
     String myJSON = req.body();
     JoinRequest givenRequest = new Gson().fromJson(myJSON, JoinRequest.class);
-    JoinResult myResult = myService.joinResult(givenRequest, userDAO, authDAO, gameDAO);
-    return null;
+    Object myResult = myService.joinResult(givenRequest, userDAO, authDAO, gameDAO);
+    return new Gson().toJson(myResult);
   }
 }

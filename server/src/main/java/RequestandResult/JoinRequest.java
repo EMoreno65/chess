@@ -4,9 +4,9 @@ import chess.ChessGame;
 
 public class JoinRequest {
 
-  public JoinRequest(String authtoken, ChessGame.TeamColor color, int gameID) {
+  public JoinRequest(String authtoken, ChessGame.TeamColor playerColor, int gameID) {
     this.authtoken=authtoken;
-    this.color=color;
+    this.playerColor=playerColor;
     this.gameID=gameID;
   }
 
@@ -18,12 +18,12 @@ public class JoinRequest {
     this.authtoken=authtoken;
   }
 
-  public ChessGame.TeamColor getColor() {
-    return color;
+  public ChessGame.TeamColor getPlayerColor() {
+    return playerColor;
   }
 
-  public void setColor(ChessGame.TeamColor color) {
-    this.color=color;
+  public void setPlayerColor(ChessGame.TeamColor color) {
+    this.playerColor=color;
   }
 
   public int getGameID() {
@@ -35,6 +35,6 @@ public class JoinRequest {
   }
 
   String authtoken;
-  ChessGame.TeamColor color;
+  ChessGame.TeamColor playerColor;
   int gameID;
 }

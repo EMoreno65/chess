@@ -49,12 +49,12 @@ public class GameDAO {
 
 
   // Method to retrieve all chess games
-  public List<ChessGame> listGames() {
-    return new ArrayList<>(gamesMa);
+  public List<GameData> listGames() {
+    return new ArrayList<>(gamesMap.values());
   }
 
   // Method to update a chess game
-  public void updateGame(int gameId, ChessGame updatedGame) throws DataAccessException {
+  public void updateGame(int gameId, GameData updatedGame) throws DataAccessException {
     if (!gamesMap.containsKey(gameId)) {
       throw new DataAccessException("Game not found with ID: " + gameId);
     }

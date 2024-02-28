@@ -16,7 +16,7 @@ public class CreateService {
   public CreateResult createGame(CreateRequest givenRequest, AuthDAO authDAO, GameDAO gameDAO, UserDAO userDAO) throws DataAccessException {
     try {
       String gameName = givenRequest.getGameName();
-      ChessGame newGame = new ChessGame();
+      GameData newGame = new GameData(0, null, null, null, null);
       int gameId = generateUniqueGameID();
       gameDAO.createGame(gameId, newGame);
       return new CreateResult(gameId);

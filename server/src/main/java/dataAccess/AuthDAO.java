@@ -58,6 +58,15 @@ public class AuthDAO {
     return false; // User is not authenticated
   }
 
+  public String findUserFromAuthToken(String authToken){
+    for (AuthData authData : myTokens) {
+      if (authData.getAuthToken().equals(authToken)) {
+        return authData.getusername(); // User is authenticated
+      }
+  }
+    return null;
+  }
+
   // Method to generate a random token
   private String generateToken() {
     return UUID.randomUUID().toString();
@@ -65,5 +74,4 @@ public class AuthDAO {
 
   public void clearAll() {
     myTokens.clear();
-  }
-}
+  }}
