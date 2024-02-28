@@ -23,8 +23,8 @@ public class CreateService {
         return new CreateResult(e.getMessage());
       }
       String gameName = givenRequest.getGameName();
-      GameData newGame = new GameData(0, null, null, null, null);
       int gameId = generateUniqueGameID();
+      GameData newGame = new GameData(gameId, null, null, gameName, new ChessGame());
       gameDAO.createGame(gameId, newGame);
       return new CreateResult(gameId);
     } catch (DataAccessException e) {

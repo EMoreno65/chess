@@ -1,13 +1,12 @@
 package server;
 
-import RequestandResult.ListRequest;
-import RequestandResult.ListResult;
-import RequestandResult.LoginRequest;
-import RequestandResult.LoginResult;
+import RequestandResult.*;
 import com.google.gson.Gson;
 import dataAccess.AuthDAO;
+import dataAccess.DataAccessException;
 import dataAccess.GameDAO;
 import model.GameData;
+import model.results;
 import service.ListService;
 import spark.Request;
 import spark.Response;
@@ -15,12 +14,14 @@ import spark.Response;
 public class ListHandler {
   ListService myService = new ListService();
 
-  public Object list(Request req, Response res, AuthDAO authDAO, GameDAO gameDAO) {
-    String myJSON = req.body();
-    ListRequest givenRequest = new Gson().fromJson(myJSON, ListRequest.class);
-    // givenRequest.setAuthToken(req.headers("authorization"));
-    ListResult myResult = myService.listResult(givenRequest, authDAO, gameDAO);
-
-    return new Gson().toJson(myResult);
+  public Object list(Request req, Response res, AuthDAO authDAO, GameDAO gameDAO) throws DataAccessException {
+    String token = req.headers("Authorization");
+    if (authDAO.isValidToken(token)){
+      ListResult myResult = myService.listResult(authDAO, gameDAO);
+      return new Gson().toJson(myResult);
+    }
+    results resultMessage = new results("Error: unauthorized");
+    res.status(401);
+    return new Gson().toJson(resultMessage);
   }
 }

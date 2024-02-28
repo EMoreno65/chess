@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ListService {
 
-  public ListResult listResult(ListRequest givenRequest, AuthDAO authDAO, GameDAO gameDAO) {
+  public ListResult listResult(AuthDAO authDAO, GameDAO gameDAO) {
     List<GameData> games = gameDAO.listGames();
     return new ListResult(games, null);
   }

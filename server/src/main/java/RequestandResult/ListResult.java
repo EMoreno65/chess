@@ -42,5 +42,9 @@ public class ListResult {
     this.errorMessage=errorMessage;
   }
 
+  public ListResult(String errorMessage) {
+    this.errorMessage=errorMessage;
+  }
+
   String errorMessage;
 }

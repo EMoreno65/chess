@@ -12,6 +12,8 @@ import dataAccess.UserDAO;
 import model.GameData;
 import model.UserData;
 
+import java.util.Objects;
+
 public class JoinService {
   public Object joinResult(JoinRequest givenRequest, UserDAO userDAO, AuthDAO authDAO, GameDAO gameDAO){
     try{
@@ -33,7 +35,7 @@ public class JoinService {
             DataAccessException e = new DataAccessException("Error: already taken");
             return new JoinResult(e.getMessage());
           }
-          GameData newGameData = new GameData(givenGame.GameID(), user.getUsername(), givenGame.blackUsername(), givenGame.gameName(), givenGame.game());
+          GameData newGameData = new GameData(givenGame.gameID(), user.getUsername(), givenGame.blackUsername(), givenGame.gameName(), givenGame.game());
           try {
             gameDAO.updateGame(givenRequest.getGameID(), newGameData);
           } catch (DataAccessException e) {
@@ -45,7 +47,7 @@ public class JoinService {
             DataAccessException e = new DataAccessException("Error: already taken");
             return new JoinResult(e.getMessage());
           }
-          GameData newGameData = new GameData(givenGame.GameID(), givenGame.whiteUsername(), user.getUsername(), givenGame.gameName(), givenGame.game());
+          GameData newGameData = new GameData(givenGame.gameID(), givenGame.whiteUsername(), user.getUsername(), givenGame.gameName(), givenGame.game());
           try {
             gameDAO.updateGame(givenRequest.getGameID(), newGameData);
           } catch (DataAccessException e) {

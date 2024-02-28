@@ -34,6 +34,11 @@ public class AuthDAO {
     return null;
   }
 
+  public boolean isValidToken(String authToken) throws DataAccessException {
+    // Check if AuthData object exists for the given authToken
+    return getAuthData(authToken) != null;
+  }
+
   public void deleteAuth(String authToken) throws DataAccessException {
     AuthData authDataToRemove = null;
     for (AuthData authData : myTokens) {
