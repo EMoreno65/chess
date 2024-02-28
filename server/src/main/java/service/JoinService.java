@@ -1,8 +1,7 @@
 package service;
 
-import RequestandResult.JoinRequest;
+import Request.JoinRequest;
 import RequestandResult.JoinResult;
-import RequestandResult.LoginResult;
 import chess.ChessGame;
 import com.google.gson.JsonObject;
 import dataAccess.AuthDAO;
@@ -11,8 +10,6 @@ import dataAccess.GameDAO;
 import dataAccess.UserDAO;
 import model.GameData;
 import model.UserData;
-
-import java.util.Objects;
 
 public class JoinService {
   public Object joinResult(JoinRequest givenRequest, UserDAO userDAO, AuthDAO authDAO, GameDAO gameDAO){

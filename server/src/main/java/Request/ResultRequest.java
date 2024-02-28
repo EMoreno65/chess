@@ -1,4 +1,4 @@
-package RequestandResult;
+package Request;
 
 public class ResultRequest {
 
@@ -8,10 +8,6 @@ public class ResultRequest {
 
   public String getMessage() {
     return message;
-  }
-
-  public void setMessage(String message) {
-    this.message=message;
   }
 
   String message = null;

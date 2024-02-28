@@ -1,13 +1,12 @@
 package service;
 
-import RequestandResult.RegisterRequest;
+import Request.RegisterRequest;
 import RequestandResult.RegisterResult;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.UserDAO;
 import model.AuthData;
 import model.UserData;
-import org.eclipse.jetty.server.Authentication;
 
 public class RegisterService {
   public RegisterResult newResult(RegisterRequest givenRequest, UserDAO userDAO, AuthDAO authDAO) {

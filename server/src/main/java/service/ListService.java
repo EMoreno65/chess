@@ -1,9 +1,7 @@
 package service;
 
-import RequestandResult.ListRequest;
 import RequestandResult.ListResult;
 import dataAccess.AuthDAO;
-import dataAccess.DataAccessException;
 import dataAccess.GameDAO;
 import model.GameData;
 

@@ -1,9 +1,7 @@
 package server;
 
-import RequestandResult.JoinRequest;
+import Request.JoinRequest;
 import RequestandResult.JoinResult;
-import RequestandResult.RegisterRequest;
-import RequestandResult.RegisterResult;
 import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;

@@ -64,12 +64,4 @@ public class GameDAO {
   public static synchronized int generateUniqueGameID() {
     return nextGameID++;
   }
-
-  // Method to delete a chess game
-  public void deleteGame(int gameId) throws DataAccessException {
-    if (!gamesMap.containsKey(gameId)) {
-      throw new DataAccessException("Game not found with ID: " + gameId);
-    }
-    gamesMap.remove(gameId);
-  }
 }

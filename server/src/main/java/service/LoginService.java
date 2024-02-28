@@ -1,6 +1,6 @@
 package service;
 
-import RequestandResult.LoginRequest;
+import Request.LoginRequest;
 import RequestandResult.LoginResult;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;

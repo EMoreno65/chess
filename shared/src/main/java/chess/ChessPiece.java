@@ -60,10 +60,6 @@ public class ChessPiece {
         return pieceColor;
     }
 
-    public void setPieceColor(ChessPiece piece, ChessGame.TeamColor color){
-        piece.pieceColor = color;
-    }
-
     /**
      * @return which type of chess piece this piece is
      */

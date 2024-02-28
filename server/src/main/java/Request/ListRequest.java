@@ -1,4 +1,4 @@
-package RequestandResult;
+package Request;
 
 import model.GameData;
 
@@ -8,14 +8,6 @@ public class ListRequest {
   public ListRequest(List<GameData> games, String authToken) {
     this.games=games;
     this.authToken=authToken;
-  }
-
-  public List<GameData> getGames() {
-    return games;
-  }
-
-  public void setGames(List<GameData> games) {
-    this.games=games;
   }
 
   public String getAuthToken() {
@@ -35,10 +27,6 @@ public class ListRequest {
 
   public String getErrorMessage() {
     return errorMessage;
-  }
-
-  public void setErrorMessage(String errorMessage) {
-    this.errorMessage=errorMessage;
   }
 
   String errorMessage;

@@ -1,8 +1,7 @@
 package service;
 
-import RequestandResult.CreateRequest;
+import Request.CreateRequest;
 import RequestandResult.CreateResult;
-import RequestandResult.LoginResult;
 import chess.ChessGame;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;

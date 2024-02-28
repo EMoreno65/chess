@@ -1,4 +1,4 @@
-package RequestandResult;
+package Request;
 
 import chess.ChessGame;
 
@@ -22,16 +22,8 @@ public class JoinRequest {
     return playerColor;
   }
 
-  public void setPlayerColor(ChessGame.TeamColor color) {
-    this.playerColor=color;
-  }
-
   public int getGameID() {
     return gameID;
-  }
-
-  public void setGameID(int gameID) {
-    this.gameID=gameID;
   }
 
   String authtoken;

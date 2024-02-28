@@ -1,9 +1,7 @@
 package server;
 
-import RequestandResult.CreateRequest;
+import Request.CreateRequest;
 import RequestandResult.CreateResult;
-import RequestandResult.LoginRequest;
-import RequestandResult.LoginResult;
 import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;

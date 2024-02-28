@@ -1,6 +1,5 @@
 package server;
 
-import RequestandResult.ClearRequest;
 import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
