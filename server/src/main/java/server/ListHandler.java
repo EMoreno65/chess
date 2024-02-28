@@ -19,6 +19,7 @@ public class ListHandler {
     if (authDAO.isValidToken(token)){
       ListResult myResult = myService.listResult(authDAO, gameDAO);
       return new Gson().toJson(myResult);
+
     }
     results resultMessage = new results("Error: unauthorized");
     res.status(401);
