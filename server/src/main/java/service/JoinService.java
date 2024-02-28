@@ -4,6 +4,7 @@ import RequestandResult.JoinRequest;
 import RequestandResult.JoinResult;
 import RequestandResult.LoginResult;
 import chess.ChessGame;
+import com.google.gson.JsonObject;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.GameDAO;
@@ -19,8 +20,12 @@ public class JoinService {
         DataAccessException e = new DataAccessException("Error: bad request");
         return new JoinResult(e.getMessage());
       }
+      if (!authDAO.isUserAuthenticated(givenRequest.getAuthtoken())){
+        DataAccessException e = new DataAccessException("Error: unauthorized");
+        return new JoinResult(e.getMessage());
+      }
       if (givenRequest.getPlayerColor() == null){
-        return "";
+        return new JsonObject();
       }
       // Check if name is null and throw an excpetion
       if (givenRequest.getPlayerColor() != null){

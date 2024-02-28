@@ -30,5 +30,14 @@ public class JoinResult {
 
   String authToken;
   GameData gameData;
+
+  public String getErrorMessage() {
+    return errorMessage;
+  }
+
+  public void setErrorMessage(String errorMessage) {
+    this.errorMessage=errorMessage;
+  }
+
   String errorMessage;
 }
