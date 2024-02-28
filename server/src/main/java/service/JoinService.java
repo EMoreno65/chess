@@ -35,7 +35,7 @@ public class JoinService {
           }
           GameData newGameData = new GameData(givenGame.GameID(), user.getUsername(), givenGame.blackUsername(), givenGame.gameName(), givenGame.game());
           try {
-            gameDAO.updateGame(newGameData.GameID(), newGameData);
+            gameDAO.updateGame(givenRequest.getGameID(), newGameData);
           } catch (DataAccessException e) {
             return new JoinResult("Error updating game data: " + e.getMessage());
           }
@@ -47,7 +47,7 @@ public class JoinService {
           }
           GameData newGameData = new GameData(givenGame.GameID(), givenGame.whiteUsername(), user.getUsername(), givenGame.gameName(), givenGame.game());
           try {
-            gameDAO.updateGame(newGameData.GameID(), newGameData);
+            gameDAO.updateGame(givenRequest.getGameID(), newGameData);
           } catch (DataAccessException e) {
             return new JoinResult("Error updating game data: " + e.getMessage());
           }

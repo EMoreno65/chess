@@ -18,7 +18,9 @@ public class ListHandler {
   public Object list(Request req, Response res, AuthDAO authDAO, GameDAO gameDAO) {
     String myJSON = req.body();
     ListRequest givenRequest = new Gson().fromJson(myJSON, ListRequest.class);
+    // givenRequest.setAuthToken(req.headers("authorization"));
     ListResult myResult = myService.listResult(givenRequest, authDAO, gameDAO);
+
     return new Gson().toJson(myResult);
   }
 }
