@@ -1,6 +1,5 @@
 package chess;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -102,51 +101,26 @@ public class ChessPiece {
         HashSet<ChessMove> possibleMoves = new HashSet<>();
 
         // Iterate over each direction
-        addDiagonalMoves(board, myPosition, 1, 1, possibleMoves);
-        addDiagonalMoves(board, myPosition, 1, -1, possibleMoves);
-        addDiagonalMoves(board, myPosition, -1, 1, possibleMoves);
-        addDiagonalMoves(board, myPosition, -1, -1, possibleMoves);
+        addMoves(board, myPosition, 1, 1, possibleMoves);
+        addMoves(board, myPosition, 1, -1, possibleMoves);
+        addMoves(board, myPosition, -1, 1, possibleMoves);
+        addMoves(board, myPosition, -1, -1, possibleMoves);
 
         return possibleMoves;
-    }
-
-    private void addDiagonalMoves(ChessBoard board, ChessPosition myPosition, int rowDirection, int colDirection, HashSet<ChessMove> possibleMoves) {
-        int i = myPosition.getRow();
-        int j = myPosition.getColumn();
-
-        while (i >= 1 && i <= 8 && j >= 1 && j <= 8) {
-            if (i != myPosition.getRow() || j != myPosition.getColumn()) {
-                ChessPosition currentPosition = new ChessPosition(i, j);
-                ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-                if (pieceAtPosition != null) {
-                    if (pieceAtPosition.pieceColor == this.pieceColor) {
-                        break;
-                    } else {
-                        ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                        possibleMoves.add(addedMove);
-                        break;
-                    }
-                }
-                ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                possibleMoves.add(addedMove);
-            }
-            i += rowDirection;
-            j += colDirection;
-        }
     }
     public Collection<ChessMove> straightMoves(ChessBoard board, ChessPosition myPosition) {
         HashSet<ChessMove> possibleMoves = new HashSet<>();
 
         // Iterate over each direction
-        addStraightMoves(board, myPosition, 1, 0, possibleMoves); // Forward
-        addStraightMoves(board, myPosition, -1, 0, possibleMoves); // Backward
-        addStraightMoves(board, myPosition, 0, 1, possibleMoves); // Right
-        addStraightMoves(board, myPosition, 0, -1, possibleMoves); // Left
+        addMoves(board, myPosition, 1, 0, possibleMoves); // Forward
+        addMoves(board, myPosition, -1, 0, possibleMoves); // Backward
+        addMoves(board, myPosition, 0, 1, possibleMoves); // Right
+        addMoves(board, myPosition, 0, -1, possibleMoves); // Left
 
         return possibleMoves;
     }
 
-    private void addStraightMoves(ChessBoard board, ChessPosition myPosition, int rowDirection, int colDirection, HashSet<ChessMove> possibleMoves) {
+    private void addMoves(ChessBoard board, ChessPosition myPosition, int rowDirection, int colDirection, HashSet<ChessMove> possibleMoves) {
         int i = myPosition.getRow();
         int j = myPosition.getColumn();
 

@@ -227,13 +227,13 @@ public class ChessGame {
         return validMoves;
     }
 
-    public ChessPosition findCurrentKing(ChessBoard board, TeamColor TeamColor){
+    public ChessPosition findCurrentKing(ChessBoard board, TeamColor teamColor){
         for (int i = 1; i <= 8; i++){
             for (int j = 1; j <= 8; j++){
                 ChessPosition checkedPosition = new ChessPosition((i),(j));
                 if (board.getPiece(checkedPosition) != null){
                     if (board.getPiece(checkedPosition).getPieceType() == ChessPiece.PieceType.KING){
-                        if (board.getPiece(checkedPosition).getTeamColor() == TeamColor){
+                        if (board.getPiece(checkedPosition).getTeamColor() == teamColor){
                             ChessPosition currentKingPosition = checkedPosition;
                             return currentKingPosition;
                         }
