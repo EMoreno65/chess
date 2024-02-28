@@ -25,7 +25,7 @@ public class CreateService {
       String gameName = givenRequest.getGameName();
       GameData newGame = new GameData(0, null, null, null, null);
       int gameId = generateUniqueGameID();
-      gameDAO.createGame(newGame);
+      gameDAO.createGame(gameId, newGame);
       return new CreateResult(gameId);
     } catch (DataAccessException e) {
       return new CreateResult(e.getMessage());
