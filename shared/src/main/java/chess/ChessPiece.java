@@ -143,32 +143,9 @@ public class ChessPiece {
 
     public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition myPosition) {
         HashSet<ChessMove> possibleMoves = new HashSet<>();
-
-        // Iterate over each direction
-        addKingMoves(board, myPosition, 1, 0, possibleMoves); // Up
-        addKingMoves(board, myPosition, -1, 0, possibleMoves); // Down
-        addKingMoves(board, myPosition, 0, 1, possibleMoves); // Right
-        addKingMoves(board, myPosition, 0, -1, possibleMoves); // Left
-        addKingMoves(board, myPosition, 1, 1, possibleMoves); // Up-Right
-        addKingMoves(board, myPosition, 1, -1, possibleMoves); // Up-Left
-        addKingMoves(board, myPosition, -1, 1, possibleMoves); // Down-Right
-        addKingMoves(board, myPosition, -1, -1, possibleMoves); // Down-Left
+        addMoves(board, myPosition, possibleMoves, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}});
 
         return possibleMoves;
-    }
-
-    private void addKingMoves(ChessBoard board, ChessPosition myPosition, int rowDirection, int colDirection, HashSet<ChessMove> possibleMoves) {
-        int i = myPosition.getRow() + rowDirection;
-        int j = myPosition.getColumn() + colDirection;
-
-        if (i >= 1 && i <= 8 && j >= 1 && j <= 8) {
-            ChessPosition currentPosition = new ChessPosition(i, j);
-            ChessPiece pieceAtPosition = board.getPiece(currentPosition);
-            if (pieceAtPosition == null || pieceAtPosition.pieceColor != this.pieceColor) {
-                ChessMove addedMove = new ChessMove(myPosition, currentPosition, null);
-                possibleMoves.add(addedMove);
-            }
-        }
     }
 
     public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition myPosition) {
@@ -176,10 +153,16 @@ public class ChessPiece {
 
         // Knight moves offsets
         int[][] offsets = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
+        addMoves(board, myPosition, possibleMoves, offsets);
+
+        return possibleMoves;
+    }
+
+    private void addMoves(ChessBoard board, ChessPosition myPosition, HashSet<ChessMove> possibleMoves, int[][] offsets) {
         for (int[] offset : offsets) {
             int i = myPosition.getRow() + offset[0];
             int j = myPosition.getColumn() + offset[1];
-            if (i >= 1 && i <= 8 && j >= 1 && j <= 8) {
+            if (isValidPosition(i, j)) {
                 ChessPosition currentPosition = new ChessPosition(i, j);
                 ChessPiece pieceAtPosition = board.getPiece(currentPosition);
                 if (pieceAtPosition == null || pieceAtPosition.pieceColor != this.pieceColor) {
@@ -188,8 +171,10 @@ public class ChessPiece {
                 }
             }
         }
+    }
 
-        return possibleMoves;
+    private boolean isValidPosition(int i, int j) {
+        return i >= 1 && i <= 8 && j >= 1 && j <= 8;
     }
 
     public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition myPosition) {

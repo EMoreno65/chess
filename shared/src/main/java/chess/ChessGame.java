@@ -72,160 +72,61 @@ public class ChessGame {
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         HashSet<ChessMove> validMoves = new HashSet<>();
-        ChessPosition kingPosition = findCurrentKing(board, board.getPiece(startPosition).getTeamColor());
-        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.KING){
-            Collection<ChessMove> kingValidMoves = null;
-            Collection<ChessMove> kingValidDeletedMoves = new ArrayList<>();
-            kingValidMoves = board.getPiece(startPosition).kingMoves(board, startPosition);
-            for (ChessMove move: kingValidMoves){
-                // Iterate through the moves of the opposing team pieces, if any of them match
-                // the king's position, return true for isInCheck and don't add the move to valid moves
-                ChessPiece restoredPiece = null;
-                if (board.getPiece(move.endPosition) != null){
-                    restoredPiece = board.getPiece(move.endPosition);
-                }
-                ChessPiece movingPiece = board.getPiece(move.startPosition);
-                board.addPiece(move.startPosition, null);
-                board.addPiece(move.endPosition, movingPiece);
-                if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
-                    // delete the move from kingValidMoves, how?
-                    kingValidDeletedMoves.add(move);
-                }
-                ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                board.addPiece(move.endPosition, restoredPiece);
-                board.addPiece(move.startPosition, unmovingPiece);
+        ChessPiece piece = board.getPiece(startPosition);
+
+        if (piece != null) {
+            Collection<ChessMove> pieceValidMoves = null;
+            Collection<ChessMove> deletedMoves = new ArrayList<>();
+
+            switch (piece.getPieceType()) {
+                case KING:
+                    pieceValidMoves = piece.kingMoves(board, startPosition);
+                    break;
+                case QUEEN:
+                    pieceValidMoves = piece.diagonalMoves(board, startPosition);
+                    pieceValidMoves.addAll(piece.straightMoves(board, startPosition));
+                    break;
+                case BISHOP:
+                    pieceValidMoves = piece.diagonalMoves(board, startPosition);
+                    break;
+                case KNIGHT:
+                    pieceValidMoves = piece.knightMoves(board, startPosition);
+                    break;
+                case ROOK:
+                    pieceValidMoves = piece.straightMoves(board, startPosition);
+                    break;
+                case PAWN:
+                    pieceValidMoves = piece.pawnMoves(board, startPosition);
+                    break;
             }
-            kingValidMoves.removeAll(kingValidDeletedMoves);
-            return kingValidMoves;
-        }
-        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.QUEEN){
-            Collection<ChessMove> queenValidMoves = null;
-            Collection<ChessMove> queenValidDeletedMoves = new ArrayList<>();
-            queenValidMoves = (board.getPiece(startPosition).diagonalMoves(board, startPosition));
-            queenValidMoves.addAll(board.getPiece(startPosition).straightMoves(board, startPosition));
-            for (ChessMove move: queenValidMoves){
-                // Iterate through the moves of the opposing team pieces, if any of them match
-                // the king's position, return true for isInCheck and don't add the move to valid moves
-                ChessPiece restoredPiece = null;
-                if (board.getPiece(move.endPosition) != null){
-                    restoredPiece = board.getPiece(move.endPosition);
+
+            if (pieceValidMoves != null) {
+                for (ChessMove move : pieceValidMoves) {
+                    if (checkMove(board, move, startPosition)) {
+                        validMoves.add(move);
+                    }
                 }
-                ChessPiece movingPiece = board.getPiece(move.startPosition);
-                board.addPiece(move.startPosition, null);
-                board.addPiece(move.endPosition, movingPiece);
-                if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
-                    // delete the move from kingValidMoves, how?
-                    queenValidDeletedMoves.add(move);
-                }
-                ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                board.addPiece(move.endPosition, restoredPiece);
-                board.addPiece(move.startPosition, unmovingPiece);
             }
-            queenValidMoves.removeAll(queenValidDeletedMoves);
-            return queenValidMoves;
         }
-        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.BISHOP){
-            Collection<ChessMove> bishopValidMoves = null;
-            Collection<ChessMove> bishopValidDeletedMoves = new ArrayList<>();
-            bishopValidMoves = board.getPiece(startPosition).diagonalMoves(board, startPosition);
-            for (ChessMove move: bishopValidMoves){
-                // Iterate through the moves of the opposing team pieces, if any of them match
-                // the king's position, return true for isInCheck and don't add the move to valid move
-                ChessPiece restoredPiece = null;
-                if (board.getPiece(move.endPosition) != null){
-                    restoredPiece = board.getPiece(move.endPosition);
-                }
-                ChessPiece movingPiece = board.getPiece(move.startPosition);
-                board.addPiece(move.startPosition, null);
-                board.addPiece(move.endPosition, movingPiece);
-                if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
-                    // delete the move from kingValidMoves, how?
-                    bishopValidDeletedMoves.add(move);
-                }
-                ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                board.addPiece(move.endPosition, restoredPiece);
-                board.addPiece(move.startPosition, unmovingPiece);
-            }
-            bishopValidMoves.removeAll(bishopValidDeletedMoves);
-            return bishopValidMoves;
-        }
-        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.KNIGHT){
-            Collection<ChessMove> knightValidMoves = null;
-            Collection<ChessMove> knightValidDeletedMoves = new ArrayList<>();
-            knightValidMoves = board.getPiece(startPosition).knightMoves(board, startPosition);
-            for (ChessMove move: knightValidMoves){
-                // Iterate through the moves of the opposing team pieces, if any of them match
-                // the king's position, return true for isInCheck and don't add the move to valid move
-                ChessPiece restoredPiece = null;
-                if (board.getPiece(move.endPosition) != null){
-                    restoredPiece = board.getPiece(move.endPosition);
-                }
-                ChessPiece movingPiece = board.getPiece(move.startPosition);
-                board.addPiece(move.startPosition, null);
-                board.addPiece(move.endPosition, movingPiece);
-                if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
-                    // delete the move from knightValidMoves, how?
-                    knightValidDeletedMoves.add(move);
-                }
-                ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                board.addPiece(move.endPosition, restoredPiece);
-                board.addPiece(move.startPosition, unmovingPiece);
-            }
-            knightValidMoves.removeAll(knightValidDeletedMoves);
-            return knightValidMoves;
-        }
-        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.ROOK){
-            Collection<ChessMove> rookValidMoves = null;
-            Collection<ChessMove> rookValidDeletedMoves = new ArrayList<>();
-            rookValidMoves = board.getPiece(startPosition).straightMoves(board, startPosition);
-            for (ChessMove move: rookValidMoves){
-                // Iterate through the moves of the opposing team pieces, if any of them match
-                // the king's position, return true for isInCheck and don't add the move to valid moves
-                ChessPiece restoredPiece = null;
-                if (board.getPiece(move.endPosition) != null){
-                    restoredPiece = board.getPiece(move.endPosition);
-                }
-                ChessPiece movingPiece = board.getPiece(move.startPosition);
-                board.addPiece(move.startPosition, null);
-                board.addPiece(move.endPosition, movingPiece);
-                if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
-                    // delete the move from kingValidMoves, how?
-                    rookValidDeletedMoves.add(move);
-                }
-                ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                board.addPiece(move.endPosition, restoredPiece);
-                board.addPiece(move.startPosition, unmovingPiece);
-                }
-            rookValidMoves.removeAll(rookValidDeletedMoves);
-            return rookValidMoves;
-        }
-        if (board.getPiece(startPosition).getPieceType() == ChessPiece.PieceType.PAWN){
-            Collection<ChessMove> pawnValidMoves = null;
-            Collection<ChessMove> pawnValidDeletedMoves = new ArrayList<>();
-            pawnValidMoves = board.getPiece(startPosition).pawnMoves(board, startPosition);
-            for (ChessMove move: pawnValidMoves){
-                // Iterate through the moves of the opposing team pieces, if any of them match
-                // the king's position, return true for isInCheck and don't add the move to valid moves
-                ChessPiece restoredPiece = null;
-                if (board.getPiece(move.endPosition) != null){
-                    restoredPiece = board.getPiece(move.endPosition);
-                }
-                ChessPiece movingPiece = board.getPiece(move.startPosition);
-                board.addPiece(move.startPosition, null);
-                board.addPiece(move.endPosition, movingPiece);
-                if (isInCheck(board.getPiece(move.endPosition).getTeamColor())){
-                    // delete the move from kingValidMoves, how?
-                    pawnValidDeletedMoves.add(move);
-                }
-                ChessPiece unmovingPiece = board.getPiece(move.endPosition);
-                board.addPiece(move.endPosition, restoredPiece);
-                board.addPiece(move.startPosition, unmovingPiece);
-            }
-            pawnValidMoves.removeAll(pawnValidDeletedMoves);
-            return pawnValidMoves;
-        }
+
         return validMoves;
     }
+
+    private boolean checkMove(ChessBoard board, ChessMove move, ChessPosition startPosition) {
+        ChessPiece restoredPiece = null;
+        if (board.getPiece(move.endPosition) != null) {
+            restoredPiece = board.getPiece(move.endPosition);
+        }
+        ChessPiece movingPiece = board.getPiece(move.startPosition);
+        board.addPiece(move.startPosition, null);
+        board.addPiece(move.endPosition, movingPiece);
+        boolean isValid = !isInCheck(board.getPiece(move.endPosition).getTeamColor());
+        ChessPiece unmovingPiece = board.getPiece(move.endPosition);
+        board.addPiece(move.endPosition, restoredPiece);
+        board.addPiece(move.startPosition, unmovingPiece);
+        return isValid;
+    }
+
 
     public ChessPosition findCurrentKing(ChessBoard board, TeamColor teamColor){
         for (int i = 1; i <= 8; i++){
