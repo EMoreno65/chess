@@ -143,7 +143,7 @@ public class ChessPiece {
 
     public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition myPosition) {
         HashSet<ChessMove> possibleMoves = new HashSet<>();
-        addMoves(board, myPosition, possibleMoves, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}});
+        addMovesforKnightorKing(board, myPosition, possibleMoves, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}});
 
         return possibleMoves;
     }
@@ -153,12 +153,12 @@ public class ChessPiece {
 
         // Knight moves offsets
         int[][] offsets = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
-        addMoves(board, myPosition, possibleMoves, offsets);
+        addMovesforKnightorKing(board, myPosition, possibleMoves, offsets);
 
         return possibleMoves;
     }
 
-    private void addMoves(ChessBoard board, ChessPosition myPosition, HashSet<ChessMove> possibleMoves, int[][] offsets) {
+    private void addMovesforKnightorKing(ChessBoard board, ChessPosition myPosition, HashSet<ChessMove> possibleMoves, int[][] offsets) {
         for (int[] offset : offsets) {
             int i = myPosition.getRow() + offset[0];
             int j = myPosition.getColumn() + offset[1];
