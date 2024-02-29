@@ -1,4 +1,4 @@
-package serverTests;
+package serviceTests;
 
 import RequestandResult.JoinResult;
 import dataAccess.AuthDAO;

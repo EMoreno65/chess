@@ -33,10 +33,6 @@ public class LoginRequest {
     return password;
   }
 
-  public void setPassword(String password) {
-    this.password=password;
-  }
-
   String password;
 
 }

@@ -1,15 +1,10 @@
-package serverTests;
+package serviceTests;
 
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Test;
 import service.ClearService;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClearServiceTest {

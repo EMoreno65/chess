@@ -1,4 +1,4 @@
-package serverTests;
+package serviceTests;
 
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
@@ -9,8 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.LogoutService;
 import RequestandResult.LogoutResult;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
