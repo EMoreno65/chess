@@ -19,6 +19,10 @@ public class ListResult {
     this.authToken=authToken;
   }
 
+  public List<GameData> getGames() {
+    return games;
+  }
+
   List<GameData> games;
   String authToken;
 
