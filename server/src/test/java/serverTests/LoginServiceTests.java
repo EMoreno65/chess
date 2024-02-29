@@ -20,6 +20,7 @@ public class LoginServiceTests {
 
   @BeforeEach
   public void setUp() throws DataAccessException {
+    // Clear existing test data
     // Initialize the login service and required DAOs
     userDAO = new UserDAO();
     authDAO = new AuthDAO();
@@ -28,12 +29,22 @@ public class LoginServiceTests {
     // Create a test user
     String username = "testUser";
     String password = "testPassword";
-    String authToken = "givenAuthToken"; // Include the authToken
-    UserData user = new UserData(username, password, authToken);
-    userDAO.createUser(user); // You need to implement this method in UserDAO
-    AuthData authData = new AuthData(authToken, username, password); // Assuming you have AuthData class to represent authentication data
-    authDAO.createAuth(user); // Assuming you have a method to create authentication data in AuthDAO
+    String authToken = "givenAuthToken";
+    String email = "email@email";
+
+    UserData user = new UserData(username, password, email);
+    userDAO.createUser(user);
+
+    AuthData authData = new AuthData(authToken, username, password); // Use the same password
+    authDAO.createAuth(user);
   }
+
+  private void clearData() {
+    // Clear existing test data from the database
+    userDAO.clearAll(); // Implement clearAll() method in UserDAO to clear all users
+    authDAO.clearAll(); // Implement clearAll() method in AuthDAO to clear all authentication data
+  }
+
 
   @Test
   public void testLogin_Failure_IncorrectPassword() throws DataAccessException {
@@ -51,6 +62,8 @@ public class LoginServiceTests {
     assertNull(loginResult.getAuthToken(), "Auth token should not be generated");
     assertNotNull(loginResult.getErrorMessage(), "Error message should be present");
     assertEquals("Error: unauthorized", loginResult.getErrorMessage(), "Error message should indicate unauthorized access");
+    userDAO.clearAll();
+    authDAO.clearAll();
   }
 
   @Test
@@ -67,6 +80,8 @@ public class LoginServiceTests {
     // Assert: Verify the result
     assertNotNull(loginResult.getAuthToken(), "Auth token should be generated");
     assertNull(loginResult.getErrorMessage(), "No error message should be present");
+    userDAO.clearAll();
+    authDAO.clearAll();
   }
 }
 
