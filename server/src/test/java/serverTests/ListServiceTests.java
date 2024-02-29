@@ -45,21 +45,20 @@ public class ListServiceTests {
       gameDAO.createGame(game.gameID(), game);
     }
 
-    // Act: Call the list service
     ListResult listResult = listService.listResult(authDAO, gameDAO);
 
-    // Assert: Verify the result
     assertEquals(expectedGames, listResult.getGames(), "List of games should match");
     assertEquals(null, listResult.getErrorMessage(), "No error message should be present");
+    userDAO.clearAll();
+    gameDAO.clearAll();
+    authDAO.clearAll();
   }
   @Test
   public void testListGames_NoGames() throws DataAccessException {
-    // Arrange: Set up test data
     String username = "testUser";
     String password = "testPassword";
     String email = "test@example.com";
 
-    // Create a user and associate it with a valid authentication token
     UserData user = new UserData(username, password, email);
     userDAO.createUser(user);
     AuthData validAuthData = authDAO.createAuth(user);
@@ -70,10 +69,11 @@ public class ListServiceTests {
     // Attempt to list games
     ListResult listResult = listService.listResult(authDAO, gameDAO);
 
-    // Assert: Verify the result
     assertNull(listResult.getErrorMessage(), "No error message should be present");
     assertEquals(new ArrayList<>(), listResult.getGames(), "Returned list should be empty");
-
+    userDAO.clearAll();
+    gameDAO.clearAll();
+    authDAO.clearAll();
   }
 
 }

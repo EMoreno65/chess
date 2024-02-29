@@ -21,6 +21,11 @@ public class JoinResult {
   }
 
   String authToken;
+
+  public GameData getGameData() {
+    return gameData;
+  }
+
   GameData gameData;
   String errorMessage;
 

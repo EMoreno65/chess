@@ -24,20 +24,17 @@ public class RegisterServiceTests {
 
   @Test
   public void testRegister_Success() {
-    // Arrange: Set up user registration data
     String username = "testUser";
     String password = "testPassword";
     String email = "test@example.com";
     RegisterRequest registerRequest = new RegisterRequest(username, password, email);
-
-    // Act: Call the register method
     RegisterResult registerResult = registerService.newResult(registerRequest, userDAO, authDAO);
-
-    // Assert: Verify the result
     assertNotNull(registerResult.getAuthToken());
     assertEquals(username, registerResult.getUsername());
     assertEquals(password, registerResult.getPassword());
     assertNull(registerResult.getErrorMessage());
+    userDAO.clearAll();
+    authDAO.clearAll();
   }
 
   @Test
@@ -48,14 +45,14 @@ public class RegisterServiceTests {
     String email = "ylfjfcktetf";
     RegisterRequest registerRequest = new RegisterRequest(username, password, email);
 
-    // Act: Call the register method
     RegisterResult registerResult = registerService.newResult(registerRequest, userDAO, authDAO);
 
-    // Assert: Verify the result
     assertNull(registerResult.getAuthToken(), "Auth token should not be generated");
     assertNull(registerResult.getUsername(), "Username should not be returned");
     assertNull(registerResult.getPassword(), "Password should not be returned");
     assertNotNull(registerResult.getErrorMessage(), "Error message should be present");
+    userDAO.clearAll();
+    authDAO.clearAll();
   }
 }
 

@@ -19,10 +19,8 @@ public class ClearServiceTest {
     // Arrange: Set up your test environment
     ClearService clearService = new ClearService();
 
-    // Act: Call the clearAll method
     clearService.clearAll(new UserDAO(), new AuthDAO(), new GameDAO());
 
-    //
     assertTrue(clearService.gameAccess.listGames().isEmpty(), "Game database should be empty");
   }
 }
