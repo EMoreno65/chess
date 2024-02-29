@@ -14,7 +14,15 @@ public class RegisterService {
     String password = givenRequest.getPassword();
     String email = givenRequest.getEmail();
 
+    if (username == null || username.isEmpty()) {
+      DataAccessException e = new DataAccessException("Error: bad request");
+      return new RegisterResult(e.getMessage());
+    }
     if (password == null || password.isEmpty()) {
+      DataAccessException e = new DataAccessException("Error: bad request");
+      return new RegisterResult(e.getMessage());
+    }
+    if (email == null || email.isEmpty()) {
       DataAccessException e = new DataAccessException("Error: bad request");
       return new RegisterResult(e.getMessage());
     }

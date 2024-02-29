@@ -24,7 +24,5 @@ public class ClearServiceTest {
 
     //
     assertTrue(clearService.gameAccess.listGames().isEmpty(), "Game database should be empty");
-//    assertTrue(clearService.userAccess.listGames().isEmpty(), "Game database should be empty");
-//    assertTrue(clearService.userAccess.listGames().isEmpty(), "Game database should be empty");
   }
 }
