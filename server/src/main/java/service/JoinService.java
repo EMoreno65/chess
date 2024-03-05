@@ -46,6 +46,7 @@ public class JoinService {
           }
           GameData newGameData = new GameData(givenGame.gameID(), givenGame.whiteUsername(), user.getUsername(), givenGame.gameName(), givenGame.game());
           try {
+
             gameDAO.updateGame(givenRequest.getGameID(), newGameData);
           } catch (DataAccessException e) {
             return new JoinResult("Error updating game data: " + e.getMessage());
