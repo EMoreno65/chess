@@ -1,17 +1,14 @@
 package server;
 
 import RequestandResult.LoginResult;
-import dataAccess.AuthDAO;
-import dataAccess.AuthSQLDAO;
-import dataAccess.GameDAO;
-import dataAccess.UserDAO;
+import dataAccess.*;
 import spark.*;
 
 public class Server {
 
     public GameDAO newGame = new GameDAO();
-    public UserDAO newUser = new UserDAO();
-    public AuthDAO newAuth = new AuthSQLDAO();
+    public UserDAO newUser = new MemoryUserDAO();
+    public AuthDAO newAuth = new MemoryAuthDAO();
     public static void main(String[] args){
         new Server().run(8080);
     }

@@ -1,15 +1,13 @@
 package service;
 
-import dataAccess.AuthDAO;
-import dataAccess.GameDAO;
-import dataAccess.UserDAO;
+import dataAccess.*;
 import org.eclipse.jetty.server.Authentication;
 
 public class ClearService {
 
-  public GameDAO gameAccess = new GameDAO();
-  public UserDAO userAccess = new UserDAO();
-  public AuthDAO tokenAccess = new AuthDAO();
+  public GameDAO gameAccess = new MemoryGameDAO();
+  public UserDAO userAccess = new MemoryUserDAO();
+  public AuthDAO tokenAccess = new MemoryAuthDAO();
 
   public void clearAll(UserDAO userDAO, AuthDAO authDAO, GameDAO gameDAO){
     userDAO.clearAll();

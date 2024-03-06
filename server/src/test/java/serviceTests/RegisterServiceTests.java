@@ -1,7 +1,6 @@
 package serviceTests;
 
-import dataAccess.AuthDAO;
-import dataAccess.UserDAO;
+import dataAccess.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.RegisterService;
@@ -17,8 +16,8 @@ public class RegisterServiceTests {
 
   @BeforeEach
   public void setUp() {
-    userDAO = new UserDAO();
-    authDAO = new AuthDAO();
+    userDAO = new MemoryUserDAO();
+    authDAO = new MemoryAuthDAO();
     registerService = new RegisterService();
   }
 

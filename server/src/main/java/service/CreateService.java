@@ -22,7 +22,7 @@ public class CreateService {
         return new CreateResult(e.getMessage());
       }
       String gameName = givenRequest.getGameName();
-      int gameId = generateUniqueGameID();
+      int gameId = generateUniqueGameID(); // Change to findMaxID
       GameData newGame = new GameData(gameId, null, null, gameName, new ChessGame());
       gameDAO.createGame(gameId, newGame);
       return new CreateResult(gameId);

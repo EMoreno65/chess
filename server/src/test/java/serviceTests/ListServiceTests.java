@@ -1,10 +1,7 @@
 package serviceTests;
 
 import RequestandResult.ListResult;
-import dataAccess.AuthDAO;
-import dataAccess.DataAccessException;
-import dataAccess.GameDAO;
-import dataAccess.UserDAO;
+import dataAccess.*;
 import model.AuthData;
 import model.GameData;
 import model.UserData;
@@ -29,9 +26,9 @@ public class ListServiceTests {
   @BeforeEach
   public void setUp() {
     // Initialize necessary objects
-    authDAO = new AuthDAO();
+    authDAO = new MemoryAuthDAO();
     gameDAO = new GameDAO();
-    userDAO = new UserDAO();
+    userDAO = new MemoryUserDAO();
     listService = new ListService();
   }
 

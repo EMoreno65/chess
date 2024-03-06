@@ -1,10 +1,7 @@
 package serviceTests;
 
 import RequestandResult.JoinResult;
-import dataAccess.AuthDAO;
-import dataAccess.DataAccessException;
-import dataAccess.GameDAO;
-import dataAccess.UserDAO;
+import dataAccess.*;
 import model.AuthData;
 import model.GameData;
 import model.UserData;
@@ -25,9 +22,9 @@ public class JoinServiceTests {
   @BeforeEach
   public void setUp() {
     // Initialize necessary objects
-    authDAO = new AuthDAO();
+    authDAO = new MemoryAuthDAO();
     gameDAO = new GameDAO();
-    userDAO = new UserDAO();
+    userDAO = new MemoryUserDAO();
     joinService = new JoinService();
   }
 

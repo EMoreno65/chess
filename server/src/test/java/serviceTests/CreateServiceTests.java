@@ -1,9 +1,6 @@
 package serviceTests;
 
-import dataAccess.AuthDAO;
-import dataAccess.DataAccessException;
-import dataAccess.GameDAO;
-import dataAccess.UserDAO;
+import dataAccess.*;
 import model.AuthData;
 import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,9 +24,9 @@ public class CreateServiceTests {
   @BeforeEach
   public void setUp() {
     // Initialize necessary objects
-    authDAO = new AuthDAO(); // Assuming authDAO initialization
+    authDAO = new MemoryAuthDAO(); // Assuming authDAO initialization
     gameDAO = new GameDAO(); // Assuming gameDAO initialization
-    userDAO = new UserDAO(); // Assuming userDAO initialization
+    userDAO = new MemoryUserDAO(); // Assuming userDAO initialization
     createService = new CreateService();
   }
 
