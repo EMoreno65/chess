@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f393bddf-746c-4755-a231-6b366ae71d1a" name="Changes" comment="Okay, I'm in the right spot. Added SQL template DAO classes" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2d0rIuCKUJAxnVuymSxyjW4lZpj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/ethan/TestingPhase3/chess",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.Server">
+    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="server.Server" />
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChessGameTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shared" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.chessTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.chessTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.chessTests.ChessGameTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChessGameTests.whiteTeamCheckmate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shared" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.chessTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.chessTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.chessTests.ChessGameTests" />
+      <option name="METHOD_NAME" value="whiteTeamCheckmate" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StandardAPITests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="serviceTests in server (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/server/src/test/java/serviceTests" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Server" />
+        <item itemvalue="JUnit.ChessGameTests" />
+        <item itemvalue="JUnit.ChessGameTests.whiteTeamCheckmate" />
+        <item itemvalue="JUnit.serviceTests in server (1)" />
+        <item itemvalue="JUnit.StandardAPITests" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f393bddf-746c-4755-a231-6b366ae71d1a" name="Changes" comment="" />
+      <created>1709155760595</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1709155760595</updated>
+      <workItem from="1709155761688" duration="15092000" />
+      <workItem from="1709181978909" duration="801000" />
+      <workItem from="1709186553144" duration="2124000" />
+      <workItem from="1709233618245" duration="1238000" />
+      <workItem from="1709245291614" duration="4163000" />
+      <workItem from="1709421639326" duration="69000" />
+      <workItem from="1709685051658" duration="450000" />
+    </task>
+    <task id="LOCAL-00001" summary="Is this where my github is?">
+      <option name="closed" value="true" />
+      <created>1709155830134</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1709155830134</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Okay, that was weird. Anyway my code's back, now I gotta redo the style thing again. This is a really long process">
+      <option name="closed" value="true" />
+      <created>1709156012219</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709156012219</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Minimized the code for pieceMoves by implementing new Methods">
+      <option name="closed" value="true" />
+      <created>1709159733204</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1709159733204</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Condensed ResetBoard by making a loop for the pawn pieces">
+      <option name="closed" value="true" />
+      <created>1709160483271</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1709160483271</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Got rid of unnecessary methods and changed names that didn't fit the normal conventions">
+      <option name="closed" value="true" />
+      <created>1709161215689</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1709161215689</updated>
+    </task>
+    <task id="LOCAL-00006" summary="I've wrote some login and request tests. We'll see if they work">
+      <option name="closed" value="true" />
+      <created>1709167383794</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1709167383794</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Login Tests are working">
+      <option name="closed" value="true" />
+      <created>1709170072126</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1709170072126</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Logout Tests are working">
+      <option name="closed" value="true" />
+      <created>1709172752319</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1709172752319</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Create Tests are working">
+      <option name="closed" value="true" />
+      <created>1709174591479</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1709174591479</updated>
+    </task>
+    <task id="LOCAL-00010" summary="List Tests are working">
+      <option name="closed" value="true" />
+      <created>1709176193720</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1709176193720</updated>
+    </task>
+    <task id="LOCAL-00011" summary="All my homeade tests should be working">
+      <option name="closed" value="true" />
+      <created>1709176969052</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1709176969052</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Testing with autograder again">
+      <option name="closed" value="true" />
+      <created>1709186730226</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1709186730226</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Hardcore refactored my valid moves">
+      <option name="closed" value="true" />
+      <created>1709187971015</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1709187971015</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Made some name adjustments in my changed code for finding pieceMoves for Knight and King">
+      <option name="closed" value="true" />
+      <created>1709188579191</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1709188579191</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Is this where the github is?">
+      <option name="closed" value="true" />
+      <created>1709685087967</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1709685087967</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Okay, I'm in the right spot. Added SQL template DAO classes">
+      <option name="closed" value="true" />
+      <created>1709685321432</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1709685321432</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Is this where my github is?" />
+    <MESSAGE value="Okay, that was weird. Anyway my code's back, now I gotta redo the style thing again. This is a really long process" />
+    <MESSAGE value="Minimized the code for pieceMoves by implementing new Methods" />
+    <MESSAGE value="Condensed ResetBoard by making a loop for the pawn pieces" />
+    <MESSAGE value="Got rid of unnecessary methods and changed names that didn't fit the normal conventions" />
+    <MESSAGE value="I've wrote some login and request tests. We'll see if they work" />
+    <MESSAGE value="Login Tests are working" />
+    <MESSAGE value="Logout Tests are working" />
+    <MESSAGE value="Create Tests are working" />
+    <MESSAGE value="List Tests are working" />
+    <MESSAGE value="All my homeade tests should be working" />
+    <MESSAGE value="Testing with autograder again" />
+    <MESSAGE value="Hardcore refactored my valid moves" />
+    <MESSAGE value="Made some name adjustments in my changed code for finding pieceMoves for Knight and King" />
+    <MESSAGE value="Is this where the github is?" />
+    <MESSAGE value="Okay, I'm in the right spot. Added SQL template DAO classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Okay, I'm in the right spot. Added SQL template DAO classes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/service/LogoutService.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/shared/src/main/java/chess/ChessGame.java</url>
+          <line>239</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
