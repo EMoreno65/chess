@@ -82,3 +82,6 @@ public class AuthDAO {
   public void clearAll() {
     myTokens.clear();
   }}
+
+// Determine what table should look like, write code for how to create the table in the DatabaseManagerClass in createDatabase method
+// Create new DAOS, userSQL, return same result but should be getting it out of a database, find where I'm creating DAOs and change them to the new DAOS. Create database and the DAO classes should do the same thing but take in input from the database and returns it somewhere else
