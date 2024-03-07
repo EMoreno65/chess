@@ -11,10 +11,12 @@ import service.ListService;
 import spark.Request;
 import spark.Response;
 
+import java.sql.SQLException;
+
 public class ListHandler {
   ListService myService = new ListService();
 
-  public Object list(Request req, Response res, AuthDAO authDAO, GameDAO gameDAO) throws DataAccessException {
+  public Object list(Request req, Response res, AuthDAO authDAO, GameDAO gameDAO) throws DataAccessException, SQLException {
     String token = req.headers("Authorization");
     if (authDAO.isValidToken(token)){
       ListResult myResult = myService.listResult(authDAO, gameDAO);

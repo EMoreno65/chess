@@ -145,6 +145,7 @@ public class AuthSQLDAO implements AuthDAO{
                 password VARCHAR(40) NOT NULL,
                 PRIMARY KEY (auth_token)
             );
+            
             """
   };
 

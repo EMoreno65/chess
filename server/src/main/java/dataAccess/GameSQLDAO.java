@@ -89,17 +89,86 @@ public class GameSQLDAO implements GameDAO{
 
 
   // Method to retrieve all chess games
-  public List<GameData> listGames() {
+  public List<GameData> listGames() throws DataAccessException, SQLException {
+    List<GameData> gamesList = new ArrayList<>();
     String sql = "SELECT * FROM games";
 
+    Connection conn = DatabaseManager.getConnection();
+    PreparedStatement preparedStatement = conn.prepareStatement(sql);
+    ResultSet resultSet = preparedStatement.executeQuery();
+
+    while (resultSet.next()) {
+      String gameDataString = resultSet.getString("game_data");
+      GameData gameData = deserializeGameData(gameDataString);
+      gamesList.add(gameData);
+    }
+
+    return gamesList;
   }
+
 
   // Method to update a chess game
   public void updateGame(int gameId, GameData updatedGame) throws DataAccessException {
+    String sql = "UPDATE games SET game_data = ? WHERE game_id = ?";
+
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+      // Serialize the updatedGame object to JSON string
+      String serializedGameData = serializeGameData(updatedGame);
+
+      // Set parameters for the PreparedStatement
+      preparedStatement.setString(1, serializedGameData);
+      preparedStatement.setInt(2, gameId);
+
+      // Execute the update query
+      int rowsUpdated = preparedStatement.executeUpdate();
+
+      // Check if any rows were affected
+      if (rowsUpdated == 0) {
+        throw new DataAccessException("Failed to update game with ID: " + gameId);
+      }
+
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error updating game");
+    }
   }
 
-  public int findMaxID() {
-    return 0;
+
+  public int findMaxID() throws DataAccessException {
+    String sql = "SELECT MAX(game_id) AS max_id FROM games";
+
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql);
+         ResultSet resultSet = preparedStatement.executeQuery()) {
+
+      if (resultSet.next()) {
+        int maxID = resultSet.getInt("max_id");
+        return maxID;
+      } else {
+        throw new DataAccessException("Failed to find maximum game ID");
+      }
+
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error finding maximum game ID");
+    }
   }
+
+  private final String[] createStatements = {
+          """
+            CREATE TABLE IF NOT EXISTS games (
+                gameID INT NOT NULL,
+                whiteusername VARCHAR(100) NOT NULL,
+                blackusername VARCHAR(100) NOT NULL,
+                gamename VARCHAR(100) NOT NULL,
+                game TEXT DEFAULT NULL,
+                PRIMARY KEY (auth_token)
+            );
+            
+            """
+  };
+
+
+
 
 }

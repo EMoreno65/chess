@@ -13,7 +13,7 @@ public class Server {
     // Do what I did in ClearService
     public Server(){
         try {
-            newGame = new MemoryGameDAO();
+            newGame = new GameSQLDAO();
             newUser = new MemoryUserDAO();
             newAuth = new AuthSQLDAO();
         } catch (DataAccessException e) {

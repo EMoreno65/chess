@@ -1,5 +1,6 @@
 package dataAccess;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ public interface GameDAO {
 
 
   // Method to retrieve all chess games
-  public List<GameData> listGames();
+  public List<GameData> listGames() throws DataAccessException, SQLException;
 
   // Method to update a chess game
   public void updateGame(int gameId, GameData updatedGame) throws DataAccessException;
@@ -30,5 +31,5 @@ public interface GameDAO {
   return 0;
   }
 
-  public int findMaxID();
+  public int findMaxID() throws DataAccessException;
 };
