@@ -85,14 +85,40 @@ public class AuthSQLDAO implements AuthDAO{
 
 
   @Override
-  public boolean isUserAuthenticated(String authToken) {
+  public boolean isUserAuthenticated(String authToken) throws DataAccessException {
+    String sql = "SELECT COUNT(*) FROM auth_data WHERE auth_token = ?";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+      preparedStatement.setString(1, authToken);
+      try (ResultSet resultSet = preparedStatement.executeQuery()) {
+        if (resultSet.next()) {
+          int count = resultSet.getInt(1);
+          return count > 0;
+        }
+      }
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error checking user authentication");
+    }
     return false;
   }
 
   @Override
-  public String findUserFromAuthToken(String authToken) {
+  public String findUserFromAuthToken(String authToken) throws DataAccessException {
+    String sql = "SELECT username FROM auth_data WHERE auth_token = ?";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+      preparedStatement.setString(1, authToken);
+      try (ResultSet resultSet = preparedStatement.executeQuery()) {
+        if (resultSet.next()) {
+          return resultSet.getString("username");
+        }
+      }
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error finding user from authentication token");
+    }
     return null;
   }
+
 
   // Method to generate a random token
   private String generateToken() {
@@ -100,9 +126,13 @@ public class AuthSQLDAO implements AuthDAO{
   }
 
   @Override
-  public void clearAll() {
-
+  public void clearAll() throws DataAccessException, SQLException {
+    String sql = "DELETE FROM auth_data";
+    Connection conn = DatabaseManager.getConnection();
+    PreparedStatement preparedStatement = conn.prepareStatement(sql);
+    preparedStatement.executeUpdate();
   }
+
 
   private final String[] createStatements = {
           """

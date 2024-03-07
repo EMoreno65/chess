@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import service.LoginService;
 import Request.LoginRequest;
 import RequestandResult.LoginResult;
+
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginServiceTests {
@@ -35,7 +38,7 @@ public class LoginServiceTests {
     authDAO.createAuth(user);
   }
 
-  private void clearData() {
+  private void clearData() throws DataAccessException, SQLException {
     // Clear existing test data from the database
     userDAO.clearAll();
     authDAO.clearAll();
@@ -43,7 +46,7 @@ public class LoginServiceTests {
 
 
   @Test
-  public void testLogin_Failure_IncorrectPassword() throws DataAccessException {
+  public void testLogin_Failure_IncorrectPassword() throws DataAccessException, SQLException {
     // Arrange: Set up test data
     String username="testUser";
     String correctPassword="testPassword";
@@ -62,7 +65,7 @@ public class LoginServiceTests {
   }
 
   @Test
-  public void testLogin_Success() throws DataAccessException {
+  public void testLogin_Success() throws DataAccessException, SQLException {
 
     String username = "testUser";
     String password = "testPassword";

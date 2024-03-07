@@ -11,6 +11,8 @@ import chess.ChessGame;
 import model.GameData;
 import service.CreateService;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateServiceTests {
@@ -31,7 +33,7 @@ public class CreateServiceTests {
   }
 
   @Test
-  public void testCreateGame_Success() throws DataAccessException {
+  public void testCreateGame_Success() throws DataAccessException, SQLException {
     // Arrange: Set up test data and parameters
     String gameName = "Test Game";
 
@@ -68,7 +70,7 @@ public class CreateServiceTests {
 
 
   @Test
-  public void testCreateGame_Unauthorized() throws DataAccessException {
+  public void testCreateGame_Unauthorized() throws DataAccessException, SQLException {
     // Arrange: Set up test data and parameters for unauthorized scenario
     String username = "testUser";
     String password = "testPassword";

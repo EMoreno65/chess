@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.ListService;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class ListServiceTests {
   }
 
   @Test
-  public void testListGames_Success() throws DataAccessException {
+  public void testListGames_Success() throws DataAccessException, SQLException {
     // Arrange: Set up test data
     List<GameData> expectedGames = new ArrayList<>();
     expectedGames.add(new GameData(1, "Game 1", null, null, null));
@@ -51,7 +52,7 @@ public class ListServiceTests {
     authDAO.clearAll();
   }
   @Test
-  public void testListGames_NoGames() throws DataAccessException {
+  public void testListGames_NoGames() throws DataAccessException, SQLException {
     String username = "testUser";
     String password = "testPassword";
     String email = "test@example.com";

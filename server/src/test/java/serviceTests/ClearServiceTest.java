@@ -3,12 +3,15 @@ package serviceTests;
 import dataAccess.*;
 import org.junit.jupiter.api.Test;
 import service.ClearService;
+
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClearServiceTest {
 
   @Test
-  public void testClearAll() {
+  public void testClearAll() throws DataAccessException, SQLException {
     // Arrange: Set up your test environment
     ClearService clearService = new ClearService();
 

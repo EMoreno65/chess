@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import service.LogoutService;
 import RequestandResult.LogoutResult;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LogoutServiceTest {
@@ -35,7 +37,7 @@ public class LogoutServiceTest {
     AuthData authData = new AuthData(validAuthToken, username, password);
   }
 
-  private void clearData() {
+  private void clearData() throws DataAccessException, SQLException {
     userDAO.clearAll();
     authDAO.clearAll();
   }
@@ -46,7 +48,7 @@ public class LogoutServiceTest {
 
 
   @Test
-  public void testLogout_Success() throws DataAccessException {
+  public void testLogout_Success() throws DataAccessException, SQLException {
 
     Object result = logoutService.logout(authDAO, validAuthToken);
     if (result instanceof LogoutResult) {
@@ -63,7 +65,7 @@ public class LogoutServiceTest {
 
 
   @Test
-  public void testLogout_Failure_InvalidAuthToken() throws DataAccessException {
+  public void testLogout_Failure_InvalidAuthToken() throws DataAccessException, SQLException {
 
     String invalidAuthToken = "invalidAuthToken"; // Assuming an invalid authentication token
 

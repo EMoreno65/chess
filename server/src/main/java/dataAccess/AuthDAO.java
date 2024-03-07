@@ -3,6 +3,7 @@ package dataAccess;
 import model.AuthData;
 import model.UserData;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -17,11 +18,11 @@ public interface AuthDAO {
 
   public void deleteAuth(String authToken) throws DataAccessException;
 
-  public boolean isUserAuthenticated(String authToken);
+  public boolean isUserAuthenticated(String authToken) throws DataAccessException;
 
-  public String findUserFromAuthToken(String authToken);
+  public String findUserFromAuthToken(String authToken) throws DataAccessException;
 
-  public void clearAll();
+  public void clearAll() throws DataAccessException, SQLException;
 }
 
 // Determine what table should look like, write code for how to create the table in the DatabaseManagerClass in createDatabase method

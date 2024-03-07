@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import service.RegisterService;
 import Request.RegisterRequest;
 import RequestandResult.RegisterResult;
+
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RegisterServiceTests {
@@ -22,7 +25,7 @@ public class RegisterServiceTests {
   }
 
   @Test
-  public void testRegister_Success() {
+  public void testRegister_Success() throws DataAccessException, SQLException {
     String username = "testUser";
     String password = "testPassword";
     String email = "test@example.com";
@@ -37,7 +40,7 @@ public class RegisterServiceTests {
   }
 
   @Test
-  public void testRegister_Failure() {
+  public void testRegister_Failure() throws DataAccessException, SQLException {
     // No Email
     String username = null;
     String password = "";

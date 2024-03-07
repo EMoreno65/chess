@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import service.JoinService;
 import Request.JoinRequest;
 import chess.ChessGame;
+
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JoinServiceTests {
@@ -29,7 +32,7 @@ public class JoinServiceTests {
   }
 
   @Test
-  public void testJoinGame_Success() throws DataAccessException {
+  public void testJoinGame_Success() throws DataAccessException, SQLException {
     // Arrange: Set up test data
     String username = "testUser";
     String password = "testPassword";
@@ -55,7 +58,7 @@ public class JoinServiceTests {
   }
 
   @Test
-  public void testJoinGame_Failure_AlreadyTaken() throws DataAccessException {
+  public void testJoinGame_Failure_AlreadyTaken() throws DataAccessException, SQLException {
     // Arrange: Set up test data
     String authToken = "validAuthToken";
     String username = "testUser";
