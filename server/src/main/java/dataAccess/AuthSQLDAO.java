@@ -70,8 +70,19 @@ public class AuthSQLDAO implements AuthDAO{
 
   @Override
   public void deleteAuth(String authToken) throws DataAccessException {
-
+    String sql = "DELETE FROM auth_data WHERE auth_token = ?";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+      preparedStatement.setString(1, authToken);
+      int rowsAffected = preparedStatement.executeUpdate();
+      if (rowsAffected == 0) {
+        throw new DataAccessException("Token not found: " + authToken);
+      }
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error deleting authentication data");
+    }
   }
+
 
   @Override
   public boolean isUserAuthenticated(String authToken) {
