@@ -6,9 +6,9 @@ import spark.*;
 
 public class Server {
 
-    public GameDAO newGame = new MemoryGameDAO();
-    public UserDAO newUser = new MemoryUserDAO();
-    public AuthDAO newAuth = new MemoryAuthDAO();
+    public GameDAO newGame = new GameSQLDAO();
+    public UserDAO newUser = new UserSQLDAO();
+    public AuthDAO newAuth = new AuthSQLDAO();
     public static void main(String[] args){
         new Server().run(8080);
     }
