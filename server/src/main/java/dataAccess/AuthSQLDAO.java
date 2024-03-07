@@ -5,6 +5,7 @@ import model.UserData;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
@@ -32,11 +33,38 @@ public class AuthSQLDAO implements AuthDAO{
 
   @Override
   public AuthData getAuthData(String authToken) throws DataAccessException {
-
+    String sql = "SELECT auth_token, username, password FROM auth_data WHERE auth_token = ?";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+      preparedStatement.setString(1, authToken);
+      try (ResultSet resultSet = preparedStatement.executeQuery()) {
+        if (resultSet.next()) {
+          String username = resultSet.getString("username");
+          String password = resultSet.getString("password");
+          return new AuthData(authToken, username, password);
+        }
+      }
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error retrieving authentication data");
+    }
+    return null; // Return null if no authentication data found for the provided token
   }
 
   @Override
   public boolean isValidToken(String authToken) throws DataAccessException {
+    String sql = "SELECT COUNT(*) FROM auth_data WHERE auth_token = ?";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+      preparedStatement.setString(1, authToken);
+      try (ResultSet resultSet = preparedStatement.executeQuery()) {
+        if (resultSet.next()) {
+          int count = resultSet.getInt(1);
+          return count > 0;
+        }
+      }
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error checking token validity");
+    }
     return false;
   }
 
