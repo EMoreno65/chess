@@ -7,14 +7,28 @@ import java.sql.SQLException;
 
 public class ClearService {
 
-  public GameDAO gameAccess = new GameSQLDAO();
-  public UserDAO userAccess = new UserSQLDAO();
-  public AuthDAO tokenAccess = new AuthSQLDAO();
+  public GameDAO gameAccess = null;
+  public UserDAO userAccess = null;
+  public AuthDAO tokenAccess = null;
 
-  public void clearAll(UserDAO userDAO, AuthDAO authDAO, GameDAO gameDAO) throws DataAccessException, SQLException {
-    userDAO.clearAll();
-    gameDAO.clearAll();
-    authDAO.clearAll();
+  public ClearService(){
+    try {
+      gameAccess = new GameSQLDAO();
+      userAccess = new UserSQLDAO();
+      tokenAccess = new AuthSQLDAO();
+    } catch (DataAccessException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public void clearAll(UserDAO userAccess, AuthDAO tokenAccess, GameDAO gameAccess){
+    try {
+      userAccess.clearAll();
+      gameAccess.clearAll();
+      tokenAccess.clearAll();
+    } catch (DataAccessException e) {
+      throw new RuntimeException(e);
+    }
   }
 
 }

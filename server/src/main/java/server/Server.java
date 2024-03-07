@@ -6,9 +6,20 @@ import spark.*;
 
 public class Server {
 
-    public GameDAO newGame = new GameSQLDAO();
-    public UserDAO newUser = new UserSQLDAO();
-    public AuthDAO newAuth = new AuthSQLDAO();
+    public GameDAO newGame = null;
+    public UserDAO newUser = null;
+    public AuthDAO newAuth = null;
+
+    // Do what I did in ClearService
+    public Server(){
+        try {
+            newGame = new MemoryGameDAO();
+            newUser = new MemoryUserDAO();
+            newAuth = new AuthSQLDAO();
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static void main(String[] args){
         new Server().run(8080);
     }

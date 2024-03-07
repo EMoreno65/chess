@@ -11,9 +11,9 @@ import java.util.UUID;
 
 public class AuthSQLDAO implements AuthDAO{
 
-//  public AuthSQLDAO() throws DataAccessException, ResponseException {
-//    configureDatabase();
-//  }
+  public AuthSQLDAO() throws DataAccessException{
+    configureDatabase();
+  }
   @Override
   public AuthData createAuth(UserData user) throws DataAccessException {
     String newToken = generateToken();
@@ -126,11 +126,14 @@ public class AuthSQLDAO implements AuthDAO{
   }
 
   @Override
-  public void clearAll() throws DataAccessException, SQLException {
+  public void clearAll() throws DataAccessException {
     String sql = "DELETE FROM auth_data";
-    Connection conn = DatabaseManager.getConnection();
-    PreparedStatement preparedStatement = conn.prepareStatement(sql);
-    preparedStatement.executeUpdate();
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+      preparedStatement.executeUpdate();
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error clearing authentication data");
+    }
   }
 
 
@@ -145,7 +148,7 @@ public class AuthSQLDAO implements AuthDAO{
             """
   };
 
-  private void configureDatabase() throws ResponseException, DataAccessException {
+  private void configureDatabase() throws DataAccessException {
     DatabaseManager.createDatabase();
     try (var conn = DatabaseManager.getConnection()) {
       for (var statement : createStatements) {
@@ -154,7 +157,7 @@ public class AuthSQLDAO implements AuthDAO{
         }
       }
     } catch (SQLException ex) {
-      throw new ResponseException(500, String.format("Unable to configure database: %s", ex.getMessage()));
+      throw new DataAccessException(String.format("Unable to configure database: %s", ex.getMessage()));
     }
   }
   // Table of AuthData

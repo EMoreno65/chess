@@ -9,8 +9,6 @@ import model.AuthData;
 import model.UserData;
 
 public class LoginService {
-  //  UserDAO userAccess = new UserDAO();
-//  AuthDAO tokenAccess = new AuthDAO();
   public LoginResult newResult(LoginRequest givenRequest, UserDAO userDAO, AuthDAO authDAO) throws DataAccessException {
     try{
       UserData user = userDAO.getUser(givenRequest.getUsername());

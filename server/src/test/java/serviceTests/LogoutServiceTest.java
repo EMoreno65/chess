@@ -37,9 +37,14 @@ public class LogoutServiceTest {
     AuthData authData = new AuthData(validAuthToken, username, password);
   }
 
-  private void clearData() throws DataAccessException, SQLException {
-    userDAO.clearAll();
-    authDAO.clearAll();
+  private void clearData(){
+    try {
+      userDAO.clearAll();
+      authDAO.clearAll();
+    }
+    catch(DataAccessException e){
+      throw new RuntimeException(e);
+    }
   }
 
   private String generateUniqueAuthToken() {

@@ -38,10 +38,15 @@ public class LoginServiceTests {
     authDAO.createAuth(user);
   }
 
-  private void clearData() throws DataAccessException, SQLException {
+  private void clearData(){
     // Clear existing test data from the database
-    userDAO.clearAll();
-    authDAO.clearAll();
+    try {
+      userDAO.clearAll();
+      authDAO.clearAll();
+    }
+    catch (DataAccessException e){
+      throw new RuntimeException(e);
+    }
   }
 
 

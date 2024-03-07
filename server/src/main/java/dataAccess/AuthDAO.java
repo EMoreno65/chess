@@ -22,7 +22,7 @@ public interface AuthDAO {
 
   public String findUserFromAuthToken(String authToken) throws DataAccessException;
 
-  public void clearAll() throws DataAccessException, SQLException;
+  public void clearAll() throws DataAccessException;
 }
 
 // Determine what table should look like, write code for how to create the table in the DatabaseManagerClass in createDatabase method
