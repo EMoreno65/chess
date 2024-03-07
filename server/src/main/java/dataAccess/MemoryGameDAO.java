@@ -63,12 +63,16 @@ public class MemoryGameDAO implements GameDAO{
       return nextGameID++;
     }
 
-  @Override
-  public int findMaxID() {
-      gamesMap.keySet(// find maximum number);
-              // return said number
-              // Get rid of generateUniqueGameID and replace with findMaxID
-    return 0;
+    public int findMaxID() {
+      int maxID = 0;
+
+      for (int id : gamesMap.keySet()) {
+        if (id > maxID) {
+          maxID = id;
+        }
+      }
+
+    return maxID + 1;
   }
 
 }

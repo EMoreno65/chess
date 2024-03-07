@@ -23,7 +23,7 @@ public class JoinServiceTests {
   public void setUp() {
     // Initialize necessary objects
     authDAO = new MemoryAuthDAO();
-    gameDAO = new GameDAO();
+    gameDAO = new MemoryGameDAO();
     userDAO = new MemoryUserDAO();
     joinService = new JoinService();
   }

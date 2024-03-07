@@ -25,7 +25,7 @@ public class CreateServiceTests {
   public void setUp() {
     // Initialize necessary objects
     authDAO = new MemoryAuthDAO(); // Assuming authDAO initialization
-    gameDAO = new GameDAO(); // Assuming gameDAO initialization
+    gameDAO = new MemoryGameDAO(); // Assuming gameDAO initialization
     userDAO = new MemoryUserDAO(); // Assuming userDAO initialization
     createService = new CreateService();
   }

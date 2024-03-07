@@ -18,7 +18,7 @@ public class ClearServiceTest {
     ClearService clearService = new ClearService();
 
     // Act: Call the clearAll method
-    clearService.clearAll(new MemoryUserDAO(), new MemoryAuthDAO(), new GameDAO());
+    clearService.clearAll(new MemoryUserDAO(), new MemoryAuthDAO(), new MemoryGameDAO());
 
     //
     assertTrue(clearService.gameAccess.listGames().isEmpty(), "Game database should be empty");

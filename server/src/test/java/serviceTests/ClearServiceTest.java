@@ -12,7 +12,7 @@ public class ClearServiceTest {
     // Arrange: Set up your test environment
     ClearService clearService = new ClearService();
 
-    clearService.clearAll(new MemoryUserDAO(), new MemoryAuthDAO(), new GameDAO());
+    clearService.clearAll(new MemoryUserDAO(), new MemoryAuthDAO(), new MemoryGameDAO());
 
     assertTrue(clearService.gameAccess.listGames().isEmpty(), "Game database should be empty");
   }

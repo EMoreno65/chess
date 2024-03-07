@@ -10,8 +10,6 @@ import dataAccess.UserDAO;
 import model.AuthData;
 import model.GameData;
 
-import static dataAccess.GameDAO.generateUniqueGameID;
-
 public class CreateService {
   public CreateResult createGame(CreateRequest givenRequest, AuthDAO authDAO, GameDAO gameDAO, UserDAO userDAO) throws DataAccessException {
     try {
@@ -22,7 +20,7 @@ public class CreateService {
         return new CreateResult(e.getMessage());
       }
       String gameName = givenRequest.getGameName();
-      int gameId = generateUniqueGameID(); // Change to findMaxID
+      int gameId =gameDAO.findMaxID(); // Change to findMaxID
       GameData newGame = new GameData(gameId, null, null, gameName, new ChessGame());
       gameDAO.createGame(gameId, newGame);
       return new CreateResult(gameId);
