@@ -15,7 +15,7 @@ public interface UserDAO {
 
   public String getPassword(String username) throws DataAccessException;
 
-  public boolean verifyPassword(UserData user, String providedPassword);
+  public boolean verifyPassword(UserData user, String providedPassword) throws DataAccessException;
 
-  public void clearAll();
+  public void clearAll() throws DataAccessException;
 }

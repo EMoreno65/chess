@@ -19,7 +19,7 @@ public class RegisterHandler {
     RegisterRequest givenRequest = new Gson().fromJson(myJSON, RegisterRequest.class);
     RegisterResult myResult = myService.newResult(givenRequest, userDAO, authDAO);
     if (myResult.getErrorMessage() != null){
-      if (myResult.getErrorMessage() == "Error: already taken"){
+      if (myResult.getErrorMessage().equals("Error: already taken")){
         Results resultMessage = new Results(myResult.getErrorMessage());
         res.status(403);
         return new Gson().toJson(resultMessage);

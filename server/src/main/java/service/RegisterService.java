@@ -29,6 +29,10 @@ public class RegisterService {
 
     UserData user = new UserData(username, password, email);
     try {
+      if (userDAO.getUser(username) != null){
+        DataAccessException e = new DataAccessException("Error: already taken");
+        return new RegisterResult(e.getMessage());
+      }
       userDAO.createUser(user);
       AuthData givenToken = authDAO.createAuth(user);
       return new RegisterResult(givenToken.getAuthToken(), givenToken.getusername(), givenToken.getPassword());

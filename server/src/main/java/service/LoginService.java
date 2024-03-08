@@ -12,6 +12,10 @@ public class LoginService {
   public LoginResult newResult(LoginRequest givenRequest, UserDAO userDAO, AuthDAO authDAO) throws DataAccessException {
     try{
       UserData user = userDAO.getUser(givenRequest.getUsername());
+      if (user == null){
+        DataAccessException e = new DataAccessException("Error: unauthorized");
+        return new LoginResult(e.getMessage());
+      }
       AuthData givenToken = authDAO.createAuth(user);
       if (!userDAO.verifyPassword(user, givenRequest.getPassword())){
         DataAccessException e = new DataAccessException("Error: unauthorized");
