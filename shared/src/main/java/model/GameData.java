@@ -6,7 +6,7 @@ import java.io.Serializable;
 public record GameData(int gameID, String whiteUsername, String blackUsername, String gameName, ChessGame game) {
   // Constructor with default values for whiteUsername and blackUsername
   public GameData(int gameID, String gameName, ChessGame game) {
-    this(gameID, "", "", gameName, game);
+    this(gameID, null, null, gameName, game);
   }
   public int gameID(){
     return gameID;

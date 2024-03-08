@@ -28,7 +28,14 @@ public class GameSQLDAO implements GameDAO {
     configureDatabase();
   }
 
-  public void clearAll() {
+  public void clearAll() throws DataAccessException{
+    String sql = "DELETE FROM games";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+      preparedStatement.executeUpdate();
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error clearing game data");
+    }
   }
 
   // Method to create a new chess game
@@ -51,10 +58,10 @@ public class GameSQLDAO implements GameDAO {
          PreparedStatement preparedStatement = conn.prepareStatement(insertSql)) {
       int newGameID = findMaxID() + 1;
       preparedStatement.setInt(1, newGameID);
-      preparedStatement.setObject(2, (game.whiteUsername() != null) ? game.whiteUsername() : "");
-      preparedStatement.setObject(3, (game.blackUsername() != null) ? game.blackUsername() : "");
+      preparedStatement.setObject(2, game.whiteUsername());
+      preparedStatement.setObject(3, game.blackUsername());
       preparedStatement.setObject(4, game.gameName());
-      preparedStatement.setObject(5, serializeGameData(game));
+      preparedStatement.setObject(5, serializeGameData(new GameData(newGameID, game.whiteUsername(), game.blackUsername(), game.gameName(), game.game())));
 
       preparedStatement.executeUpdate();
     } catch (SQLException ex) {
@@ -72,14 +79,20 @@ public class GameSQLDAO implements GameDAO {
     return byteArrayOutputStream.toByteArray();
   }
   public GameData getGame(int gameId) throws DataAccessException {
-    String sql="SELECT games FROM games WHERE game_id = ?";
+    String sql="SELECT * FROM games WHERE gameID = ?";
     try (Connection conn=DatabaseManager.getConnection();
          PreparedStatement preparedStatement=conn.prepareStatement(sql)) {
       preparedStatement.setInt(1, gameId);
       try (ResultSet resultSet=preparedStatement.executeQuery()) {
         if (resultSet.next()) {
-          String gameDataString=resultSet.getString("game_data");
-          return deserializeGameData(gameDataString);
+          int GameID = resultSet.getInt("gameID");
+          String whiteUsernameString = resultSet.getString("whiteUsername");
+          String blackUsernameString = resultSet.getString("blackUsername");
+          String gameNameString = resultSet.getString("gameName");
+          String chessGameString = resultSet.getString("game");
+          ChessGame chessGame = deserializeChessGame(chessGameString);
+          GameData newGameData = new GameData(GameID, whiteUsernameString, blackUsernameString, gameNameString, chessGame);
+          return newGameData;
         } else {
           throw new DataAccessException("Game not found with ID: " + gameId);
         }
@@ -112,17 +125,17 @@ public class GameSQLDAO implements GameDAO {
 
 
   // Deserialization method
-  private GameData deserializeGameData(String json) throws DataAccessException {
+  private ChessGame deserializeChessGame(String json) throws DataAccessException {
     Gson gson=new Gson();
     try {
-      return gson.fromJson(json, GameData.class);
+      return gson.fromJson(json, ChessGame.class);
     } catch (JsonSyntaxException e) {
       throw new DataAccessException("Error deserializing game data");
     }
   }
 
   public int getGameID(ChessGame gameToFind) throws DataAccessException {
-    String sql="SELECT game_id FROM game_data WHERE game = '?'";
+    String sql="SELECT gameID FROM games WHERE game = '?'";
     try (Connection conn=DatabaseManager.getConnection();
          PreparedStatement preparedStatement=conn.prepareStatement(sql)) {
       preparedStatement.setObject(5, gameToFind);
@@ -139,16 +152,21 @@ public class GameSQLDAO implements GameDAO {
 
   public List<GameData> listGames() throws DataAccessException {
     List<GameData> gamesList = new ArrayList<>();
-    String sql = "SELECT DISTINCT game FROM games";
+    String sql = "SELECT * FROM games";
 
     try (Connection conn = DatabaseManager.getConnection();
          PreparedStatement preparedStatement = conn.prepareStatement(sql);
          ResultSet resultSet = preparedStatement.executeQuery()) {
 
       while (resultSet.next()) {
-        String gameDataString = resultSet.getString("game");
-        GameData gameData = deserializeGameData(gameDataString);
-        gamesList.add(gameData);
+        int GameID = resultSet.getInt("gameID");
+        String whiteUsernameString = resultSet.getString("whiteUsername");
+        String blackUsernameString = resultSet.getString("blackUsername");
+        String gameNameString = resultSet.getString("gameName");
+        String chessGameString = resultSet.getString("game");
+        ChessGame chessGame = deserializeChessGame(chessGameString);
+        GameData newGameData = new GameData(GameID, whiteUsernameString, blackUsernameString, gameNameString, chessGame);
+        gamesList.add(newGameData);
       }
 
       // Check if no games were found
@@ -170,7 +188,7 @@ public class GameSQLDAO implements GameDAO {
 
   // Method to update a chess game
   public void updateGame(int gameId, GameData updatedGame) throws DataAccessException {
-    String sql="UPDATE games SET game_data = ? WHERE game_id = ?";
+    String sql="UPDATE games SET game = ? WHERE gameID = ?";
 
     try (Connection conn=DatabaseManager.getConnection();
          PreparedStatement preparedStatement=conn.prepareStatement(sql)) {
@@ -219,8 +237,8 @@ public class GameSQLDAO implements GameDAO {
           """
             CREATE TABLE IF NOT EXISTS games (
                 gameID INT NOT NULL,
-                whiteUsername VARCHAR(100) DEFAULT NULL,
-                blackUsername VARCHAR(100) DEFAULT NULL,
+                whiteUsername VARCHAR(100),
+                blackUsername VARCHAR(100),
                 gameName VARCHAR(100) DEFAULT NULL,
                 game TEXT DEFAULT NULL,
                 PRIMARY KEY (gameID)

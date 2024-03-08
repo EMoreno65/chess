@@ -10,7 +10,7 @@ import chess.ChessGame;
 import model.GameData;
 
 public interface GameDAO {
-  public void clearAll();
+  public void clearAll() throws DataAccessException;
 
   // Method to create a new chess game
   public void createGame(int gameId, GameData game) throws DataAccessException;

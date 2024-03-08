@@ -23,7 +23,7 @@ public class CreateService {
       int gameId =gameDAO.findMaxID(); // Change to findMaxID
       GameData newGame = new GameData(gameId, null, null, gameName, new ChessGame());
       gameDAO.createGame(gameId, newGame);
-      return new CreateResult(gameId);
+      return new CreateResult(gameId + 1);
     } catch (DataAccessException e) {
       return new CreateResult(e.getMessage());
     }
