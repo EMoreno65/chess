@@ -137,24 +137,35 @@ public class GameSQLDAO implements GameDAO {
     return 0;
   }
 
+  public List<GameData> listGames() throws DataAccessException {
+    List<GameData> gamesList = new ArrayList<>();
+    String sql = "SELECT DISTINCT game FROM games";
 
-  // Method to retrieve all chess games
-  public List<GameData> listGames() throws DataAccessException, SQLException {
-    List<GameData> gamesList=new ArrayList<>();
-    String sql="SELECT * FROM games";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql);
+         ResultSet resultSet = preparedStatement.executeQuery()) {
 
-    Connection conn=DatabaseManager.getConnection();
-    PreparedStatement preparedStatement=conn.prepareStatement(sql);
-    ResultSet resultSet=preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        String gameDataString = resultSet.getString("game");
+        GameData gameData = deserializeGameData(gameDataString);
+        gamesList.add(gameData);
+      }
 
-    while (resultSet.next()) {
-      String gameDataString=resultSet.getString("game_data");
-      GameData gameData=deserializeGameData(gameDataString);
-      gamesList.add(gameData);
+      // Check if no games were found
+      if (gamesList.isEmpty()) {
+        System.out.println("No games found in the database.");
+      }
+
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error retrieving games: " + ex.getMessage());
     }
 
     return gamesList;
   }
+
+
+  // Method to retrieve all chess games
+
 
 
   // Method to update a chess game
