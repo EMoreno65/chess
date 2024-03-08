@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
+import java.io.Serializable;
 
 /**
  * For a class that can manage a chess game, making moves on a board
@@ -11,7 +12,7 @@ import java.util.Objects;
  * Note: You can add to this class, but you may not alter
  * signature of the existing methods.
  */
-public class ChessGame {
+public class ChessGame implements Serializable{
     ChessBoard board;
     private TeamColor currentTurn;
     public ChessGame() {

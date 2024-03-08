@@ -4,7 +4,11 @@ import chess.ChessGame;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import model.GameData;
+import model.UserData;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,22 +32,47 @@ public class GameSQLDAO implements GameDAO {
   }
 
   // Method to create a new chess game
+//  public void createGame(int gameId, GameData game) throws DataAccessException {
+//    String sql = "INSERT INTO games (gameID, game) VALUES (?, ?)";
+//
+//    try (Connection conn = DatabaseManager.getConnection();
+//         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+//      preparedStatement.setInt(1, gameId);
+//      preparedStatement.setObject(2, game);
+//      preparedStatement.executeUpdate();
+//    } catch (SQLException ex) {
+//      throw new DataAccessException("Error creating game");
+//    }
+//  }
   public void createGame(int gameId, GameData game) throws DataAccessException {
-    String sql="INSERT INTO games (game_id, game_data) VALUES (?, ?)";
+    String insertSql = "INSERT INTO games (gameID, whiteUsername, blackUsername, gameName, game) VALUES (?, ?, ?, ?, ?)";
 
-    try (Connection conn=DatabaseManager.getConnection();
-         PreparedStatement preparedStatement=conn.prepareStatement(sql)) {
-      preparedStatement.setInt(1, gameId);
-      preparedStatement.setObject(5, game);
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(insertSql)) {
+      int newGameID = findMaxID() + 1;
+      preparedStatement.setInt(1, newGameID);
+      preparedStatement.setObject(2, (game.whiteUsername() != null) ? game.whiteUsername() : "");
+      preparedStatement.setObject(3, (game.blackUsername() != null) ? game.blackUsername() : "");
+      preparedStatement.setObject(4, game.gameName());
+      preparedStatement.setObject(5, serializeGameData(game));
+
       preparedStatement.executeUpdate();
     } catch (SQLException ex) {
-      throw new DataAccessException("Error creating game");
+      throw new DataAccessException("Error: " + ex.getMessage());
     }
   }
 
-  // Method to retrieve a chess game by its ID
+
+
+  private byte[] serializeChessGame(ChessGame chessGame) throws IOException {
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+    objectOutputStream.writeObject(chessGame);
+    objectOutputStream.flush();
+    return byteArrayOutputStream.toByteArray();
+  }
   public GameData getGame(int gameId) throws DataAccessException {
-    String sql="SELECT game_data FROM games WHERE game_id = ?";
+    String sql="SELECT games FROM games WHERE game_id = ?";
     try (Connection conn=DatabaseManager.getConnection();
          PreparedStatement preparedStatement=conn.prepareStatement(sql)) {
       preparedStatement.setInt(1, gameId);
@@ -61,9 +90,26 @@ public class GameSQLDAO implements GameDAO {
   }
 
   private String serializeGameData(GameData gameData) {
-    Gson gson=new Gson();
+    // Ensure whiteUsername and blackUsername are not null
+    String whiteUsername = (gameData.whiteUsername() != null) ? gameData.whiteUsername() : "";
+    String blackUsername = (gameData.blackUsername() != null) ? gameData.blackUsername() : "";
+
+    // Create a new instance of GameData with updated whiteUsername and blackUsername
+    gameData = new GameData(
+            gameData.gameID(),
+            whiteUsername,
+            blackUsername,
+            gameData.gameName(),
+            gameData.game()
+    );
+
+    // Serialize the updated GameData object
+    Gson gson = new Gson();
     return gson.toJson(gameData);
   }
+
+
+
 
   // Deserialization method
   private GameData deserializeGameData(String json) throws DataAccessException {
@@ -140,7 +186,7 @@ public class GameSQLDAO implements GameDAO {
 
 
   public int findMaxID() throws DataAccessException {
-    String sql="SELECT MAX(game_id) AS max_id FROM games";
+    String sql="SELECT MAX(gameID) AS max_id FROM games";
 
     try (Connection conn=DatabaseManager.getConnection();
          PreparedStatement preparedStatement=conn.prepareStatement(sql);
@@ -162,9 +208,9 @@ public class GameSQLDAO implements GameDAO {
           """
             CREATE TABLE IF NOT EXISTS games (
                 gameID INT NOT NULL,
-                whiteusername VARCHAR(100) DEFAULT NULL,
-                blackusername VARCHAR(100) DEFAULT NULL,
-                gamename VARCHAR(100) NOT NULL,
+                whiteUsername VARCHAR(100) DEFAULT NULL,
+                blackUsername VARCHAR(100) DEFAULT NULL,
+                gameName VARCHAR(100) DEFAULT NULL,
                 game TEXT DEFAULT NULL,
                 PRIMARY KEY (gameID)
                 
