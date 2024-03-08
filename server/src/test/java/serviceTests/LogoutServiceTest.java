@@ -1,4 +1,4 @@
-package dataAccessTests;
+package serviceTests;
 
 import dataAccess.*;
 import model.AuthData;

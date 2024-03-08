@@ -121,7 +121,7 @@ public class AuthSQLDAO implements AuthDAO{
 
 
   // Method to generate a random token
-  private String generateToken() {
+  public String generateToken() {
     return UUID.randomUUID().toString();
   }
 
