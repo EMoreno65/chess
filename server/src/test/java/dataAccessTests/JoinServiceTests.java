@@ -1,4 +1,4 @@
-package serviceTests;
+package dataAccessTests;
 
 import RequestandResult.JoinResult;
 import dataAccess.*;
