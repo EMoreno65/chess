@@ -71,12 +71,8 @@ public class GameSQLDAO implements GameDAO {
 
 
 
-  private byte[] serializeChessGame(ChessGame chessGame) throws IOException {
-    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-    ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-    objectOutputStream.writeObject(chessGame);
-    objectOutputStream.flush();
-    return byteArrayOutputStream.toByteArray();
+  private String serializeChessGame(ChessGame chessGame) {
+    return new Gson().toJson(chessGame);
   }
   public GameData getGame(int gameId) throws DataAccessException {
     String sql="SELECT * FROM games WHERE gameID = ?";
@@ -188,17 +184,19 @@ public class GameSQLDAO implements GameDAO {
 
   // Method to update a chess game
   public void updateGame(int gameId, GameData updatedGame) throws DataAccessException {
-    String sql="UPDATE games SET game = ? WHERE gameID = ?";
+    String sql="UPDATE games SET game = ?, whiteUsername = ?, blackUsername = ? WHERE gameID = ?";
 
     try (Connection conn=DatabaseManager.getConnection();
          PreparedStatement preparedStatement=conn.prepareStatement(sql)) {
 
       // Serialize the updatedGame object to JSON string
-      String serializedGameData=serializeGameData(updatedGame);
+      String serializedGameData=serializeChessGame(updatedGame.game());
 
       // Set parameters for the PreparedStatement
       preparedStatement.setString(1, serializedGameData);
-      preparedStatement.setInt(2, gameId);
+      preparedStatement.setString(2, updatedGame.whiteUsername());
+      preparedStatement.setString(3, updatedGame.blackUsername());
+      preparedStatement.setInt(4, gameId);
 
       // Execute the update query
       int rowsUpdated=preparedStatement.executeUpdate();

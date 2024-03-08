@@ -13,7 +13,7 @@ import java.io.Serializable;
  * signature of the existing methods.
  */
 public class ChessGame implements Serializable{
-    ChessBoard board;
+    ChessBoard board = new ChessBoard();
     private TeamColor currentTurn;
     public ChessGame() {
         this.currentTurn = TeamColor.WHITE;
