@@ -2,10 +2,17 @@ package dataAccessTests;
 
 import dataAccess.AuthSQLDAO;
 import dataAccess.DataAccessException;
+import dataAccess.DatabaseManager;
 import model.AuthData;
 import model.UserData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.asm.ClassReader;
+
+import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AuthSQLDAOTest {
 
@@ -49,12 +56,63 @@ public class AuthSQLDAOTest {
 
   @Test
   public void testGetAuthData_Positive() throws DataAccessException {
+    // Create an instance of AuthSQLDAO
     AuthSQLDAO authDAO = new AuthSQLDAO();
-    String newToken = authDAO.generateToken();
-    AuthData expectedAuthData = new AuthData(newToken, "test_user", "password123");
-    authDAO.createAuth(new UserData("test_user", "password123", "email@email"));
+
+    // Generate a new authentication token
+
+    // Create a new user and insert authentication data with the generated token
+    UserData user = new UserData("test_user", "password123", "email@email");
+    AuthData authData = authDAO.createAuth(user);
+    String newToken = authData.authToken();
+
+    // Retrieve authentication data using the same token that was generated
     AuthData retrievedAuthData = authDAO.getAuthData(newToken);
+
+    // Create an expected AuthData object with the user's details
+    AuthData expectedAuthData = new AuthData(newToken, user.getUsername(), user.getPassword());
+
+    // Perform assertion to compare the expected and retrieved AuthData objects
     Assertions.assertEquals(expectedAuthData, retrievedAuthData, "AuthData should match");
   }
+  @Test
+  public void testGetAuthData_Negative() throws DataAccessException {
+    // Create an instance of AuthSQLDAO
+    AuthSQLDAO authDAO = new AuthSQLDAO();
+
+    // Generate a new authentication token
+
+    // Create a new user and insert authentication data with the generated token
+    UserData user = new UserData("test_user", "password123", "email@email");
+    AuthData authData = authDAO.createAuth(user);
+    String newToken =authDAO.generateToken();
+
+    // Retrieve authentication data using the same token that was generated
+    AuthData retrievedAuthData = authDAO.getAuthData(newToken);
+
+    // Create an expected AuthData object with the user's details
+    AuthData expectedAuthData = new AuthData(authData.authToken(), user.getUsername(), user.getPassword());
+
+    // Perform assertion to compare the expected and retrieved AuthData objects
+    Assertions.assertNull(retrievedAuthData, "AuthData should match");
+  }
+
+  @Test
+  public void testIsValidTokenTrue() throws DataAccessException {
+    AuthSQLDAO authDAO = new AuthSQLDAO();
+    UserData user = new UserData("test_user", "password123", "email@email");
+    AuthData authData = authDAO.createAuth(user);
+    String newToken = authData.authToken();
+    assertTrue(authDAO.isValidToken(newToken), "Token is Valid");
+  }
+  @Test
+  public void testIsValidTokenFalse() throws DataAccessException {
+    AuthSQLDAO authDAO = new AuthSQLDAO();
+    UserData user = new UserData("test_user", "password123", "email@email");
+    AuthData authData = authDAO.createAuth(user);
+    String newToken =authDAO.generateToken();
+    assertFalse(authDAO.isValidToken(newToken), "Token is invalid");
+  }
+
 
 }
