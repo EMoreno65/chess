@@ -154,6 +154,28 @@ public class AuthSQLDAOTest {
     assertFalse(authDAO.isUserAuthenticated(newToken), "User is not Authenticated");
   }
 
+  @Test
+  public void findUserFromTokenTrue() throws DataAccessException {
+    AuthSQLDAO authDAO = new AuthSQLDAO();
+    UserData user = new UserData("test_user", "password123", "email@email");
+    AuthData authData = authDAO.createAuth(user);
+    String newToken = authData.authToken();
+    String expectedUsername = user.username();
+    String foundUsername =authDAO.findUserFromAuthToken(newToken);
+    assertEquals(expectedUsername, foundUsername);
+  }
+
+  @Test
+  public void findUserFromTokenFalse() throws DataAccessException {
+    AuthSQLDAO authDAO = new AuthSQLDAO();
+    UserData user = new UserData("test_user", "password123", "email@email");
+    AuthData authData = authDAO.createAuth(user);
+    String newToken =authDAO.generateToken();
+    String expectedUsername = user.username();
+    assertThrows(DataAccessException.class, () -> {
+      authDAO.findUserFromAuthToken(newToken);
+    });
+  }
 
 
 

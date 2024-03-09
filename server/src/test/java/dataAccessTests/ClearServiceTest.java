@@ -1,4 +1,4 @@
-package serverTests;
+package dataAccessTests;
 
 import dataAccess.*;
 import org.junit.jupiter.api.Test;

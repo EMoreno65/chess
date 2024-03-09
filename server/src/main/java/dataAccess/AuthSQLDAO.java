@@ -112,11 +112,13 @@ public class AuthSQLDAO implements AuthDAO{
         if (resultSet.next()) {
           return resultSet.getString("username");
         }
+        else {
+          throw new DataAccessException("No user with given token");
+        }
       }
     } catch (SQLException ex) {
       throw new DataAccessException("Error finding user from authentication token");
     }
-    return null;
   }
 
 
