@@ -11,8 +11,7 @@ import org.springframework.asm.ClassReader;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AuthSQLDAOTest {
 
@@ -94,7 +93,7 @@ public class AuthSQLDAOTest {
     AuthData expectedAuthData = new AuthData(authData.authToken(), user.getUsername(), user.getPassword());
 
     // Perform assertion to compare the expected and retrieved AuthData objects
-    Assertions.assertNull(retrievedAuthData, "AuthData should match");
+    assertNull(retrievedAuthData, "AuthData should match");
   }
 
   @Test
@@ -113,6 +112,51 @@ public class AuthSQLDAOTest {
     String newToken =authDAO.generateToken();
     assertFalse(authDAO.isValidToken(newToken), "Token is invalid");
   }
+
+  @Test
+  public void deleteAuthPositive() throws DataAccessException {
+    AuthSQLDAO authDAO = new AuthSQLDAO();
+    UserData user = new UserData("test_user", "password123", "email@email");
+    AuthData authData = authDAO.createAuth(user);
+
+    // Delete the authentication data
+    authDAO.deleteAuth(authData.getAuthToken());
+
+    // Attempt to retrieve the deleted authentication data
+    assertNull(authDAO.getAuthData(authData.getAuthToken()));
+  }
+
+  @Test
+  public void deleteAuthNegative() throws DataAccessException {
+    AuthSQLDAO authDAO = new AuthSQLDAO();
+    UserData user = new UserData("test_user", "password123", "email@email");
+    AuthData authData = authDAO.createAuth(user);
+
+    assertThrows(DataAccessException.class, () -> {
+      authDAO.deleteAuth(authDAO.generateToken());
+    });
+  }
+
+  @Test
+  public void IsUserAuthenticatedTrue() throws DataAccessException {
+    AuthSQLDAO authDAO = new AuthSQLDAO();
+    UserData user = new UserData("test_user", "password123", "email@email");
+    AuthData authData = authDAO.createAuth(user);
+    String newToken = authData.authToken();
+    assertTrue(authDAO.isUserAuthenticated(newToken), "User is Authenticated");
+  }
+
+  @Test
+  public void IsUserAuthenticatedFalse() throws DataAccessException {
+    AuthSQLDAO authDAO = new AuthSQLDAO();
+    UserData user = new UserData("test_user", "password123", "email@email");
+    String newToken =authDAO.generateToken();
+    assertFalse(authDAO.isUserAuthenticated(newToken), "User is not Authenticated");
+  }
+
+
+
+
 
 
 }
