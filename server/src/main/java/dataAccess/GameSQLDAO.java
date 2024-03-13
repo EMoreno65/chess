@@ -131,11 +131,12 @@ public class GameSQLDAO implements GameDAO {
   }
 
   public int getGameID(ChessGame gameToFind) throws DataAccessException {
-    String sql="SELECT gameID FROM games WHERE game = ?";
-    try (Connection conn=DatabaseManager.getConnection();
-         PreparedStatement preparedStatement=conn.prepareStatement(sql)) {
-      preparedStatement.setObject(1, gameToFind);
-      try (ResultSet resultSet=preparedStatement.executeQuery()) {
+    String sql = "SELECT gameID FROM games WHERE game = ?";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+      String serializedGameToFind = serializeChessGame(gameToFind);
+      preparedStatement.setString(1, serializedGameToFind);
+      try (ResultSet resultSet = preparedStatement.executeQuery()) {
         if (resultSet.next()) {
           return resultSet.getInt("gameID");
         }

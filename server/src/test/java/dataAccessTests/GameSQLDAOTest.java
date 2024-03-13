@@ -6,9 +6,11 @@ import model.AuthData;
 import model.GameData;
 import model.UserData;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.ClearService;
 
+import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameSQLDAOTest {
+
+  GameDAO gameDAO = new GameSQLDAO();
+
+  public GameSQLDAOTest() throws DataAccessException {
+  }
+
+  @BeforeEach
+  public void clearAll() throws DataAccessException {
+    gameDAO.clearAll();
+  }
   @Test
   public void testCreateGamePositive() throws DataAccessException {
       int gameId = 1;
@@ -75,18 +87,40 @@ public class GameSQLDAOTest {
 
   @Test
   public void testGetGameID_Positive() throws DataAccessException {
-    // Create a new ChessGame object
     ChessGame gameToFind = new ChessGame();
     GameDAO gameDAO = new GameSQLDAO();
     int expectedGameID = 1;
     gameDAO.createGame(expectedGameID, new GameData(expectedGameID, "white", "black", "name", gameToFind));
-
-    // Retrieve the game ID of the inserted game
     int retrievedGameID = gameDAO.getGameID(gameToFind);
-
-    // Assert that the retrieved game ID matches the expected game ID
     Assertions.assertEquals(expectedGameID, retrievedGameID, "Retrieved game ID should match the expected game ID");
   }
+  @Test
+  public void testGetGameID_Negative() throws DataAccessException {
+    ChessGame gameToFind = new ChessGame();
+    GameDAO gameDAO = new GameSQLDAO();
+    int expectedGameID = 1;
+    gameDAO.createGame(expectedGameID, new GameData(expectedGameID, "white", "black", "name", gameToFind));
+    int retrievedGameID = 7;
+    Assertions.assertNotEquals(expectedGameID, retrievedGameID, "Retrieved game ID should not match the expected game ID");
+  }
 
+  @Test
+  public void testListGamesPositive() throws DataAccessException, SQLException {
+    GameDAO gameDAO = new GameSQLDAO();
+    List<GameData> list = new ArrayList<>();
+    ChessGame chessGame1 = new ChessGame();
+    GameData gameData1 = new GameData(3, "josh", "sean", "dukgsalsud.hga", chessGame1);
+    list = gameDAO.listGames();
+    assertEquals(1, list.size());
+    gameDAO.clearAll();
+  }
+
+  @Test
+  public void testListGamesNoGames() throws DataAccessException, SQLException {
+    GameDAO gameDAO = new GameSQLDAO();
+    List<GameData> list = new ArrayList<>();
+    list = gameDAO.listGames();
+    assertEquals(0, list.size());
+  }
 
 }
