@@ -24,15 +24,22 @@ public class printObject {
     ChessBoard board=game.getBoard();
     for (int i=0; i <= 9; i++) { // Rows
       for (int j=0; j <= 9; j++) { // Columns
-        if (i == 0 || i == 9 || j == 0 || j == 9){
+        if (i == 0 || i == 9){
           System.out.print(EscapeSequences.SET_BG_COLOR_DARK_GREY);
           System.out.print(EscapeSequences.RESET_TEXT_COLOR);
-          String borderChar = findBorderLetterOrNumber(i,j);
-          if (Character.isLetter(borderChar.charAt(0))) {
-            System.out.print("  " + borderChar);
-          } else if (Character.isDigit(borderChar.charAt(0))) {
-            System.out.print(" " + borderChar);
+          String borderLetter = findBorderLetter(i,j);
+          if (borderLetter.equals("a")){
+            System.out.print("  " + borderLetter + " ");
           }
+          else{
+            System.out.print(" " + borderLetter + " ");
+          }
+        }
+        else if (j == 0 || j ==9){
+          System.out.print(EscapeSequences.SET_BG_COLOR_DARK_GREY);
+          System.out.print(EscapeSequences.RESET_TEXT_COLOR);
+          String borderNumber = findBorderNumber(i,j);
+          System.out.print(" " + borderNumber + " ");
         }
         else {
           ChessPosition position=new ChessPosition(i, j);
@@ -154,20 +161,17 @@ public class printObject {
     }
     return "";
   }
-  public static String findBorderLetterOrNumber(int row, int col) {
+  public static String findBorderLetter(int row, int col) {
     if ((row == 0 || row == 9) && col >= 1 && col < 9) {
       char letter = (char) ('a' + col - 1);
-      if (col == 9) {
-        return "   ";
-      }
       return String.valueOf(letter);
     }
-    if (col == 0 && row >= 1 && row < 9) {
-      char number = (char) ('1' + row - 1);
-      if (row == 9){
-        return "   ";
-      }
-      return String.valueOf(number);
+    return "";
+  }
+  public static String findBorderNumber(int row, int col){
+    if ((col == 0 || col == 9) && row >= 1 && row < 9){
+      char digit = (char) ('1' + row - 1);
+      return String.valueOf(digit);
     }
     return "";
   }
