@@ -13,6 +13,9 @@ public class printObject {
   // Loop through every piece on the board
   public static void main(String[] args) {
     ChessGame game = new ChessGame();
+    ChessBoard board = game.getBoard();
+    ChessPosition givenPosition = new ChessPosition(2, 4);
+    board.addPiece(givenPosition, new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT));
     printObject.drawWhiteBoard(game);
   }
 
@@ -27,20 +30,26 @@ public class printObject {
         if (piece != null) {
           String pieceLetter = findPieceLetter(board, position);
           if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0)&&(j % 2 != 0))) {
-            System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
-          } else {
             System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
+          } else {
+            System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
           }
           System.out.print(pieceLetter);
         } else {
           if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0)&&(j % 2 != 0))) {
-            System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
-          } else {
             System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
+          } else {
+            System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
           }
-          System.out.print(" ");
+          if (i == 8){
+            System.out.print("   ");
+          }
+          else{
+            System.out.print("   ");
+          }
         }
       }
+      System.out.print(EscapeSequences.RESET_BG_COLOR);
       System.out.println();
     }
   }
@@ -49,53 +58,53 @@ public class printObject {
     if (givenPiece.getTeamColor() == ChessGame.TeamColor.WHITE){
       if (givenPiece.getPieceType() == ChessPiece.PieceType.PAWN){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_RED);
-        return "P";
+        return " P ";
       }
       if (givenPiece.getPieceType() == ChessPiece.PieceType.ROOK){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_RED);
-        return "R";
+        return " R ";
       }
       if (givenPiece.getPieceType() == ChessPiece.PieceType.KNIGHT){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_RED);
-        return "KN";
+        return " N ";
       }
       if (givenPiece.getPieceType() == ChessPiece.PieceType.BISHOP){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_RED);
-        return "B";
+        return " B ";
       }
       if (givenPiece.getPieceType() == ChessPiece.PieceType.QUEEN){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_RED);
-        return "Q";
+        return " Q ";
       }
       if (givenPiece.getPieceType() == ChessPiece.PieceType.KING){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_RED);
-        return "K";
+        return " K ";
       }
     }
     if (givenPiece.getTeamColor() == ChessGame.TeamColor.BLACK){
       if (givenPiece.getPieceType() == ChessPiece.PieceType.PAWN){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_BLUE);
-        return "P";
+        return " P ";
       }
       if (givenPiece.getPieceType() == ChessPiece.PieceType.ROOK){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_BLUE);
-        return "R";
+        return " R ";
       }
       if (givenPiece.getPieceType() == ChessPiece.PieceType.KNIGHT){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_BLUE);
-        return "KN";
+        return " N ";
       }
       if (givenPiece.getPieceType() == ChessPiece.PieceType.BISHOP){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_BLUE);
-        return "B";
+        return " B ";
       }
       if (givenPiece.getPieceType() == ChessPiece.PieceType.QUEEN){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_BLUE);
-        return "Q";
+        return " Q ";
       }
       if (givenPiece.getPieceType() == ChessPiece.PieceType.KING){
         System.out.print(EscapeSequences.SET_TEXT_COLOR_BLUE);
-        return "K";
+        return " K ";
       }
     }
     return "";
