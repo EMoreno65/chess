@@ -24,8 +24,15 @@ public class printObject {
     ChessBoard board=game.getBoard();
     for (int i=0; i <= 9; i++) { // Rows
       for (int j=0; j <= 9; j++) { // Columns
-        if (i == 0){
+        if (i == 0 || i == 9 || j == 0 || j == 9){
           System.out.print(EscapeSequences.SET_BG_COLOR_DARK_GREY);
+          System.out.print(EscapeSequences.RESET_TEXT_COLOR);
+          String borderChar = findBorderLetterOrNumber(i,j);
+          if (Character.isLetter(borderChar.charAt(0))) {
+            System.out.print("  " + borderChar);
+          } else if (Character.isDigit(borderChar.charAt(0))) {
+            System.out.print(" " + borderChar);
+          }
         }
         else {
           ChessPosition position=new ChessPosition(i, j);
@@ -147,6 +154,21 @@ public class printObject {
     }
     return "";
   }
-  public static String findBorderLetter()
-
+  public static String findBorderLetterOrNumber(int row, int col) {
+    if ((row == 0 || row == 9) && col >= 1 && col < 9) {
+      char letter = (char) ('a' + col - 1);
+      if (col == 9) {
+        return "   ";
+      }
+      return String.valueOf(letter);
+    }
+    if (col == 0 && row >= 1 && row < 9) {
+      char number = (char) ('1' + row - 1);
+      if (row == 9){
+        return "   ";
+      }
+      return String.valueOf(number);
+    }
+    return "";
+  }
 }
