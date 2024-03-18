@@ -52,6 +52,9 @@ public class ChessBoard {
     public ChessPiece getPiece(ChessPosition position) {
         return squares[position.getRow() -1][position.getColumn() - 1];
     }
+    public void setPiece(ChessPiece piece, ChessPosition position) {
+        squares[position.getRow()-1][position.getColumn()-1] = piece;
+    }
 
     /**
      * Sets the board to the default starting board
