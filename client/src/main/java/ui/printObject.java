@@ -26,7 +26,7 @@ public class printObject {
         ChessPiece piece = board.getPiece(position);
         if (piece != null) {
           String pieceLetter = findPieceLetter(board, position);
-          if ((i + j) % 2 == 0) {
+          if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0)&&(j % 2 != 0))) {
             System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
           } else {
             System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
@@ -34,9 +34,9 @@ public class printObject {
           System.out.print(pieceLetter);
         } else {
           if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0)&&(j % 2 != 0))) {
-            System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
-          } else {
             System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
+          } else {
+            System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
           }
           System.out.print(" ");
         }
