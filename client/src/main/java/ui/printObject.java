@@ -14,37 +14,73 @@ public class printObject {
   public static void main(String[] args) {
     ChessGame game = new ChessGame();
     ChessBoard board = game.getBoard();
-    ChessPosition givenPosition = new ChessPosition(2, 4);
-    board.addPiece(givenPosition, new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT));
+    board.resetBoard();
     printObject.drawWhiteBoard(game);
   }
 
   // Have a new method that takes in a chess board/game and print it out based on the position
 
   public static void drawWhiteBoard(ChessGame game) {
-    ChessBoard board = game.getBoard();
-    for (int i = 1; i <= 8; i++) { // Rows
-      for (int j = 1; j <= 8; j++) { // Columns
-        ChessPosition position = new ChessPosition(i, j);
-        ChessPiece piece = board.getPiece(position);
+    ChessBoard board=game.getBoard();
+    for (int i=0; i <= 9; i++) { // Rows
+      for (int j=0; j <= 9; j++) { // Columns
+        if (i == 0){
+          System.out.print(EscapeSequences.SET_BG_COLOR_DARK_GREY);
+        }
+        else {
+          ChessPosition position=new ChessPosition(i, j);
+          ChessPiece piece=board.getPiece(position);
+          if (piece != null) {
+            String pieceLetter=findPieceLetter(board, position);
+            if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0) && (j % 2 != 0))) {
+              System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
+            } else {
+              System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
+            }
+            System.out.print(pieceLetter);
+          } else {
+            if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0) && (j % 2 != 0))) {
+              System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
+            } else {
+              System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
+            }
+            if (i == 8) {
+              System.out.print("   ");
+            } else {
+              System.out.print("   ");
+            }
+          }
+        }
+      }
+      System.out.print(EscapeSequences.RESET_BG_COLOR);
+      System.out.println();
+    }
+    System.out.println();
+  }
+
+  public static void drawBlackBoard(ChessGame game){
+    ChessBoard board=game.getBoard();
+    for (int i=8; i >= 1; i--) { // Rows
+      for (int j=8; j >= 1; j--) { // Columns
+        ChessPosition position=new ChessPosition(i, j);
+        ChessPiece piece=board.getPiece(position);
         if (piece != null) {
-          String pieceLetter = findPieceLetter(board, position);
-          if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0)&&(j % 2 != 0))) {
+          String pieceLetter=findPieceLetter(board, position);
+          if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0) && (j % 2 != 0))) {
             System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
           } else {
             System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
           }
           System.out.print(pieceLetter);
         } else {
-          if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0)&&(j % 2 != 0))) {
+          if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0) && (j % 2 != 0))) {
             System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
           } else {
             System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
           }
-          if (i == 8){
+          if (i == 8) {
             System.out.print("   ");
-          }
-          else{
+          } else {
             System.out.print("   ");
           }
         }
@@ -52,7 +88,9 @@ public class printObject {
       System.out.print(EscapeSequences.RESET_BG_COLOR);
       System.out.println();
     }
+    System.out.println();
   }
+
   public static String findPieceLetter(ChessBoard board, ChessPosition position){
     ChessPiece givenPiece = board.getPiece(position);
     if (givenPiece.getTeamColor() == ChessGame.TeamColor.WHITE){
@@ -109,5 +147,6 @@ public class printObject {
     }
     return "";
   }
+  public static String findBorderLetter()
 
 }
