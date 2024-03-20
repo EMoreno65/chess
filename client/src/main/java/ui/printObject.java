@@ -16,6 +16,8 @@ public class printObject {
     ChessBoard board = game.getBoard();
     board.resetBoard();
     printObject.drawWhiteBoard(game);
+    board.resetBoard();
+    printObject.drawBlackBoard(game);
   }
 
   // Have a new method that takes in a chess board/game and print it out based on the position
@@ -74,28 +76,47 @@ public class printObject {
 
   public static void drawBlackBoard(ChessGame game){
     ChessBoard board=game.getBoard();
-    for (int i=8; i >= 1; i--) { // Rows
-      for (int j=8; j >= 1; j--) { // Columns
-        ChessPosition position=new ChessPosition(i, j);
-        ChessPiece piece=board.getPiece(position);
-        if (piece != null) {
-          String pieceLetter=findPieceLetter(board, position);
-          if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0) && (j % 2 != 0))) {
-            System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
-          } else {
-            System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
+    for (int i=9; i >= 0; i--) { // Rows
+      for (int j=9; j >= 0; j--) { // Columns
+        if (i == 0 || i == 9){
+          System.out.print(EscapeSequences.SET_BG_COLOR_DARK_GREY);
+          System.out.print(EscapeSequences.RESET_TEXT_COLOR);
+          String borderLetter = findBorderLetter(i,j);
+          if (borderLetter.equals("h")){
+            System.out.print("  " + borderLetter + " ");
           }
-          System.out.print(pieceLetter);
-        } else {
-          if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0) && (j % 2 != 0))) {
-            System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
-          } else {
-            System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
+          else{
+            System.out.print(" " + borderLetter + " ");
           }
-          if (i == 8) {
-            System.out.print("   ");
+        }
+        else if (j == 0 || j ==9){
+          System.out.print(EscapeSequences.SET_BG_COLOR_DARK_GREY);
+          System.out.print(EscapeSequences.RESET_TEXT_COLOR);
+          String borderNumber = findBorderNumber(i,j);
+          System.out.print(" " + borderNumber + " ");
+        }
+        else {
+          ChessPosition position=new ChessPosition(i, j);
+          ChessPiece piece=board.getPiece(position);
+          if (piece != null) {
+            String pieceLetter=findPieceLetter(board, position);
+            if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0) && (j % 2 != 0))) {
+              System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
+            } else {
+              System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
+            }
+            System.out.print(pieceLetter);
           } else {
-            System.out.print("   ");
+            if (((i % 2 == 0) && (j % 2 == 0)) || ((i % 2 != 0) && (j % 2 != 0))) {
+              System.out.print(EscapeSequences.SET_BG_COLOR_WHITE);
+            } else {
+              System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
+            }
+            if (i == 8) {
+              System.out.print("   ");
+            } else {
+              System.out.print("   ");
+            }
           }
         }
       }
