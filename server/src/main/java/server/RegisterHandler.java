@@ -1,7 +1,7 @@
 package server;
 
-import Request.RegisterRequest;
-import RequestandResult.RegisterResult;
+import model.Request.RegisterRequest;
+import model.RequestandResult.RegisterResult;
 import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.UserDAO;

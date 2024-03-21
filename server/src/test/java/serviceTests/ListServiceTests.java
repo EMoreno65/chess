@@ -1,6 +1,6 @@
 package serviceTests;
 
-import RequestandResult.ListResult;
+import model.RequestandResult.ListResult;
 import dataAccess.*;
 import model.AuthData;
 import model.GameData;

@@ -6,8 +6,8 @@ import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.LoginService;
-import Request.LoginRequest;
-import RequestandResult.LoginResult;
+import model.Request.LoginRequest;
+import model.RequestandResult.LoginResult;
 
 import java.sql.SQLException;
 

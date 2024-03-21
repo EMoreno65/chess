@@ -1,7 +1,6 @@
 package server;
 
-import RequestandResult.LoginResult;
-import RequestandResult.LogoutResult;
+import model.RequestandResult.LogoutResult;
 import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;

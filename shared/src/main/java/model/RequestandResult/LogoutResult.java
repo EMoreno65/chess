@@ -1,4 +1,4 @@
-package RequestandResult;
+package model.RequestandResult;
 
 public class LogoutResult {
   public LogoutResult(String authToken, String username){

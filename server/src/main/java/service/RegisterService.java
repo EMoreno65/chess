@@ -1,7 +1,7 @@
 package service;
 
-import Request.RegisterRequest;
-import RequestandResult.RegisterResult;
+import model.Request.RegisterRequest;
+import model.RequestandResult.RegisterResult;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.UserDAO;

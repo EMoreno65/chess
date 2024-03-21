@@ -1,7 +1,7 @@
 package service;
 
-import Request.LoginRequest;
-import RequestandResult.LoginResult;
+import model.Request.LoginRequest;
+import model.RequestandResult.LoginResult;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.UserDAO;

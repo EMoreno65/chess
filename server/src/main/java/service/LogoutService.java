@@ -1,14 +1,9 @@
 package service;
 
-import RequestandResult.LoginResult;
-import RequestandResult.LogoutResult;
-import RequestandResult.RegisterResult;
-import com.google.gson.Gson;
+import model.RequestandResult.LogoutResult;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
-import dataAccess.UserDAO;
 import model.AuthData;
-import model.Results;
 
 public class LogoutService {
 

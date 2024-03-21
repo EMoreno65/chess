@@ -4,10 +4,12 @@ package serverFacade;
 // Login, Register, Create, Join, etc
 // They're gonna contact my server over http
 
-import Request.*;
 import com.google.gson.Gson;
-import dataAccess.ResponseException;
-import model.UserData;
+import model.RequestandResult.LoginResult;
+import model.RequestandResult.RegisterResult;
+import ui.ResponseException;
+import model.*;
+import model.Request.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,16 +32,16 @@ public class serverFacade {
 
   // User host and port to contact server
   // Move server request folders to shared  java
-  public RegisterRequest register(UserData data) throws ResponseException {
+  public RegisterResult register(UserData data) throws ResponseException {
     var path = "/user";
-    return this.makeRequest("POST", "/user", data, "", RegisterRequest.class);
+    return this.makeRequest("POST", "/user", data, "", RegisterResult.class);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
-  public LoginRequest login(UserData data) throws ResponseException {
+  public LoginResult login(UserData data) throws ResponseException {
     var path = "/session";
-    return this.makeRequest("POST", "/session", data, "", LoginRequest.class);
+    return this.makeRequest("POST", "/session", data, "", LoginResult.class);
     // contact the server
     // Access request and execute request
     // Send request to server

@@ -1,6 +1,5 @@
 package server;
 
-import RequestandResult.LoginResult;
 import dataAccess.*;
 import spark.*;
 

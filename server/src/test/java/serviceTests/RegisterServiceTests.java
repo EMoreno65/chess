@@ -4,8 +4,8 @@ import dataAccess.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.RegisterService;
-import Request.RegisterRequest;
-import RequestandResult.RegisterResult;
+import model.Request.RegisterRequest;
+import model.RequestandResult.RegisterResult;
 
 import java.sql.SQLException;
 

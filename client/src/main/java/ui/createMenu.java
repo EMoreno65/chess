@@ -1,64 +1,23 @@
 package ui;
 
-import Request.LoginRequest;
-import Request.RegisterRequest;
-import RequestandResult.LoginResult;
-import RequestandResult.RegisterResult;
-import dataAccess.ResponseException;
+import dataAccess.DataAccessException;
+import model.Request.LoginRequest;
+import model.Request.RegisterRequest;
+import model.RequestandResult.LoginResult;
+import model.RequestandResult.RegisterResult;
 import model.UserData;
-import server.LoginHandler;
-import server.RegisterHandler;
 import serverFacade.serverFacade;
 
 import java.util.Scanner;
 
 public class createMenu {
 
-  public serverFacade server = new serverFacade("http://localhost:8080");
+  public static serverFacade server = new serverFacade("http://localhost:8080");
+  static String savedAuthToken;
 
-  public static void main(String[] args) {
-    // Create a Scanner object to read input from the console
-    Scanner scanner = new Scanner(System.in);
-    createMenu.writeHelpScreen();
-    System.out.print("Input Number Here: ");
-    while (true) {
-      String userInput = scanner.nextLine();
-      if (userInput.equals("1")) {
-        System.out.println(" Help - By Pressing Help you can show all the options available and what each option does");
-        System.out.println(" Quit - This option will make you exit out of the program");
-        System.out.println(" Login - This option will give you a prompt to input your username and password and have you login");
-        System.out.println(" Register - This option will give you the option to input a username, password and an email to create a user");
-      } else if (userInput.equals("2")) {
-          break;
-      } else if (userInput.equals("3")) {
-          System.out.print("Enter Username: ");
-          System.out.print("Enter Password: ");
-          String userInputUsername = scanner.nextLine();
-          String userInputPassword = scanner.nextLine();
-          if (loginCommand(userInputUsername, userInputPassword)){
-            // go to printSecondMenu function
-          }
-          else {
-            // Send error message
-          }
-      } else if (userInput.equals("4")) {
-          System.out.println("Enter Username: ");
-          System.out.println("Enter Password: ");
-          System.out.println("Enter Email: ");
-        String userInputUsername = scanner.nextLine();
-        String userInputPassword = scanner.nextLine();
-        String userInputEmail = scanner.nextLine();
-        if (registerCommand(userInputUsername, userInputPassword, userInputEmail)){
-          // go to printSecondMenu function
-        }
-        else {
-          // Send error message
-        }
-      }
-    }
-
-    // Close the scanner
-    scanner.close();
+  public static void main(String[] args) throws ResponseException {
+    operateFirstMenu();
+    operateSecondMenu();
   }
   // Print things to the terminal for the user to select
   // some kinda switch statement
@@ -66,7 +25,7 @@ public class createMenu {
   // give login request to server facade call .login
   // Print out results in terminal by calling methods and receiving objects
 
-  public static void writeHelpScreen(){
+  public static void writeHelpScreen1(){
     System.out.println("Welcome to CS240 Chess");
     System.out.println("Type in Corresponding Number to Begin");
     System.out.println("1 - Help");
@@ -77,18 +36,27 @@ public class createMenu {
     // Get information from user
     // Check if we have the correct parameters, ask one at a time and press enter
   }
+
+  public static void writeHelpScreen2(){
+    System.out.println("1 - Help");
+    System.out.println("2 - Logout");
+    System.out.println("3 - Create Game");
+    System.out.println("4 - List Games");
+    System.out.println("5 - Join Game");
+    System.out.println("6 - Join as an Observer");
+  }
+
   public void helpCommand(){
 
   }
   public void quitCommand(){
 
   }
-  public boolean loginCommand(String username, String password) throws ResponseException {
+  public static boolean loginCommand(String username, String password) throws ResponseException {
     UserData userData = new UserData(username, password, "");
-    LoginRequest receivedRequest = server.login(userData);
-    LoginHandler loginHandler = new LoginHandler();
-    LoginResult receivedResult = (LoginResult) loginHandler.login(receivedRequest, null, null, null);
-    if (receivedResult.getAuthToken() != null){
+    LoginResult receivedResult = server.login(userData);
+    savedAuthToken = receivedResult.getAuthToken();
+    if (savedAuthToken != null){
       return true;
     }
     else {
@@ -98,13 +66,11 @@ public class createMenu {
     // Get information from user
     // Check if we have the correct parameters, ask one at a time and press enter
   }
-  public boolean registerCommand(String username, String password, String email) throws ResponseException {
+  public static boolean registerCommand(String username, String password, String email) throws ResponseException {
     UserData userData = new UserData(username, password, email);
-    RegisterRequest receivedRequest = server.register(userData);
-    RegisterHandler registerHandler = new RegisterHandler(); // Create an instance
-    RegisterResult receivedResult =(RegisterResult) registerHandler.register(receivedRequest, null, null, null);
-    // Pass request into handler, let it do it's thing, receive result. Check if result has an authToken, if it does, move it to the next menu
-    if (receivedResult.getAuthToken() != null){
+    RegisterResult receivedResult = server.register(userData);
+    savedAuthToken = receivedResult.getAuthToken();
+    if (savedAuthToken != null){
       return true;
     }
     else {
@@ -112,6 +78,60 @@ public class createMenu {
     }
   }
 
-}
+  public static void operateFirstMenu() throws ResponseException {
+    Scanner scanner = new Scanner(System.in);
+    createMenu.writeHelpScreen1();
+    System.out.print("Input Number Here: ");
+    while (true) {
+      String userInput = scanner.nextLine();
+      if (userInput.equals("1")) {
+        System.out.println(" Help - By Pressing Help you can show all the options available and what each option does");
+        System.out.println(" Quit - This option will make you exit out of the program");
+        System.out.println(" Login - This option will give you a prompt to input your username and password and have you login");
+        System.out.println(" Register - This option will give you the option to input a username, password and an email to create a user");
+      } else if (userInput.equals("2")) {
+        break;
+      } else if (userInput.equals("3")) {
+        System.out.print("Enter Username: ");
+        String userInputUsername = scanner.nextLine();
+        System.out.print("Enter Password: ");
+        String userInputPassword = scanner.nextLine();
+        if (loginCommand(userInputUsername, userInputPassword)){
+          createMenu.operateSecondMenu();
+        }
+        else {
+          // Send error message
+        }
+      } else if (userInput.equals("4")) {
+        System.out.println("Enter Username: ");
+        String userInputUsername = scanner.nextLine();
+        System.out.println("Enter Password: ");
+        String userInputPassword = scanner.nextLine();
+        System.out.println("Enter Email: ");
+        String userInputEmail = scanner.nextLine();
+        if (registerCommand(userInputUsername, userInputPassword, userInputEmail)){
+          createMenu.operateSecondMenu();
+        }
+        else {
+          throw new ResponseException(400, "Can't Register");
+        }
+      }
+    }
+
+    // Close the scanner
+    scanner.close();
+  }
+
+  public static void operateSecondMenu(){
+    Scanner scanner = new Scanner(System.in);
+    createMenu.writeHelpScreen2();
+    System.out.print("Input Number Here: ");
+  }
+  // Print things to the terminal for the user to select
+  // some kinda switch statement
+  // login -> give username and password, put inside login request
+  // give login request to server facade call .login
+  // Print out results in terminal by calling methods and receiving objects
+  }
 
 

@@ -1,11 +1,10 @@
 package server;
 
-import RequestandResult.*;
 import com.google.gson.Gson;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.GameDAO;
-import model.GameData;
+import model.RequestandResult.ListResult;
 import model.Results;
 import service.ListService;
 import spark.Request;

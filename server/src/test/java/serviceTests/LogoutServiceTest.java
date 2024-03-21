@@ -6,7 +6,7 @@ import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.LogoutService;
-import RequestandResult.LogoutResult;
+import model.RequestandResult.LogoutResult;
 
 import java.sql.SQLException;
 

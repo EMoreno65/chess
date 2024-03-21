@@ -1,7 +1,7 @@
 package service;
 
-import Request.JoinRequest;
-import RequestandResult.JoinResult;
+import model.Request.JoinRequest;
+import model.RequestandResult.JoinResult;
 import chess.ChessGame;
 import com.google.gson.JsonObject;
 import dataAccess.AuthDAO;

@@ -1,4 +1,4 @@
-package RequestandResult;
+package model.RequestandResult;
 import model.AuthData;
 
 public class RegisterResult {

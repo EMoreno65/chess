@@ -1,4 +1,4 @@
-package RequestandResult;
+package model.RequestandResult;
 
 public class CreateResult {
   public CreateResult(int gameID){
