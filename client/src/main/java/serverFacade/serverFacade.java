@@ -7,6 +7,7 @@ package serverFacade;
 import Request.*;
 import com.google.gson.Gson;
 import dataAccess.ResponseException;
+import model.UserData;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,61 +30,62 @@ public class serverFacade {
 
   // User host and port to contact server
   // Move server request folders to shared  java
-  public RegisterRequest register(RegisterRequest request) throws ResponseException {
+  public RegisterRequest register(UserData data) throws ResponseException {
     var path = "/user";
-    return this.makeRequest("POST", "/user", request, RegisterRequest.class);
+    return this.makeRequest("POST", "/user", data, "", RegisterRequest.class);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
-  public LoginRequest login(LoginRequest request) throws ResponseException {
+  public LoginRequest login(UserData data) throws ResponseException {
     var path = "/session";
-    return this.makeRequest("POST", "/session", request, LoginRequest.class);
+    return this.makeRequest("POST", "/session", data, "", LoginRequest.class);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
-  public CreateRequest create(CreateRequest request) throws ResponseException {
+  public CreateRequest create(String gameName, String authToken) throws ResponseException {
     var path = "/game";
-    return this.makeRequest("POST","/game", request, CreateRequest.class);
+    return this.makeRequest("POST","/game", gameName, authToken, CreateRequest.class);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
   public JoinRequest join(JoinRequest request) throws ResponseException{
     var path = "/game";
-    return this.makeRequest("PUT", "/game", request, JoinRequest.class);
+    return this.makeRequest("PUT", "/game", request, "", JoinRequest.class);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
   public ListRequest list(ListRequest request) throws ResponseException{
     var path = "/game";
-    return this.makeRequest("GET", "/game", request, ListRequest.class);
+    return this.makeRequest("GET", "/game", request, "", ListRequest.class);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
   public ClearRequest clear(ClearRequest request) throws ResponseException{
     var path = "/db";
-    return this.makeRequest("DELETE", "/db", request, ClearRequest.class);
+    return this.makeRequest("DELETE", "/db", request, "", ClearRequest.class);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
   public LogoutRequest logout(LogoutRequest request) throws ResponseException{
     var path = "/session";
-    return this.makeRequest("DELETE", "/session", request, LogoutRequest.class);
+    return this.makeRequest("DELETE", "/session", request, "", LogoutRequest.class);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
 
-  private <T> T makeRequest(String method, String path, Object request, Class<T> responseClass) throws ResponseException {
+  private <T> T makeRequest(String method, String path, Object request, String authToken, Class<T> responseClass) throws ResponseException {
     try {
       URL url = (new URI(serverUrl + path)).toURL();
       HttpURLConnection http = (HttpURLConnection) url.openConnection();
       http.setRequestMethod(method);
+      http.setRequestProperty("authorization", authToken);
       http.setDoOutput(true);
 
       writeBody(request, http);
