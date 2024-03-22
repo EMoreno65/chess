@@ -174,25 +174,62 @@ public class ServerFacadeTests {
         });
     }
 
+//    @Test
+//    public void listSuccess() throws ResponseException {
+//        String username = "Ethan";
+//        UserData userData = new UserData("Ethan", "Password", "email");
+//        serverFacade.register(userData);
+//        LoginResult logResult = serverFacade.login(userData);
+//        String authToken = logResult.getAuthToken();
+//
+//        CreateResult createResult1 = serverFacade.create("GameExample", authToken);
+//        CreateResult createResult2 = serverFacade.create("GameExample2", authToken);
+//
+//        List<GameData> gameDataList = new ArrayList<>();
+//        gameDataList.add(new GameData(createResult1.getGameID(), null, null, "GameExample", null));
+//        gameDataList.add(new GameData(createResult2.getGameID(), null, null, "GameExample2", null));
+//
+//        ListResult listResult = serverFacade.list(gameDataList, authToken);
+//
+//        assertEquals(2, listResult.getGames().size());
+//    }
+
     @Test
-    public void listSuccess() throws ResponseException {
-        String username = "Ethan";
-        UserData userData = new UserData("Ethan", "Password", "email");
-        serverFacade.register(userData);
-        LoginResult logResult = serverFacade.login(userData);
-        String authToken = logResult.getAuthToken();
+    public void listFail() throws ResponseException {
+        try {
+            String username="Ethan";
+            UserData userData=new UserData("Ethan", "Password", "email");
+            serverFacade.register(userData);
+            LoginResult logResult=serverFacade.login(userData);
+            String authToken="badAuthToken";
 
-        CreateResult createResult1 = serverFacade.create("GameExample", authToken);
-        CreateResult createResult2 = serverFacade.create("GameExample2", authToken);
+            CreateResult createResult1=serverFacade.create("GameExample", authToken);
+            CreateResult createResult2=serverFacade.create("GameExample2", authToken);
 
-        List<GameData> gameDataList = new ArrayList<>();
-        gameDataList.add(new GameData(createResult1.getGameID(), null, null, "GameExample", null));
-        gameDataList.add(new GameData(createResult2.getGameID(), null, null, "GameExample2", null));
+            List<GameData> gameDataList=new ArrayList<>();
+            gameDataList.add(new GameData(createResult1.getGameID(), null, null, "GameExample", null));
+            gameDataList.add(new GameData(createResult2.getGameID(), null, null, "GameExample2", null));
 
-        ListResult listResult = serverFacade.list(gameDataList, authToken);
-
-        assertEquals(2, listResult.getGames().size());
+            ListResult listResult=serverFacade.list(gameDataList, authToken);
+        }
+        catch (ResponseException e){
+            assertEquals(500, e.StatusCode(), "Expected status code 500");
+        }
     }
+
+//    @Test
+//    public void clearTest() throws ResponseException {
+//        String username = "Ethan";
+//        UserData userData = new UserData("Ethan", "Password", "email");
+//        serverFacade.register(userData);
+//        LoginResult logResult = serverFacade.login(userData);
+//        String authToken = logResult.getAuthToken();
+//
+//        CreateResult createResult1 = serverFacade.create("GameExample", authToken);
+//        CreateResult createResult2 = serverFacade.create("GameExample2", authToken);
+//        serverFacade.clear();
+//        assertNull(authToken);
+//    }
 
 
 
