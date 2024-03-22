@@ -11,6 +11,12 @@
             <version>2.9.3</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>edu.byu.cs240</groupId>
+            <artifactId>client</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <parent>

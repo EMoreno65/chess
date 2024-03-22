@@ -1,7 +1,6 @@
 package ui;
 
 import chess.ChessBoard;
-import chess.ChessGame.TeamColor;
 import chess.ChessGame;
 import com.google.gson.Gson;
 import model.AuthData;
@@ -9,7 +8,6 @@ import model.GameData;
 import model.RequestandResult.*;
 import model.UserData;
 import serverFacade.serverFacade;
-import ui.printObject;
 
 import java.util.ArrayList;
 import java.util.List;
