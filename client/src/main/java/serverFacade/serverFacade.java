@@ -65,7 +65,7 @@ public class serverFacade {
   }
   public ListResult list(List<GameData> games, String authToken) throws ResponseException{
     var path = "/game";
-    ListRequest listRequest = new ListRequest(games, authToken);
+    ListRequest listRequest = new ListRequest(authToken);
     return this.makeRequest("GET", "/game", listRequest, "", ListResult.class, "Authorization", authToken);
     // contact the server
     // Access request and execute request

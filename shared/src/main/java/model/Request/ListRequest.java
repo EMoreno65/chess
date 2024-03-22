@@ -5,8 +5,7 @@ import model.GameData;
 import java.util.List;
 
 public class ListRequest {
-  public ListRequest(List<GameData> games, String authToken) {
-    this.games=games;
+  public ListRequest(String authToken) {
     this.authToken=authToken;
   }
 
@@ -17,13 +16,7 @@ public class ListRequest {
   public void setAuthToken(String authToken) {
     this.authToken=authToken;
   }
-
-  List<GameData> games;
   String authToken;
-
-  public ListRequest(String errorMessage) {
-    this.errorMessage=errorMessage;
-  }
 
   public String getErrorMessage() {
     return errorMessage;

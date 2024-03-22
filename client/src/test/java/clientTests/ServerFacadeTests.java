@@ -12,6 +12,9 @@ import server.Server;
 import serverFacade.serverFacade;
 import ui.ResponseException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -169,6 +172,26 @@ public class ServerFacadeTests {
         assertThrows(NullPointerException.class, () -> {
             JoinRequest newRequest =new JoinRequest(authToken, ChessGame.TeamColor.WHITE, result.getGameID()); // This line should throw a NullPointerException
         });
+    }
+
+    @Test
+    public void listSuccess() throws ResponseException {
+        String username = "Ethan";
+        UserData userData = new UserData("Ethan", "Password", "email");
+        serverFacade.register(userData);
+        LoginResult logResult = serverFacade.login(userData);
+        String authToken = logResult.getAuthToken();
+
+        CreateResult createResult1 = serverFacade.create("GameExample", authToken);
+        CreateResult createResult2 = serverFacade.create("GameExample2", authToken);
+
+        List<GameData> gameDataList = new ArrayList<>();
+        gameDataList.add(new GameData(createResult1.getGameID(), null, null, "GameExample", null));
+        gameDataList.add(new GameData(createResult2.getGameID(), null, null, "GameExample2", null));
+
+        ListResult listResult = serverFacade.list(gameDataList, authToken);
+
+        assertEquals(2, listResult.getGames().size());
     }
 
 
