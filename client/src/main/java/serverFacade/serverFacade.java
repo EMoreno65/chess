@@ -71,9 +71,9 @@ public class serverFacade {
     // Access request and execute request
     // Send request to server
   }
-  public ClearRequest clear(ClearRequest request) throws ResponseException{
+  public ClearResult clear() throws ResponseException{
     var path = "/db";
-    return this.makeRequest("DELETE", "/db", request, "", ClearRequest.class, null, null);
+    return this.makeRequest("DELETE", "/db", null, null, null, null, null);
     // contact the server
     // Access request and execute request
     // Send request to server

@@ -1,20 +1,22 @@
 package ui;
 
+import chess.ChessBoard;
+import chess.ChessGame.TeamColor;
 import chess.ChessGame;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import dataAccess.DataAccessException;
 import model.AuthData;
 import model.GameData;
-import model.Request.LoginRequest;
-import model.Request.RegisterRequest;
 import model.RequestandResult.*;
 import model.UserData;
 import serverFacade.serverFacade;
+import ui.printObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static chess.ChessGame.TeamColor.BLACK;
+import static chess.ChessGame.TeamColor.WHITE;
 
 public class createMenu {
 
@@ -32,6 +34,15 @@ public class createMenu {
   // login -> give username and password, put inside login request
   // give login request to server facade call .login
   // Print out results in terminal by calling methods and receiving objects
+
+    public static ChessGame.TeamColor fromString(String color) {
+      return switch (color.toLowerCase()) {
+        case "black" -> BLACK;
+        case "white" -> WHITE;
+        default -> throw new IllegalArgumentException("Invalid team color: " + color);
+      };
+    }
+
 
   public static void writeHelpScreen1(){
     System.out.println("Welcome to CS240 Chess");
@@ -155,7 +166,7 @@ public class createMenu {
         }
       }
       else if (userInput.equals("4")){
-        System.out.println("Current Games"); // Changed println to println for a new line after printing the header
+        System.out.println("Current Games");
         List<GameData> gamesToShow = createMenu.listCommand(savedAuthToken);
         int index = 1;
 
@@ -165,6 +176,7 @@ public class createMenu {
         createMenu.operateSecondMenu();
       }
       else if (userInput.equals("5")){
+
         System.out.print("Enter Number of game you'd like to join: ");
         String userInputGameNumber = scanner.nextLine();
         int selectedGameIndex = Integer.parseInt(userInputGameNumber);
@@ -174,23 +186,38 @@ public class createMenu {
         for (GameData game : games) {
           if (++index == selectedGameIndex) { // Increment index and compare
             GameData updatedGame;
+            ChessGame.TeamColor color = fromString(userInputChosenTeam);
+            server.join(savedAuthToken, color, game.gameID());
             if (userInputChosenTeam.equals("white")) {
               updatedGame = new GameData(game.gameID(), userName, game.blackUsername(), game.gameName(), game.game());
             } else if (userInputChosenTeam.equals("black")) {
               updatedGame = new GameData(game.gameID(), game.whiteUsername(), userName, game.gameName(), game.game());
             } else {
               // Handle invalid team choice
-              // You might want to add some error handling or user feedback here
               break;
             }
-            games.set(index - 1, updatedGame); // Update the game in the list
+            games.set(index - 1, updatedGame);
             break; // Exit the loop once the desired game is found and updated
           }
         }
         createMenu.operateSecondMenu();
       }
       else if (userInput.equals("6")){
-
+        System.out.print("Enter Number of game you'd like to join as an observer: ");
+        String userInputGameNumber = scanner.nextLine();
+        int selectedGameIndex = Integer.parseInt(userInputGameNumber);
+        int index = 0;
+        for (GameData game : games) {
+          if (++index == selectedGameIndex) {
+             // Update the game in the list
+            server.join(savedAuthToken, null, game.gameID());
+            System.out.println("Joined as Observer");
+            printObject.drawWhiteBoard(game.game());
+            printObject.drawBlackBoard(game.game());
+            createMenu.operateSecondMenu();
+            break;
+          }
+        }
       }
     }
     }
@@ -213,7 +240,9 @@ public class createMenu {
         String requestBodyString = new Gson().toJson(gameName);
         CreateResult createResult = server.create(requestBodyString, authToken);
         if (createResult != null) {
-          GameData gameData = new GameData(createResult.getGameID(), null, null, gameName, null);
+          GameData gameData = new GameData(createResult.getGameID(), null, null, gameName, new ChessGame());
+          ChessBoard board = (gameData.game()).getBoard();
+          board.resetBoard();
           games.add(gameData);
           return true;
         } else {
@@ -223,9 +252,6 @@ public class createMenu {
         System.out.println("Error creating game: " + e.getMessage());
         return false;
       }
-    }
-    public static void joinCommand(String authToken, ChessGame.TeamColor playerColor, int gameID) throws ResponseException {
-      JoinResult joinResult = server.join(authToken, playerColor, gameID);
     }
     public static List<GameData> listCommand(String authToken) throws ResponseException {
       ListResult listResult = server.list(games, authToken);
