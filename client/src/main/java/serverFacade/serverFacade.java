@@ -4,6 +4,7 @@ package serverFacade;
 // Login, Register, Create, Join, etc
 // They're gonna contact my server over http
 
+import chess.ChessGame;
 import com.google.gson.Gson;
 import model.RequestandResult.*;
 import ui.ResponseException;
@@ -54,9 +55,10 @@ public class serverFacade {
     // Access request and execute request
     // Send request to server
   }
-  public JoinResult join(JoinRequest request) throws ResponseException{
+  public JoinResult join(String authToken, ChessGame.TeamColor playerColor, int gameID) throws ResponseException{
     var path = "/game";
-    return this.makeRequest("PUT", "/game", request, "", JoinResult.class, null, null);
+    JoinRequest joinRequest = new JoinRequest(authToken, playerColor, gameID);
+    return this.makeRequest("PUT", "/game", joinRequest, "", JoinResult.class, "Authorization", authToken);
     // contact the server
     // Access request and execute request
     // Send request to server

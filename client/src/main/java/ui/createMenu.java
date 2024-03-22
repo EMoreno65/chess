@@ -1,5 +1,6 @@
 package ui;
 
+import chess.ChessGame;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dataAccess.DataAccessException;
@@ -20,6 +21,7 @@ public class createMenu {
   public static serverFacade server = new serverFacade("http://localhost:8080");
   static String savedAuthToken;
   static List<GameData> games = new ArrayList<>();
+  static String userName;
 
   public static void main(String[] args) throws ResponseException {
     operateFirstMenu();
@@ -50,13 +52,6 @@ public class createMenu {
     System.out.println("4 - List Games");
     System.out.println("5 - Join Game");
     System.out.println("6 - Join as an Observer");
-  }
-
-  public void helpCommand(){
-
-  }
-  public void quitCommand(){
-
   }
   public static boolean loginCommand(String username, String password) throws ResponseException {
     UserData userData = new UserData(username, password, "");
@@ -100,6 +95,7 @@ public class createMenu {
       } else if (userInput.equals("3")) {
         System.out.print("Enter Username: ");
         String userInputUsername = scanner.nextLine();
+        userName = userInputUsername;
         System.out.print("Enter Password: ");
         String userInputPassword = scanner.nextLine();
         if (loginCommand(userInputUsername, userInputPassword)){
@@ -115,6 +111,7 @@ public class createMenu {
         String userInputPassword = scanner.nextLine();
         System.out.println("Enter Email: ");
         String userInputEmail = scanner.nextLine();
+        userName = userInputUsername;
         if (registerCommand(userInputUsername, userInputPassword, userInputEmail)){
           createMenu.operateSecondMenu();
         }
@@ -165,9 +162,32 @@ public class createMenu {
         for (GameData game : gamesToShow) { // Enhanced for loop to iterate over gamesToShow
           System.out.println(index++ + ". " + "Game Name is " + game.gameName() + " Game ID is " + game.gameID() + " , " + "White Team Player = " + game.whiteUsername()+ " , " + "Black Team Player = " + game.blackUsername());
         }
+        createMenu.operateSecondMenu();
       }
       else if (userInput.equals("5")){
-
+        System.out.print("Enter Number of game you'd like to join: ");
+        String userInputGameNumber = scanner.nextLine();
+        int selectedGameIndex = Integer.parseInt(userInputGameNumber);
+        System.out.println("Enter which color you'd like to be (Please type all lowercase either 'black' or 'white'): ");
+        String userInputChosenTeam = scanner.nextLine();
+        int index = 0; // Initialize index to start from 0
+        for (GameData game : games) {
+          if (++index == selectedGameIndex) { // Increment index and compare
+            GameData updatedGame;
+            if (userInputChosenTeam.equals("white")) {
+              updatedGame = new GameData(game.gameID(), userName, game.blackUsername(), game.gameName(), game.game());
+            } else if (userInputChosenTeam.equals("black")) {
+              updatedGame = new GameData(game.gameID(), game.whiteUsername(), userName, game.gameName(), game.game());
+            } else {
+              // Handle invalid team choice
+              // You might want to add some error handling or user feedback here
+              break;
+            }
+            games.set(index - 1, updatedGame); // Update the game in the list
+            break; // Exit the loop once the desired game is found and updated
+          }
+        }
+        createMenu.operateSecondMenu();
       }
       else if (userInput.equals("6")){
 
@@ -203,6 +223,9 @@ public class createMenu {
         System.out.println("Error creating game: " + e.getMessage());
         return false;
       }
+    }
+    public static void joinCommand(String authToken, ChessGame.TeamColor playerColor, int gameID) throws ResponseException {
+      JoinResult joinResult = server.join(authToken, playerColor, gameID);
     }
     public static List<GameData> listCommand(String authToken) throws ResponseException {
       ListResult listResult = server.list(games, authToken);
