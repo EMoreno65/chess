@@ -1,9 +1,14 @@
 package ui;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import dataAccess.DataAccessException;
+import model.AuthData;
 import model.Request.LoginRequest;
 import model.Request.RegisterRequest;
+import model.RequestandResult.CreateResult;
 import model.RequestandResult.LoginResult;
+import model.RequestandResult.LogoutResult;
 import model.RequestandResult.RegisterResult;
 import model.UserData;
 import serverFacade.serverFacade;
@@ -122,11 +127,72 @@ public class createMenu {
     scanner.close();
   }
 
-  public static void operateSecondMenu(){
+  public static void operateSecondMenu() throws ResponseException {
     Scanner scanner = new Scanner(System.in);
     createMenu.writeHelpScreen2();
     System.out.print("Input Number Here: ");
-  }
+    while (true) {
+      String userInput = scanner.nextLine();
+      if (userInput.equals("1")) {
+        System.out.println(" Help - By Pressing Help you can show all the options available and what each option does");
+        System.out.println(" Logout - This option will log you out of your account and return you to the main menu");
+        System.out.println(" Create Game - This will create a chess game with a unique ID");
+        System.out.println(" List Games - This option will show all the available games");
+        System.out.println(" Join Game - You will join an available game as a player");
+        System.out.println(" Join as an Observer - You will join an available game as an observer");
+      }
+      else if (userInput.equals("2")){
+        createMenu.logoutCommand();
+      }
+      else if (userInput.equals("3")){
+        System.out.print("Insert Game Name Here: ");
+        String userInputGameName = scanner.nextLine();
+        if(createCommand(userInputGameName, savedAuthToken)){
+          System.out.println("Game Created");
+        }
+        else{
+          System.out.println("Game Unable to be Created");
+        }
+      }
+      else if (userInput.equals("4")){
+
+      }
+      else if (userInput.equals("5")){
+
+      }
+      else if (userInput.equals("6")){
+
+      }
+    }
+    }
+    public static void logoutCommand() throws ResponseException {
+      if (savedAuthToken == null){
+        return;
+      }
+      AuthData authData = new AuthData(savedAuthToken, "", "");
+      LogoutResult logoutResult = server.logout(authData);
+      savedAuthToken = null;
+      createMenu.operateFirstMenu();
+    }
+
+    public static boolean createCommand(String gameName, String authToken) throws ResponseException {
+      try {
+        JsonObject requestBody = new JsonObject();
+        requestBody.addProperty("gameName", gameName); // Add the gameName to the JSON object
+
+        // Serialize the JSON object to a string
+        String requestBodyString = new Gson().toJson(requestBody);
+        CreateResult createResult = server.create(requestBodyString, authToken);
+        if (createResult != null) {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (ResponseException e) {
+        System.out.println("Error creating game: " + e.getMessage());
+        return false;
+      }
+    }
   // Print things to the terminal for the user to select
   // some kinda switch statement
   // login -> give username and password, put inside login request

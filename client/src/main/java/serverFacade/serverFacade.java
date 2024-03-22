@@ -5,7 +5,9 @@ package serverFacade;
 // They're gonna contact my server over http
 
 import com.google.gson.Gson;
+import model.RequestandResult.CreateResult;
 import model.RequestandResult.LoginResult;
+import model.RequestandResult.LogoutResult;
 import model.RequestandResult.RegisterResult;
 import ui.ResponseException;
 import model.*;
@@ -34,61 +36,65 @@ public class serverFacade {
   // Move server request folders to shared  java
   public RegisterResult register(UserData data) throws ResponseException {
     var path = "/user";
-    return this.makeRequest("POST", "/user", data, "", RegisterResult.class);
+    return this.makeRequest("POST", "/user", data, "", RegisterResult.class, null, null);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
   public LoginResult login(UserData data) throws ResponseException {
     var path = "/session";
-    return this.makeRequest("POST", "/session", data, "", LoginResult.class);
+    return this.makeRequest("POST", "/session", data, "", LoginResult.class, null, null);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
-  public CreateRequest create(String gameName, String authToken) throws ResponseException {
+  public CreateResult create(String gameName, String authToken) throws ResponseException {
     var path = "/game";
-    return this.makeRequest("POST","/game", gameName, authToken, CreateRequest.class);
+    return this.makeRequest("POST","/game", gameName, authToken, CreateResult.class, "Authorization", authToken);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
   public JoinRequest join(JoinRequest request) throws ResponseException{
     var path = "/game";
-    return this.makeRequest("PUT", "/game", request, "", JoinRequest.class);
+    return this.makeRequest("PUT", "/game", request, "", JoinRequest.class, null, null);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
   public ListRequest list(ListRequest request) throws ResponseException{
     var path = "/game";
-    return this.makeRequest("GET", "/game", request, "", ListRequest.class);
+    return this.makeRequest("GET", "/game", request, "", ListRequest.class, null, null);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
   public ClearRequest clear(ClearRequest request) throws ResponseException{
     var path = "/db";
-    return this.makeRequest("DELETE", "/db", request, "", ClearRequest.class);
+    return this.makeRequest("DELETE", "/db", request, "", ClearRequest.class, null, null);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
-  public LogoutRequest logout(LogoutRequest request) throws ResponseException{
+  public LogoutResult logout(AuthData data) throws ResponseException{
     var path = "/session";
-    return this.makeRequest("DELETE", "/session", request, "", LogoutRequest.class);
+    return this.makeRequest("DELETE", "/session", data, data.authToken(), LogoutResult.class, "Authorization", data.authToken());
     // contact the server
     // Access request and execute request
     // Send request to server
   }
 
-  private <T> T makeRequest(String method, String path, Object request, String authToken, Class<T> responseClass) throws ResponseException {
+  private <T> T makeRequest(String method, String path, Object request, String authToken, Class<T> responseClass, String headerName, String headerValue) throws ResponseException {
     try {
       URL url = (new URI(serverUrl + path)).toURL();
       HttpURLConnection http = (HttpURLConnection) url.openConnection();
       http.setRequestMethod(method);
       http.setRequestProperty("authorization", authToken);
       http.setDoOutput(true);
+
+      if (headerName != null && headerValue != null){
+        http.setRequestProperty(headerName, headerValue);
+      }
 
       writeBody(request, http);
       http.connect();
