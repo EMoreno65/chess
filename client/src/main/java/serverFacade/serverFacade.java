@@ -64,15 +64,12 @@ public class serverFacade {
     // Send request to server
   }
   public ListResult list(List<GameData> games, String authToken) throws ResponseException{
-    var path = "/game";
-    ListRequest listRequest = new ListRequest(authToken);
-    return this.makeRequest("GET", "/game", listRequest, "", ListResult.class, "Authorization", authToken);
+    return this.makeRequest("GET", "/game", null, "", ListResult.class, "Authorization", authToken);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
   public ClearResult clear() throws ResponseException{
-    var path = "/db";
     return this.makeRequest("DELETE", "/db", null, null, null, null, null);
     // contact the server
     // Access request and execute request

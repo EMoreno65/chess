@@ -21,12 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ServerFacadeTests {
 
     private static Server server;
-    public static serverFacade serverFacade = new serverFacade("http://localhost:8080");
+    public static serverFacade serverFacade;
 
     @BeforeAll
     public static void init() {
         server = new Server();
         var port = server.run(0);
+        serverFacade = new serverFacade("http://localhost:" + port);
         System.out.println("Started test HTTP server on " + port);
     }
 
@@ -174,25 +175,25 @@ public class ServerFacadeTests {
         });
     }
 
-//    @Test
-//    public void listSuccess() throws ResponseException {
-//        String username = "Ethan";
-//        UserData userData = new UserData("Ethan", "Password", "email");
-//        serverFacade.register(userData);
-//        LoginResult logResult = serverFacade.login(userData);
-//        String authToken = logResult.getAuthToken();
-//
-//        CreateResult createResult1 = serverFacade.create("GameExample", authToken);
-//        CreateResult createResult2 = serverFacade.create("GameExample2", authToken);
-//
-//        List<GameData> gameDataList = new ArrayList<>();
-//        gameDataList.add(new GameData(createResult1.getGameID(), null, null, "GameExample", null));
-//        gameDataList.add(new GameData(createResult2.getGameID(), null, null, "GameExample2", null));
-//
-//        ListResult listResult = serverFacade.list(gameDataList, authToken);
-//
-//        assertEquals(2, listResult.getGames().size());
-//    }
+    @Test
+    public void listSuccess() throws ResponseException {
+        String username = "Ethan";
+        UserData userData = new UserData("Ethan", "Password", "email");
+        serverFacade.register(userData);
+        LoginResult logResult = serverFacade.login(userData);
+        String authToken = logResult.getAuthToken();
+
+        CreateResult createResult1 = serverFacade.create("GameExample", authToken);
+        CreateResult createResult2 = serverFacade.create("GameExample2", authToken);
+
+        List<GameData> gameDataList = new ArrayList<>();
+        gameDataList.add(new GameData(createResult1.getGameID(), null, null, "GameExample", null));
+        gameDataList.add(new GameData(createResult2.getGameID(), null, null, "GameExample2", null));
+
+        ListResult listResult = serverFacade.list(gameDataList, authToken);
+
+        assertEquals(2, listResult.getGames().size());
+    }
 
     @Test
     public void listFail() throws ResponseException {
@@ -216,20 +217,6 @@ public class ServerFacadeTests {
             assertEquals(500, e.StatusCode(), "Expected status code 500");
         }
     }
-
-//    @Test
-//    public void clearTest() throws ResponseException {
-//        String username = "Ethan";
-//        UserData userData = new UserData("Ethan", "Password", "email");
-//        serverFacade.register(userData);
-//        LoginResult logResult = serverFacade.login(userData);
-//        String authToken = logResult.getAuthToken();
-//
-//        CreateResult createResult1 = serverFacade.create("GameExample", authToken);
-//        CreateResult createResult2 = serverFacade.create("GameExample2", authToken);
-//        serverFacade.clear();
-//        assertNull(authToken);
-//    }
 
 
 
