@@ -11,6 +11,7 @@ import model.RequestandResult.*;
 import model.UserData;
 import serverFacade.serverFacade;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,6 +19,7 @@ public class createMenu {
 
   public static serverFacade server = new serverFacade("http://localhost:8080");
   static String savedAuthToken;
+  static List<GameData> games = new ArrayList<>();
 
   public static void main(String[] args) throws ResponseException {
     operateFirstMenu();
@@ -156,8 +158,13 @@ public class createMenu {
         }
       }
       else if (userInput.equals("4")){
-        System.out.print("Current Games");
+        System.out.println("Current Games"); // Changed println to println for a new line after printing the header
+        List<GameData> gamesToShow = createMenu.listCommand(savedAuthToken);
+        int index = 1;
 
+        for (GameData game : gamesToShow) { // Enhanced for loop to iterate over gamesToShow
+          System.out.println(index++ + ". " + "Game Name is " + game.gameName() + " Game ID is " + game.gameID() + " , " + "White Team Player = " + game.whiteUsername()+ " , " + "Black Team Player = " + game.blackUsername());
+        }
       }
       else if (userInput.equals("5")){
 
@@ -186,6 +193,8 @@ public class createMenu {
         String requestBodyString = new Gson().toJson(gameName);
         CreateResult createResult = server.create(requestBodyString, authToken);
         if (createResult != null) {
+          GameData gameData = new GameData(createResult.getGameID(), null, null, gameName, null);
+          games.add(gameData);
           return true;
         } else {
           return false;
@@ -195,9 +204,9 @@ public class createMenu {
         return false;
       }
     }
-    public static ListResult listCommand(List<GameData> games, String authToken) throws ResponseException {
+    public static List<GameData> listCommand(String authToken) throws ResponseException {
       ListResult listResult = server.list(games, authToken);
-      return listResult;
+      return games;
     }
   // Print things to the terminal for the user to select
   // some kinda switch statement
