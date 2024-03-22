@@ -4,15 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dataAccess.DataAccessException;
 import model.AuthData;
+import model.GameData;
 import model.Request.LoginRequest;
 import model.Request.RegisterRequest;
-import model.RequestandResult.CreateResult;
-import model.RequestandResult.LoginResult;
-import model.RequestandResult.LogoutResult;
-import model.RequestandResult.RegisterResult;
+import model.RequestandResult.*;
 import model.UserData;
 import serverFacade.serverFacade;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class createMenu {
@@ -149,12 +148,15 @@ public class createMenu {
         String userInputGameName = scanner.nextLine();
         if(createCommand(userInputGameName, savedAuthToken)){
           System.out.println("Game Created");
+          createMenu.operateSecondMenu();
         }
         else{
           System.out.println("Game Unable to be Created");
+          createMenu.operateSecondMenu();
         }
       }
       else if (userInput.equals("4")){
+        System.out.print("Current Games");
 
       }
       else if (userInput.equals("5")){
@@ -177,11 +179,11 @@ public class createMenu {
 
     public static boolean createCommand(String gameName, String authToken) throws ResponseException {
       try {
-        JsonObject requestBody = new JsonObject();
-        requestBody.addProperty("gameName", gameName); // Add the gameName to the JSON object
+//        JsonObject requestBody = new JsonObject();
+//        requestBody.addProperty("gameName", gameName); // Add the gameName to the JSON object
 
         // Serialize the JSON object to a string
-        String requestBodyString = new Gson().toJson(requestBody);
+        String requestBodyString = new Gson().toJson(gameName);
         CreateResult createResult = server.create(requestBodyString, authToken);
         if (createResult != null) {
           return true;
@@ -192,6 +194,10 @@ public class createMenu {
         System.out.println("Error creating game: " + e.getMessage());
         return false;
       }
+    }
+    public static ListResult listCommand(List<GameData> games, String authToken) throws ResponseException {
+      ListResult listResult = server.list(games, authToken);
+      return listResult;
     }
   // Print things to the terminal for the user to select
   // some kinda switch statement

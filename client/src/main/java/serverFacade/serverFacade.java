@@ -5,10 +5,7 @@ package serverFacade;
 // They're gonna contact my server over http
 
 import com.google.gson.Gson;
-import model.RequestandResult.CreateResult;
-import model.RequestandResult.LoginResult;
-import model.RequestandResult.LogoutResult;
-import model.RequestandResult.RegisterResult;
+import model.RequestandResult.*;
 import ui.ResponseException;
 import model.*;
 import model.Request.*;
@@ -20,6 +17,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
 
 public class serverFacade {
   private String serverUrl;
@@ -50,21 +48,23 @@ public class serverFacade {
   }
   public CreateResult create(String gameName, String authToken) throws ResponseException {
     var path = "/game";
-    return this.makeRequest("POST","/game", gameName, authToken, CreateResult.class, "Authorization", authToken);
+    CreateRequest createRequest = new CreateRequest(authToken, gameName, null, null);
+    return this.makeRequest("POST","/game", createRequest, authToken, CreateResult.class, "Authorization", authToken);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
-  public JoinRequest join(JoinRequest request) throws ResponseException{
+  public JoinResult join(JoinRequest request) throws ResponseException{
     var path = "/game";
-    return this.makeRequest("PUT", "/game", request, "", JoinRequest.class, null, null);
+    return this.makeRequest("PUT", "/game", request, "", JoinResult.class, null, null);
     // contact the server
     // Access request and execute request
     // Send request to server
   }
-  public ListRequest list(ListRequest request) throws ResponseException{
+  public ListResult list(List<GameData> games, String authToken) throws ResponseException{
     var path = "/game";
-    return this.makeRequest("GET", "/game", request, "", ListRequest.class, null, null);
+    ListRequest listRequest = new ListRequest(games, authToken);
+    return this.makeRequest("GET", "/game", listRequest, "", ListResult.class, "Authorization", authToken);
     // contact the server
     // Access request and execute request
     // Send request to server
