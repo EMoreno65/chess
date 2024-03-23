@@ -1,8 +1,6 @@
 package model.Request;
 
-import spark.Request;
-
-public class RegisterRequest extends Request {
+public class RegisterRequest {
 
   public RegisterRequest(String username, String password, String email) {
     this.username=username;
