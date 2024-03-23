@@ -73,7 +73,7 @@ public class createMenu {
       server.login(userData);
     }
     catch (ResponseException e){
-      System.out.println("Username or password is Incorrect");
+      System.out.println("Username or password is Incorrect / Does not Exist");
       createMenu.operateFirstMenu();
     }
     LoginResult receivedResult = server.login(userData);
@@ -117,7 +117,8 @@ public class createMenu {
         System.out.println(" Login - This option will give you a prompt to input your username and password and have you login");
         System.out.println(" Register - This option will give you the option to input a username, password and an email to create a user");
       } else if (userInput.equals("2")) {
-        break;
+        System.out.println("Exiting the program...");
+        System.exit(0);
       } else if (userInput.equals("3")) {
         System.out.print("Enter Username: ");
         String userInputUsername = scanner.nextLine();
@@ -146,9 +147,6 @@ public class createMenu {
         }
       }
     }
-
-    // Close the scanner
-    scanner.close();
   }
 
   public static void operateSecondMenu() throws ResponseException {
