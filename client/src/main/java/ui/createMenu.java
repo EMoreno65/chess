@@ -33,11 +33,16 @@ public class createMenu {
   // give login request to server facade call .login
   // Print out results in terminal by calling methods and receiving objects
 
-    public static ChessGame.TeamColor fromString(String color) {
+    public static ChessGame.TeamColor fromString(String color) throws ResponseException {
       return switch (color.toLowerCase()) {
         case "black" -> BLACK;
         case "white" -> WHITE;
-        default -> throw new IllegalArgumentException("Invalid team color: " + color);
+        default -> {
+          System.out.println("That's not black or white you goofball");
+          createMenu.operateSecondMenu();
+          yield null;
+        }
+
       };
     }
 
@@ -64,6 +69,13 @@ public class createMenu {
   }
   public static boolean loginCommand(String username, String password) throws ResponseException {
     UserData userData = new UserData(username, password, "");
+    try {
+      server.login(userData);
+    }
+    catch (ResponseException e){
+      System.out.println("Username or password is Incorrect");
+      createMenu.operateFirstMenu();
+    }
     LoginResult receivedResult = server.login(userData);
     savedAuthToken = receivedResult.getAuthToken();
     if (savedAuthToken != null){
@@ -78,12 +90,17 @@ public class createMenu {
   }
   public static boolean registerCommand(String username, String password, String email) throws ResponseException {
     UserData userData = new UserData(username, password, email);
-    RegisterResult receivedResult = server.register(userData);
-    savedAuthToken = receivedResult.getAuthToken();
-    if (savedAuthToken != null){
-      return true;
-    }
-    else {
+    try {
+      RegisterResult receivedResult = server.register(userData);
+      savedAuthToken = receivedResult.getAuthToken();
+      if (savedAuthToken != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (ResponseException e) {
+      System.out.println("Missing information in Registration");
+      createMenu.operateFirstMenu();
       return false;
     }
   }
@@ -152,8 +169,15 @@ public class createMenu {
         createMenu.logoutCommand();
       }
       else if (userInput.equals("3")){
+        if (savedAuthToken == null){
+          createMenu.operateFirstMenu();
+        }
         System.out.print("Insert Game Name Here: ");
         String userInputGameName = scanner.nextLine();
+        if (userInputGameName == ""){
+          System.out.println("Please return to create a game and input a name for game");
+          createMenu.operateSecondMenu();
+        }
         if(createCommand(userInputGameName, savedAuthToken)){
           System.out.println("Game Created");
           createMenu.operateSecondMenu();
@@ -177,6 +201,13 @@ public class createMenu {
 
         System.out.print("Enter Number of game you'd like to join: ");
         String userInputGameNumber = scanner.nextLine();
+        try {
+          int selectedGameIndex=Integer.parseInt(userInputGameNumber);
+        }
+        catch (NumberFormatException e){
+          System.out.println("That's definitely not a number");
+          createMenu.operateSecondMenu();
+        }
         int selectedGameIndex = Integer.parseInt(userInputGameNumber);
         System.out.println("Enter which color you'd like to be (Please type all lowercase either 'black' or 'white'): ");
         String userInputChosenTeam = scanner.nextLine();
@@ -185,26 +216,49 @@ public class createMenu {
           if (++index == selectedGameIndex) { // Increment index and compare
             GameData updatedGame;
             ChessGame.TeamColor color = fromString(userInputChosenTeam);
+            if (userInputChosenTeam.equals("white")){
+              if (game.whiteUsername() != null){
+                System.out.println("White Team in that game is already taken");
+                createMenu.operateSecondMenu();
+              }
+            }
+            if (userInputChosenTeam.equals("black")){
+              if (game.blackUsername() != null){
+                System.out.println("Black Team in that game is already taken");
+                createMenu.operateSecondMenu();
+              }
+            }
             server.join(savedAuthToken, color, game.gameID());
             if (userInputChosenTeam.equals("white")) {
               updatedGame = new GameData(game.gameID(), userName, game.blackUsername(), game.gameName(), game.game());
             } else if (userInputChosenTeam.equals("black")) {
               updatedGame = new GameData(game.gameID(), game.whiteUsername(), userName, game.gameName(), game.game());
             } else {
-              // Handle invalid team choice
+              System.out.println("Not a valid team choice");
+              createMenu.operateSecondMenu();
               break;
             }
             games.set(index - 1, updatedGame);
             break; // Exit the loop once the desired game is found and updated
           }
+          System.out.println("Not a valid selected game");
+          createMenu.operateSecondMenu();
         }
+        System.out.println("Game Joined Successfully");
         createMenu.operateSecondMenu();
       }
       else if (userInput.equals("6")){
-        System.out.print("Enter Number of game you'd like to join as an observer: ");
+        System.out.print("Enter Number of game you'd like to join: ");
         String userInputGameNumber = scanner.nextLine();
+        try {
+          int selectedGameIndex=Integer.parseInt(userInputGameNumber);
+        }
+        catch (NumberFormatException e){
+          System.out.println("That's definitely not a number");
+          createMenu.operateSecondMenu();
+        }
         int selectedGameIndex = Integer.parseInt(userInputGameNumber);
-        int index = 0;
+        int index = 0; // Initialize index to start from 0
         for (GameData game : games) {
           if (++index == selectedGameIndex) {
              // Update the game in the list
